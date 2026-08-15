@@ -1,0 +1,7 @@
+# NEXORA — Mídia Digital & Criação
+# Se o site for publicado em outro domínio, atualize a linha Sitemap.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://nexora.com.br/sitemap.xml

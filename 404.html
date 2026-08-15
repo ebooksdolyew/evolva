@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Página não encontrada — NEXORA</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#020513" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/png" href="/assets/iconelogo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        background-color: #020513;
+      }
+
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 2rem 1.25rem;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+          Roboto, Arial, sans-serif;
+        color: #f5f7ff;
+        text-align: center;
+        background:
+          radial-gradient(
+            circle at 70% 30%,
+            rgba(124, 60, 255, 0.24),
+            transparent 42%
+          ),
+          radial-gradient(
+            circle at 25% 65%,
+            rgba(18, 100, 255, 0.18),
+            transparent 40%
+          ),
+          linear-gradient(160deg, #020513 0%, #050a20 60%, #070428 100%);
+      }
+
+      .wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.25rem;
+        max-width: 520px;
+      }
+
+      .mark {
+        width: 96px;
+        filter: drop-shadow(0 0 40px rgba(60, 110, 255, 0.55));
+      }
+
+      .code {
+        font-size: clamp(4rem, 18vw, 9rem);
+        font-weight: 900;
+        line-height: 0.85;
+        letter-spacing: -0.06em;
+        background: linear-gradient(90deg, #fff, #4e8fff 45%, #a75cff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+      }
+
+      h1 {
+        font-size: clamp(1.1rem, 4vw, 1.6rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+      }
+
+      p {
+        color: #aab2ca;
+        line-height: 1.7;
+        font-size: 15px;
+      }
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+        border-radius: 999px;
+        border: 1px solid rgba(75, 120, 255, 0.45);
+        padding: 0.9rem 1.8rem;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        color: #fff;
+        text-decoration: none;
+        background: linear-gradient(90deg, #0758ff, #5428ff);
+        box-shadow: 0 15px 40px rgba(33, 71, 255, 0.28);
+        transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+      }
+
+      a:hover {
+        transform: translateY(-2px);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        a {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <img class="mark" src="/assets/iconelogo.png" alt="NEXORA" />
+      <p class="code">404</p>
+      <h1>Esta página não existe.</h1>
+      <p>
+        O endereço que você abriu não está no ar — pode ter sido movido ou o link
+        veio errado.
+      </p>
+      <a href="/">Voltar para o início</a>
+    </div>
+  </body>
+</html>

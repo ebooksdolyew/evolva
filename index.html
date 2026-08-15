@@ -3,18 +3,171 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="./assets/iconelogo.png" />
-    <title>NEXORA — Mídia Digital &amp; Criação</title>
+
+    <!-- ==============================================================
+         DOMÍNIO: todas as URLs absolutas abaixo (canonical, Open Graph,
+         sitemap.xml e robots.txt) apontam para https://nexora.com.br.
+         Se o site for publicado em outro endereço — GitHub Pages, por
+         exemplo — troque o domínio aqui, no sitemap.xml e no robots.txt.
+         Um canonical apontando para um endereço errado tira a página do
+         índice do Google.
+    =============================================================== -->
+
+    <title>NEXORA — Mídia Digital &amp; Criação | Branding, Social e IA</title>
     <meta
       name="description"
-      content="A NEXORA conecta criatividade, estratégia, tecnologia e inteligência artificial para transformar marcas e negócios."
+      content="Agência de mídia digital e criação. Unimos estratégia, branding, mídia social, tecnologia e inteligência artificial para transformar marcas e gerar resultado."
     />
+    <link rel="canonical" href="https://nexora.com.br/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="NEXORA — Mídia Digital &amp; Criação" />
+    <meta name="theme-color" content="#020513" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Open Graph (WhatsApp, LinkedIn, Facebook) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="NEXORA" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:url" content="https://nexora.com.br/" />
+    <meta
+      property="og:title"
+      content="NEXORA — Mídia Digital &amp; Criação | Branding, Social e IA"
+    />
+    <meta
+      property="og:description"
+      content="Unimos estratégia, branding, mídia social, tecnologia e inteligência artificial para transformar marcas e gerar resultado."
+    />
+    <meta property="og:image" content="https://nexora.com.br/assets/textologo.png" />
+    <meta property="og:image:width" content="1821" />
+    <meta property="og:image:height" content="864" />
+    <meta
+      property="og:image:alt"
+      content="NEXORA — Mídia Digital &amp; Criação"
+    />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="NEXORA — Mídia Digital &amp; Criação | Branding, Social e IA"
+    />
+    <meta
+      name="twitter:description"
+      content="Unimos estratégia, branding, mídia social, tecnologia e inteligência artificial para transformar marcas e gerar resultado."
+    />
+    <meta
+      name="twitter:image"
+      content="https://nexora.com.br/assets/textologo.png"
+    />
+
+    <!-- Ícones -->
+    <link rel="icon" type="image/png" href="./assets/iconelogo.png" />
+    <link rel="apple-touch-icon" href="./assets/iconelogo.png" />
+    <link rel="manifest" href="./site.webmanifest" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://nexora.com.br/#organizacao",
+            "name": "NEXORA",
+            "legalName": "NEXORA — Mídia Digital & Criação",
+            "alternateName": "NEXORA Mídia Digital",
+            "url": "https://nexora.com.br/",
+            "email": "contato@nexora.com.br",
+            "description": "Agência de mídia digital e criação. Estratégia, branding, mídia social, tecnologia e inteligência artificial para marcas que querem crescer.",
+            "slogan": "Ideias que viram resultado.",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://nexora.com.br/assets/textologo.png",
+              "width": 1821,
+              "height": 864
+            },
+            "image": "https://nexora.com.br/assets/textologo.png",
+            "knowsLanguage": "pt-BR"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://nexora.com.br/#site",
+            "url": "https://nexora.com.br/",
+            "name": "NEXORA — Mídia Digital & Criação",
+            "inLanguage": "pt-BR",
+            "publisher": { "@id": "https://nexora.com.br/#organizacao" }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://nexora.com.br/#pagina",
+            "url": "https://nexora.com.br/",
+            "name": "NEXORA — Mídia Digital & Criação | Branding, Social e IA",
+            "description": "Unimos estratégia, branding, mídia social, tecnologia e inteligência artificial para transformar marcas e gerar resultado.",
+            "inLanguage": "pt-BR",
+            "isPartOf": { "@id": "https://nexora.com.br/#site" },
+            "about": { "@id": "https://nexora.com.br/#organizacao" }
+          },
+          {
+            "@type": "Service",
+            "name": "Serviços NEXORA",
+            "provider": { "@id": "https://nexora.com.br/#organizacao" },
+            "areaServed": { "@type": "Country", "name": "Brasil" },
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Serviços",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Estratégia",
+                    "description": "Planejamento orientado a objetivos, posicionamento e crescimento real."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Identidade & Branding",
+                    "description": "Logo, sistema visual, manual, paleta, tipografia e aplicações."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Mídia Social",
+                    "description": "Conteúdo estratégico, campanhas, reels, carrosséis e calendário editorial."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "IA & Automação",
+                    "description": "Automação de processos, integrações, dados e experiências inteligentes."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Tecnologia & Web",
+                    "description": "Suporte, infraestrutura e soluções digitais para escalar a operação."
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    </script>
 
     <style>
       /* ===============================================================
@@ -1485,7 +1638,61 @@
         <h2 class="section-heading services__heading" data-reveal style="--ry: 40px">
           Serviços
         </h2>
-        <div class="services__list" data-services></div>
+        <div class="services__list">
+          <div class="service" data-reveal style="--rd: 0s">
+            <span class="service__number">01</span>
+            <div class="service__body">
+              <h3 class="service__name">Estratégia</h3>
+              <p class="service__desc">
+                Planejamento orientado a objetivos, posicionamento e crescimento
+                real.
+              </p>
+            </div>
+          </div>
+
+          <div class="service" data-reveal style="--rd: 0.1s">
+            <span class="service__number">02</span>
+            <div class="service__body">
+              <h3 class="service__name">Identidade &amp; Branding</h3>
+              <p class="service__desc">
+                Logo, sistema visual, manual, paleta, tipografia e aplicações.
+              </p>
+            </div>
+          </div>
+
+          <div class="service" data-reveal style="--rd: 0.2s">
+            <span class="service__number">03</span>
+            <div class="service__body">
+              <h3 class="service__name">Mídia Social</h3>
+              <p class="service__desc">
+                Conteúdo estratégico, campanhas, reels, carrosséis e calendário
+                editorial.
+              </p>
+            </div>
+          </div>
+
+          <div class="service" data-reveal style="--rd: 0.3s">
+            <span class="service__number">04</span>
+            <div class="service__body">
+              <h3 class="service__name">IA &amp; Automação</h3>
+              <p class="service__desc">
+                Automação de processos, integrações, dados e experiências
+                inteligentes.
+              </p>
+            </div>
+          </div>
+
+          <div class="service" data-reveal style="--rd: 0.4s">
+            <span class="service__number">05</span>
+            <div class="service__body">
+              <h3 class="service__name">Tecnologia &amp; Web</h3>
+              <p class="service__desc">
+                Suporte, infraestrutura e soluções digitais para escalar a
+                operação.
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- ============================================================
@@ -1496,6 +1703,96 @@
         <h2 class="section-heading solutions__heading" data-reveal style="--ry: 40px">
           <span class="gradient-text">Soluções</span>
         </h2>
+
+        <div class="solution-slot">
+          <article class="solution-card" style="top: 0px">
+            <div class="solution-card__head">
+              <div class="solution-card__id">
+                <span class="solution-card__number gradient-text">01</span>
+                <div class="solution-card__meta">
+                  <p class="kicker">Mídia social</p>
+                  <h3 class="solution-card__name">Conteúdo que conecta.</h3>
+                </div>
+              </div>
+              <a class="btn btn--ghost" href="#contato">Ver solução →</a>
+            </div>
+            <div class="solution-card__visual">
+              <img
+                src="./assets/social.png"
+                alt="Peças de mídia social criadas pela NEXORA"
+                loading="lazy"
+                data-fallback="hide"
+              />
+              <div class="solution-card__veil"></div>
+              <div class="solution-card__copy">
+                <p class="solution-card__desc">
+                  Estratégia, criação, calendário e campanhas para fazer sua marca
+                  se destacar.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="solution-slot">
+          <article class="solution-card" style="top: 24px">
+            <div class="solution-card__head">
+              <div class="solution-card__id">
+                <span class="solution-card__number gradient-text">02</span>
+                <div class="solution-card__meta">
+                  <p class="kicker">Tecnologia &amp; IA</p>
+                  <h3 class="solution-card__name">Inteligência para crescer.</h3>
+                </div>
+              </div>
+              <a class="btn btn--ghost" href="#contato">Ver solução →</a>
+            </div>
+            <div class="solution-card__visual">
+              <img
+                src="./assets/ai.png"
+                alt="Infraestrutura e automação com inteligência artificial"
+                loading="lazy"
+                data-fallback="hide"
+              />
+              <div class="solution-card__veil"></div>
+              <div class="solution-card__copy">
+                <p class="solution-card__desc">
+                  Suporte, infraestrutura, automação, integrações e soluções de
+                  IA.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="solution-slot">
+          <article class="solution-card" style="top: 48px">
+            <div class="solution-card__head">
+              <div class="solution-card__id">
+                <span class="solution-card__number gradient-text">03</span>
+                <div class="solution-card__meta">
+                  <p class="kicker">Branding</p>
+                  <h3 class="solution-card__name">A essência da sua marca.</h3>
+                </div>
+              </div>
+              <a class="btn btn--ghost" href="#contato">Ver solução →</a>
+            </div>
+            <div class="solution-card__visual">
+              <img
+                src="./assets/branding.png"
+                alt="Aplicações de identidade visual da NEXORA em papelaria"
+                loading="lazy"
+                data-fallback="hide"
+              />
+              <div class="solution-card__veil"></div>
+              <div class="solution-card__copy">
+                <p class="solution-card__desc">
+                  Identidade visual, direção criativa e aplicações pensadas para
+                  comunicar valor.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
       </section>
 
       <!-- ============================================================
@@ -1530,7 +1827,24 @@
             </div>
           </div>
 
-          <div class="process__steps" data-steps></div>
+          <div class="process__steps">
+            <div class="step" data-reveal style="--rd: 0s">
+              <strong>01 — Descobrir</strong>
+              <span>Entender cenário, marca e objetivos.</span>
+            </div>
+            <div class="step" data-reveal style="--rd: 0.1s">
+              <strong>02 — Estratégia</strong>
+              <span>Definir posicionamento e plano.</span>
+            </div>
+            <div class="step" data-reveal style="--rd: 0.2s">
+              <strong>03 — Criar</strong>
+              <span>Transformar estratégia em experiência.</span>
+            </div>
+            <div class="step" data-reveal style="--rd: 0.3s">
+              <strong>04 — Escalar</strong>
+              <span>Otimizar, automatizar e crescer.</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1602,67 +1916,10 @@
           './assets/about.png',
         ];
 
-        var SERVICES = [
-          {
-            number: '01',
-            name: 'Estratégia',
-            desc: 'Planejamento orientado a objetivos, posicionamento e crescimento real.',
-          },
-          {
-            number: '02',
-            name: 'Identidade & Branding',
-            desc: 'Logo, sistema visual, manual, paleta, tipografia e aplicações.',
-          },
-          {
-            number: '03',
-            name: 'Mídia Social',
-            desc: 'Conteúdo estratégico, campanhas, reels, carrosséis e calendário editorial.',
-          },
-          {
-            number: '04',
-            name: 'IA & Automação',
-            desc: 'Automação de processos, integrações, dados e experiências inteligentes.',
-          },
-          {
-            number: '05',
-            name: 'Tecnologia & Web',
-            desc: 'Suporte, infraestrutura e soluções digitais para escalar a operação.',
-          },
-        ];
-
-        var SOLUTIONS = [
-          {
-            number: '01',
-            kicker: 'Mídia social',
-            name: 'Conteúdo que conecta.',
-            desc: 'Estratégia, criação, calendário e campanhas para fazer sua marca se destacar.',
-            art: './assets/social.png',
-          },
-          {
-            number: '02',
-            kicker: 'Tecnologia & IA',
-            name: 'Inteligência para crescer.',
-            desc: 'Suporte, infraestrutura, automação, integrações e soluções de IA.',
-            art: './assets/ai.png',
-          },
-          {
-            number: '03',
-            kicker: 'Branding',
-            name: 'A essência da sua marca.',
-            desc: 'Identidade visual, direção criativa e aplicações pensadas para comunicar valor.',
-            art: './assets/branding.png',
-          },
-        ];
-
-        var STEPS = [
-          ['01 — Descobrir', 'Entender cenário, marca e objetivos.'],
-          ['02 — Estratégia', 'Definir posicionamento e plano.'],
-          ['03 — Criar', 'Transformar estratégia em experiência.'],
-          ['04 — Escalar', 'Otimizar, automatizar e crescer.'],
-        ];
-
         /* ----------------------------------------------------------
-           Montagem
+           Montagem — serviços, soluções e processo são HTML estático
+           para que o rastreador leia tudo sem depender de JavaScript.
+           Aqui só se monta a faixa deslizante, que é decorativa.
         ---------------------------------------------------------- */
         var makeTile = function (src) {
           var img = document.createElement('img');
@@ -1689,74 +1946,7 @@
           }
         });
 
-        var servicesList = document.querySelector('[data-services]');
-        SERVICES.forEach(function (service, i) {
-          var item = document.createElement('div');
-          item.className = 'service';
-          item.setAttribute('data-reveal', '');
-          item.style.setProperty('--rd', i * 0.1 + 's');
-          item.innerHTML =
-            '<span class="service__number"></span>' +
-            '<div class="service__body">' +
-            '<h3 class="service__name"></h3>' +
-            '<p class="service__desc"></p>' +
-            '</div>';
-          item.querySelector('.service__number').textContent = service.number;
-          item.querySelector('.service__name').textContent = service.name;
-          item.querySelector('.service__desc').textContent = service.desc;
-          servicesList.appendChild(item);
-        });
-
         var solutionsSection = document.querySelector('[data-solutions]');
-        SOLUTIONS.forEach(function (solution, i) {
-          var slot = document.createElement('div');
-          slot.className = 'solution-slot';
-
-          var card = document.createElement('article');
-          card.className = 'solution-card';
-          card.style.top = i * 24 + 'px';
-          card.innerHTML =
-            '<div class="solution-card__head">' +
-            '<div class="solution-card__id">' +
-            '<span class="solution-card__number gradient-text"></span>' +
-            '<div class="solution-card__meta">' +
-            '<p class="kicker"></p>' +
-            '<h3 class="solution-card__name"></h3>' +
-            '</div></div>' +
-            '<a class="btn btn--ghost" href="#contato">Ver solução →</a>' +
-            '</div>' +
-            '<div class="solution-card__visual">' +
-            '<div class="solution-card__veil"></div>' +
-            '<div class="solution-card__copy">' +
-            '<p class="solution-card__desc"></p>' +
-            '</div></div>';
-
-          card.querySelector('.solution-card__number').textContent =
-            solution.number;
-          card.querySelector('.kicker').textContent = solution.kicker;
-          card.querySelector('.solution-card__name').textContent = solution.name;
-          card.querySelector('.solution-card__desc').textContent = solution.desc;
-
-          var art = makeTile(solution.art);
-          art.setAttribute('data-fallback', 'hide');
-          var visual = card.querySelector('.solution-card__visual');
-          visual.insertBefore(art, visual.firstChild);
-
-          slot.appendChild(card);
-          solutionsSection.appendChild(slot);
-        });
-
-        var stepsWrap = document.querySelector('[data-steps]');
-        STEPS.forEach(function (step, i) {
-          var node = document.createElement('div');
-          node.className = 'step';
-          node.setAttribute('data-reveal', '');
-          node.style.setProperty('--rd', i * 0.1 + 's');
-          node.innerHTML = '<strong></strong><span></span>';
-          node.querySelector('strong').textContent = step[0];
-          node.querySelector('span').textContent = step[1];
-          stepsWrap.appendChild(node);
-        });
 
         var yearNode = document.querySelector('[data-year]');
         yearNode.insertBefore(

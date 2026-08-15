@@ -1,11 +1,21 @@
 # nexorasite
 
-Site da NEXORA — Mídia Digital & Criação. Um arquivo só, sem build.
+Site da NEXORA — Mídia Digital & Criação. Sem build.
 
 ```
-index.html    a página inteira (HTML + CSS + JS)
-assets/       logos e artes da marca
+index.html         a página inteira (HTML + CSS + JS)
+404.html           página de erro (GitHub Pages usa automaticamente)
+robots.txt         libera o rastreamento e aponta o sitemap
+sitemap.xml        mapa do site
+site.webmanifest   ícone e cores para "adicionar à tela de início"
+assets/            logos e artes da marca
 ```
+
+> **Antes de publicar:** as URLs absolutas apontam para `https://nexora.com.br`.
+> Se o endereço final for outro (GitHub Pages, por exemplo), troque o domínio em
+> três lugares — o bloco de metadados no topo do `index.html`, o `sitemap.xml` e
+> o `robots.txt`. Um `canonical` apontando para o endereço errado tira a página
+> do índice do Google.
 
 ## Como visualizar
 
@@ -61,8 +71,26 @@ caractere a caractere no "Quem somos", cards de solução que empilham e reduzem
 de escala, e entradas escalonadas por seção. Tudo desligado sob
 `prefers-reduced-motion`.
 
+## SEO
+
+- Título (56 caracteres) e descrição (158) dentro do tamanho que o Google exibe.
+- `canonical`, `robots`, Open Graph e Twitter Card — o card de link no WhatsApp
+  e no LinkedIn usa `assets/textologo.png` como imagem.
+- Dados estruturados em JSON-LD: `Organization`, `WebSite`, `WebPage` e o
+  catálogo de `Service` com os cinco serviços.
+- Um único `<h1>`, seguido de `<h2>` por seção e `<h3>` em cada serviço e
+  solução. Nenhuma imagem sem atributo `alt`.
+- **Todo o conteúdo é HTML estático.** Serviços, soluções e processo já foram
+  gerados por JavaScript; agora estão no HTML, então o rastreador lê as 310
+  palavras da página mesmo sem executar script. O JavaScript cuida apenas do
+  movimento e da faixa deslizante decorativa.
+
+Só falta a imagem de compartilhamento dedicada: hoje o card de link usa o
+wordmark. Se quiser algo mais rico, gere uma arte 1200×630 e troque o caminho
+nas tags `og:image` e `twitter:image`.
+
 ## Onde mexer no conteúdo
 
-Os textos de serviços, soluções e processo ficam nos arrays `SERVICES`,
-`SOLUTIONS` e `STEPS`, no `<script>` ao final do `index.html`. O restante está
-direto no HTML.
+Está tudo direto no HTML — serviços, soluções, processo e textos das seções.
+No `<script>` sobrou apenas o array `BRAND_ART`, que alimenta a faixa
+deslizante.
