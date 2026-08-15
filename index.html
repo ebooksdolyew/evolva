@@ -7,7 +7,7 @@
     <title>Jack — 3D Creator</title>
     <meta
       name="description"
-      content="Jack — 3D creator driven by crafting striking and unforgettable projects. 3D modeling, rendering, motion design, branding and web design."
+      content="Jack — a 3D creator driven by crafting striking and unforgettable projects. 3D modeling, rendering, motion design, branding and web design."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,9 +15,1494 @@
       href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
+
+    <style>
+      /* ---------------------------------------------------------------
+         Tokens
+      --------------------------------------------------------------- */
+      :root {
+        --ink: #0c0c0c;
+        --mist: #d7e2ea;
+        --card-radius: clamp(40px, 4.5vw, 60px);
+        --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        background-color: var(--ink);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: 'Kanit', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      .page {
+        overflow-x: clip;
+        background-color: var(--ink);
+      }
+
+      /* ---------------------------------------------------------------
+         Shared type
+      --------------------------------------------------------------- */
+      .hero-heading {
+        background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+      }
+
+      .section-heading {
+        font-size: clamp(3rem, 12vw, 160px);
+        font-weight: 900;
+        text-transform: uppercase;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        text-align: center;
+      }
+
+      /* The logo files ship with a baked-in plate, so blend it away:
+         `screen` drops the black on the dark theme. */
+      .logo-on-dark {
+        mix-blend-mode: screen;
+      }
+
+      /* ---------------------------------------------------------------
+         Buttons
+      --------------------------------------------------------------- */
+      .btn-contact {
+        display: inline-block;
+        flex-shrink: 0;
+        border-radius: 9999px;
+        padding: 0.75rem 2rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #fff;
+        background: linear-gradient(
+          123deg,
+          #18011f 7%,
+          #b600a8 37%,
+          #7621b0 72%,
+          #be4c00 100%
+        );
+        box-shadow:
+          0 4px 4px rgba(181, 1, 167, 0.25),
+          4px 4px 12px #7721b1 inset;
+        outline: 2px solid #ffffff;
+        outline-offset: -3px;
+        transition: transform 0.3s var(--ease);
+      }
+
+      .btn-contact:hover {
+        transform: scale(1.05);
+      }
+
+      .btn-live {
+        display: inline-block;
+        flex-shrink: 0;
+        border-radius: 9999px;
+        border: 2px solid var(--mist);
+        padding: 0.75rem 2rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--mist);
+        transition: background-color 0.2s var(--ease);
+      }
+
+      .btn-live:hover {
+        background-color: rgba(215, 226, 234, 0.1);
+      }
+
+      @media (min-width: 640px) {
+        .btn-contact {
+          padding: 0.875rem 2.5rem;
+          font-size: 0.875rem;
+        }
+        .btn-live {
+          padding: 0.875rem 2.5rem;
+          font-size: 1rem;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .btn-contact {
+          padding: 1rem 3rem;
+          font-size: 1rem;
+        }
+      }
+
+      /* ---------------------------------------------------------------
+         Scroll reveal
+      --------------------------------------------------------------- */
+      [data-reveal] {
+        opacity: 0;
+        transform: translate3d(var(--rx, 0px), var(--ry, 30px), 0);
+        transition:
+          opacity var(--rt, 0.7s) var(--ease) var(--rd, 0s),
+          transform var(--rt, 0.7s) var(--ease) var(--rd, 0s);
+      }
+
+      [data-reveal].is-in {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+
+      /* ---------------------------------------------------------------
+         Failed remote images degrade to a flat plate instead of a
+         broken-image icon (the artwork is hosted on third parties).
+      --------------------------------------------------------------- */
+      .img-failed {
+        background: linear-gradient(135deg, #161b24 0%, #2b1b3d 100%);
+        color: transparent;
+      }
+
+      .img-failed.is-portrait {
+        opacity: 0;
+      }
+
+      /* ===============================================================
+         1. Hero
+      =============================================================== */
+      .hero {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        height: 100svh;
+        overflow-x: clip;
+      }
+
+      .hero__nav {
+        position: relative;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 1.5rem 1rem 0;
+      }
+
+      .hero__brand {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .hero__brand-icon {
+        height: 2rem;
+        width: auto;
+      }
+
+      .hero__brand-word {
+        display: none;
+        height: 2rem;
+        width: auto;
+      }
+
+      .hero__links {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+      }
+
+      .hero__links a {
+        font-size: 0.75rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--mist);
+        transition: opacity 0.2s var(--ease);
+      }
+
+      .hero__links a:hover {
+        opacity: 0.7;
+      }
+
+      .hero__title-clip {
+        position: relative;
+        z-index: 20;
+        overflow: hidden;
+      }
+
+      .hero__title {
+        width: 100%;
+        margin-top: 1.5rem;
+        font-size: 14vw;
+        font-weight: 900;
+        text-transform: uppercase;
+        line-height: 1;
+        letter-spacing: -0.03em;
+        white-space: nowrap;
+        text-align: center;
+      }
+
+      .hero__spacer {
+        flex: 1;
+      }
+
+      .hero__bar {
+        position: relative;
+        z-index: 20;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1.5rem;
+        padding: 0 1.5rem 1.75rem;
+      }
+
+      .hero__tagline {
+        max-width: 160px;
+        font-size: clamp(0.75rem, 1.4vw, 1.5rem);
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+        line-height: 1.375;
+        color: var(--mist);
+      }
+
+      /* Positioning lives on the wrapper so the reveal transform and the
+         magnet transform never fight over the same element. */
+      .hero__portrait {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 10;
+        width: 280px;
+        transform: translate(-50%, -50%);
+      }
+
+      .hero__portrait img {
+        width: 100%;
+        user-select: none;
+      }
+
+      .magnet {
+        will-change: transform;
+        transition: transform 0.6s ease-in-out;
+      }
+
+      .magnet.is-active {
+        transition: transform 0.3s ease-out;
+      }
+
+      @media (min-width: 640px) {
+        .hero__nav {
+          gap: 1.5rem;
+          padding-left: 1.5rem;
+          padding-right: 1.5rem;
+        }
+        .hero__brand-word {
+          display: block;
+        }
+        .hero__links {
+          gap: 2rem;
+        }
+        .hero__links a {
+          font-size: 0.875rem;
+        }
+        .hero__title {
+          margin-top: 1rem;
+          font-size: 15vw;
+        }
+        .hero__bar {
+          padding-bottom: 2rem;
+        }
+        .hero__tagline {
+          max-width: 220px;
+        }
+        .hero__portrait {
+          top: auto;
+          bottom: 0;
+          width: 360px;
+          transform: translate(-50%, 0);
+        }
+      }
+
+      @media (min-width: 768px) {
+        .hero__nav {
+          gap: 1.5rem;
+          padding: 2rem 2.5rem 0;
+        }
+        .hero__brand {
+          gap: 0.75rem;
+        }
+        .hero__brand-icon,
+        .hero__brand-word {
+          height: 2.5rem;
+        }
+        .hero__links {
+          gap: 3rem;
+        }
+        .hero__links a {
+          font-size: 1.125rem;
+        }
+        .hero__title {
+          margin-top: -1.25rem;
+          font-size: 16vw;
+        }
+        .hero__bar {
+          padding: 0 2.5rem 2.5rem;
+        }
+        .hero__tagline {
+          max-width: 260px;
+        }
+        .hero__portrait {
+          width: 440px;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .hero__brand-icon,
+        .hero__brand-word {
+          height: 3rem;
+        }
+        .hero__links {
+          gap: 4rem;
+        }
+        .hero__links a {
+          font-size: 1.4rem;
+        }
+        .hero__title {
+          font-size: 17.5vw;
+        }
+        .hero__portrait {
+          width: 520px;
+        }
+      }
+
+      /* ===============================================================
+         2. Marquee
+      =============================================================== */
+      .marquee {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        overflow: hidden;
+        background-color: var(--ink);
+        padding: 6rem 0 2.5rem;
+      }
+
+      .marquee__row {
+        display: flex;
+        width: max-content;
+        gap: 0.75rem;
+        will-change: transform;
+      }
+
+      .marquee__row img {
+        height: 270px;
+        width: 420px;
+        flex-shrink: 0;
+        border-radius: 1rem;
+        object-fit: cover;
+      }
+
+      @media (min-width: 640px) {
+        .marquee {
+          padding-top: 8rem;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .marquee {
+          padding-top: 10rem;
+        }
+      }
+
+      /* ===============================================================
+         3. About
+      =============================================================== */
+      .about {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        overflow: hidden;
+        padding: 5rem 1.25rem;
+      }
+
+      .about__decor {
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .about__decor--moon {
+        top: 4%;
+        left: 1%;
+        width: 120px;
+      }
+
+      .about__decor--lego {
+        top: 4%;
+        right: 1%;
+        width: 120px;
+      }
+
+      .about__decor--object {
+        bottom: 8%;
+        left: 3%;
+        width: 100px;
+      }
+
+      .about__decor--group {
+        bottom: 8%;
+        right: 3%;
+        width: 130px;
+      }
+
+      .about__inner {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4rem;
+      }
+
+      .about__block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2.5rem;
+      }
+
+      .about__text {
+        max-width: 560px;
+        font-size: clamp(1rem, 2vw, 1.35rem);
+        font-weight: 500;
+        line-height: 1.625;
+        text-align: center;
+        color: var(--mist);
+      }
+
+      .about__text span {
+        opacity: 0.2;
+      }
+
+      @media (min-width: 640px) {
+        .about {
+          padding-left: 2rem;
+          padding-right: 2rem;
+        }
+        .about__decor--moon,
+        .about__decor--lego {
+          width: 160px;
+        }
+        .about__decor--moon {
+          left: 2%;
+        }
+        .about__decor--lego {
+          right: 2%;
+        }
+        .about__decor--object {
+          left: 6%;
+          width: 140px;
+        }
+        .about__decor--group {
+          right: 6%;
+          width: 170px;
+        }
+        .about__inner {
+          gap: 5rem;
+        }
+        .about__block {
+          gap: 3.5rem;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .about {
+          padding-left: 2.5rem;
+          padding-right: 2.5rem;
+        }
+        .about__decor--moon,
+        .about__decor--lego {
+          width: 210px;
+        }
+        .about__decor--moon {
+          left: 4%;
+        }
+        .about__decor--lego {
+          right: 4%;
+        }
+        .about__decor--object {
+          left: 10%;
+          width: 180px;
+        }
+        .about__decor--group {
+          right: 10%;
+          width: 220px;
+        }
+        .about__inner {
+          gap: 6rem;
+        }
+        .about__block {
+          gap: 4rem;
+        }
+      }
+
+      /* ===============================================================
+         4. Services
+      =============================================================== */
+      .services {
+        position: relative;
+        border-radius: var(--card-radius) var(--card-radius) 0 0;
+        background-color: #ffffff;
+        padding: 5rem 1.25rem;
+      }
+
+      .services__heading {
+        margin-bottom: 4rem;
+        color: var(--ink);
+      }
+
+      .services__list {
+        margin: 0 auto;
+        max-width: 64rem;
+      }
+
+      .service {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.25rem;
+        padding: 2rem 0;
+        border-top: 1px solid rgba(12, 12, 12, 0.15);
+      }
+
+      .service:last-child {
+        border-bottom: 1px solid rgba(12, 12, 12, 0.15);
+      }
+
+      .service__number {
+        font-size: clamp(3rem, 10vw, 140px);
+        font-weight: 900;
+        line-height: 1;
+        color: var(--ink);
+      }
+
+      .service__body {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding-top: 0.25rem;
+      }
+
+      .service__name {
+        font-size: clamp(1rem, 2.2vw, 2.1rem);
+        font-weight: 500;
+        text-transform: uppercase;
+        line-height: 1.2;
+        color: var(--ink);
+      }
+
+      .service__desc {
+        max-width: 42rem;
+        font-size: clamp(0.85rem, 1.6vw, 1.25rem);
+        font-weight: 300;
+        line-height: 1.625;
+        color: var(--ink);
+        opacity: 0.6;
+      }
+
+      @media (min-width: 640px) {
+        .services {
+          padding: 6rem 2rem;
+        }
+        .services__heading {
+          margin-bottom: 5rem;
+        }
+        .service {
+          gap: 2rem;
+          padding: 2.5rem 0;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .services {
+          padding: 8rem 2.5rem;
+        }
+        .services__heading {
+          margin-bottom: 7rem;
+        }
+        .service {
+          gap: 2.5rem;
+          padding: 3rem 0;
+        }
+        .service__body {
+          gap: 1rem;
+        }
+      }
+
+      /* ===============================================================
+         5. Projects
+      =============================================================== */
+      .projects {
+        position: relative;
+        z-index: 10;
+        margin-top: -2.5rem;
+        border-radius: var(--card-radius) var(--card-radius) 0 0;
+        background-color: var(--ink);
+        padding: 5rem 1.25rem;
+      }
+
+      .projects__heading {
+        margin-bottom: 2.5rem;
+      }
+
+      .project-slot {
+        position: sticky;
+        top: 6rem;
+        display: flex;
+        height: 85vh;
+        align-items: flex-start;
+        justify-content: center;
+      }
+
+      .project-card {
+        position: relative;
+        width: 100%;
+        max-width: 72rem;
+        border: 2px solid var(--mist);
+        border-radius: var(--card-radius);
+        background-color: var(--ink);
+        padding: 1rem;
+        will-change: transform;
+      }
+
+      .project-card__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .project-card__id {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .project-card__number {
+        /* The vh cap keeps the card inside its 85vh slot on short screens,
+           where the vw-based clamp alone would overflow. */
+        font-size: min(clamp(3rem, 10vw, 140px), 11vh);
+        font-weight: 900;
+        line-height: 1;
+      }
+
+      .project-card__meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .project-card__category {
+        font-size: 0.75rem;
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--mist);
+        opacity: 0.6;
+      }
+
+      .project-card__name {
+        font-size: clamp(1rem, 2.2vw, 2.1rem);
+        font-weight: 500;
+        text-transform: uppercase;
+        line-height: 1.2;
+        color: var(--mist);
+      }
+
+      .project-card__grid {
+        display: flex;
+        gap: 0.75rem;
+      }
+
+      .project-card__col-a {
+        display: flex;
+        width: 40%;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .project-card__col-a img:first-child {
+        height: min(clamp(130px, 16vw, 230px), 24vh);
+      }
+
+      .project-card__col-a img:last-child {
+        height: min(clamp(160px, 22vw, 340px), 34vh);
+      }
+
+      /* Absolute fill so the tall image matches the left column's height
+         instead of driving the row height from its own aspect ratio. */
+      .project-card__col-b {
+        position: relative;
+        width: 60%;
+      }
+
+      .project-card__col-b img {
+        position: absolute;
+        inset: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      .project-card__grid img {
+        width: 100%;
+        border-radius: var(--card-radius);
+        object-fit: cover;
+      }
+
+      .project-card .btn-live {
+        display: none;
+      }
+
+      @media (min-width: 640px) {
+        .projects {
+          margin-top: -3rem;
+          padding: 5rem 2rem;
+        }
+        .projects__heading {
+          margin-bottom: 3.5rem;
+        }
+        .project-card {
+          padding: 1.5rem;
+        }
+        .project-card .btn-live {
+          display: inline-block;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .projects {
+          margin-top: -3.5rem;
+          padding: 5rem 2.5rem;
+        }
+        .projects__heading {
+          margin-bottom: 4rem;
+        }
+        .project-slot {
+          top: 8rem;
+        }
+        .project-card {
+          padding: 2rem;
+        }
+        .project-card__id {
+          gap: 2rem;
+        }
+        .project-card__head {
+          margin-bottom: 1.5rem;
+        }
+        .project-card__grid,
+        .project-card__col-a {
+          gap: 1rem;
+        }
+      }
+
+      /* ===============================================================
+         6. Footer
+      =============================================================== */
+      .footer {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2.5rem;
+        padding: 5rem 1.25rem;
+      }
+
+      .footer__heading {
+        font-size: clamp(2.5rem, 10vw, 130px);
+      }
+
+      .footer__bar {
+        display: flex;
+        width: 100%;
+        max-width: 72rem;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.25rem;
+        margin-top: 1.5rem;
+        padding-top: 2.5rem;
+        border-top: 1px solid rgba(215, 226, 234, 0.15);
+      }
+
+      .footer__brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .footer__brand img {
+        height: 2rem;
+        width: auto;
+      }
+
+      .footer__copy {
+        font-size: 0.75rem;
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-align: center;
+        color: var(--mist);
+        opacity: 0.5;
+      }
+
+      @media (min-width: 640px) {
+        .footer {
+          padding: 6rem 2rem;
+        }
+        .footer__bar {
+          flex-direction: row;
+          justify-content: space-between;
+        }
+        .footer__copy {
+          font-size: 0.875rem;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .footer {
+          padding: 7rem 2.5rem;
+        }
+        .footer__brand img {
+          height: 2.5rem;
+        }
+      }
+
+      /* ---------------------------------------------------------------
+         Reduced motion
+      --------------------------------------------------------------- */
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        [data-reveal] {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+        .magnet,
+        .marquee__row,
+        .project-card {
+          transition: none !important;
+          transform: none !important;
+        }
+        .about__text span {
+          opacity: 1;
+        }
+      }
+    </style>
   </head>
+
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <main class="page" id="top">
+      <!-- ============================================================
+           1. Hero
+      ============================================================= -->
+      <section class="hero">
+        <nav class="hero__nav" data-reveal style="--ry: -20px">
+          <a class="hero__brand" href="#top">
+            <img
+              class="hero__brand-icon"
+              src="./assets/iconelogo.webp"
+              alt="Nexora"
+            />
+            <img
+              class="hero__brand-word logo-on-dark"
+              src="./assets/textologo.webp"
+              alt="Nexora — Mídia Digital &amp; Criação"
+            />
+          </a>
+
+          <ul class="hero__links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Price</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="hero__title-clip">
+          <h1
+            class="hero__title hero-heading"
+            data-reveal
+            style="--ry: 40px; --rd: 0.15s"
+          >
+            Hi, i&apos;m jack
+          </h1>
+        </div>
+
+        <div class="hero__spacer"></div>
+
+        <div class="hero__bar">
+          <p class="hero__tagline" data-reveal style="--ry: 20px; --rd: 0.35s">
+            a 3d creator driven by crafting striking and unforgettable projects
+          </p>
+
+          <div data-reveal style="--ry: 20px; --rd: 0.5s">
+            <a class="btn-contact" href="#contact">Contact Me</a>
+          </div>
+        </div>
+
+        <div class="hero__portrait">
+          <div data-reveal style="--ry: 30px; --rd: 0.6s">
+            <div class="magnet" data-magnet data-padding="150" data-strength="3">
+              <img
+                src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
+                alt="Jack, 3D creator"
+                class="is-portrait"
+                draggable="false"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           2. Marquee
+      ============================================================= -->
+      <section class="marquee" data-marquee>
+        <div class="marquee__row" data-row="1"></div>
+        <div class="marquee__row" data-row="2"></div>
+      </section>
+
+      <!-- ============================================================
+           3. About
+      ============================================================= -->
+      <section class="about" id="about">
+        <div
+          class="about__decor about__decor--moon"
+          data-reveal
+          style="--rx: -80px; --ry: 0px; --rd: 0.1s; --rt: 0.9s"
+        >
+          <img
+            src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png"
+            alt=""
+          />
+        </div>
+
+        <div
+          class="about__decor about__decor--lego"
+          data-reveal
+          style="--rx: 80px; --ry: 0px; --rd: 0.15s; --rt: 0.9s"
+        >
+          <img
+            src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png"
+            alt=""
+          />
+        </div>
+
+        <div
+          class="about__decor about__decor--object"
+          data-reveal
+          style="--rx: -80px; --ry: 0px; --rd: 0.25s; --rt: 0.9s"
+        >
+          <img
+            src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png"
+            alt=""
+          />
+        </div>
+
+        <div
+          class="about__decor about__decor--group"
+          data-reveal
+          style="--rx: 80px; --ry: 0px; --rd: 0.3s; --rt: 0.9s"
+        >
+          <img
+            src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png"
+            alt=""
+          />
+        </div>
+
+        <div class="about__inner">
+          <div class="about__block">
+            <h2
+              class="section-heading hero-heading"
+              data-reveal
+              style="--ry: 40px"
+            >
+              About me
+            </h2>
+
+            <p class="about__text" data-scroll-text>
+              With more than five years of experience in design, i focus on
+              branding, web design, and user experience, i truly enjoy working
+              with businesses that aim to stand out and present their best image.
+              Let’s build something incredible together!
+            </p>
+          </div>
+
+          <div data-reveal style="--ry: 20px; --rd: 0.2s">
+            <a class="btn-contact" href="#contact">Contact Me</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           4. Services
+      ============================================================= -->
+      <section class="services" id="services">
+        <h2 class="section-heading services__heading" data-reveal style="--ry: 40px">
+          Services
+        </h2>
+        <div class="services__list" data-services></div>
+      </section>
+
+      <!-- ============================================================
+           5. Projects
+      ============================================================= -->
+      <section class="projects" id="projects" data-projects>
+        <h2
+          class="section-heading hero-heading projects__heading"
+          data-reveal
+          style="--ry: 40px"
+        >
+          Project
+        </h2>
+      </section>
+
+      <!-- ============================================================
+           6. Footer
+      ============================================================= -->
+      <footer class="footer" id="contact">
+        <h2
+          class="section-heading hero-heading footer__heading"
+          data-reveal
+          style="--ry: 40px"
+        >
+          Let&apos;s talk
+        </h2>
+
+        <div data-reveal style="--ry: 20px; --rd: 0.15s">
+          <!-- TODO: troque o href por um mailto: real ou pelo link do WhatsApp. -->
+          <a class="btn-contact" href="#">Contact Me</a>
+        </div>
+
+        <div class="footer__bar" data-reveal style="--ry: 20px; --rd: 0.25s">
+          <a class="footer__brand" href="#top">
+            <img src="./assets/iconelogo.webp" alt="" />
+            <img
+              class="logo-on-dark"
+              src="./assets/textologo.webp"
+              alt="Nexora — Mídia Digital &amp; Criação"
+            />
+          </a>
+          <p class="footer__copy" data-year>
+            Nexora — Mídia Digital &amp; Criação
+          </p>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      (function () {
+        'use strict';
+
+        var reduceMotion = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches;
+
+        var clamp = function (value, min, max) {
+          return Math.min(Math.max(value, min), max);
+        };
+
+        /* ----------------------------------------------------------
+           Content
+        ---------------------------------------------------------- */
+        var MARQUEE = [
+          'hero-space-voyage-preview-eECLH3Yc',
+          'hero-codenest-preview-Cgppc2qV',
+          'hero-vex-ventures-preview-BczMFIiw',
+          'hero-stellar-ai-v2-preview-DjvxjG3C',
+          'hero-asme-preview-B_nGDnTP',
+          'hero-transform-data-preview-Cx5OU29N',
+          'hero-vitara-preview-Cjz2QYyU',
+          'hero-terra-preview-BFjrCr7T',
+          'hero-skyelite-preview-DHaZIgUv',
+          'hero-aethera-preview-DknSlcTa',
+          'hero-designpro-preview-D8c5_een',
+          'hero-stellar-ai-preview-D3HL6bw1',
+          'hero-xportfolio-preview-D4A8maiC',
+          'hero-orbit-web3-preview-BXt4OttD',
+          'hero-nexora-preview-cx5HmUgo',
+          'hero-evr-ventures-preview-DZxeVFEX',
+          'hero-planet-orbit-preview-DWAP8Z1P',
+          'hero-new-era-preview-CocuDUm9',
+          'hero-wealth-preview-B70idl_u',
+          'hero-luminex-preview-CxOP7ce6',
+          'hero-celestia-preview-0yO3jXO8',
+        ].map(function (slug) {
+          return 'https://motionsites.ai/assets/' + slug + '.gif';
+        });
+
+        var SERVICES = [
+          {
+            number: '01',
+            name: '3D Modeling',
+            desc: 'Creation of detailed objects, characters, or environments tailored to specific client needs, ideal for games, products, and visualizations.',
+          },
+          {
+            number: '02',
+            name: 'Rendering',
+            desc: 'High-quality, photorealistic renders that showcase designs with custom lighting, textures, and materials to bring concepts to life.',
+          },
+          {
+            number: '03',
+            name: 'Motion Design',
+            desc: 'Dynamic animations and motion graphics that add energy and storytelling to brands, products, and digital experiences.',
+          },
+          {
+            number: '04',
+            name: 'Branding',
+            desc: 'Crafting cohesive visual identities — from logos to full brand systems — that communicate a clear and memorable presence.',
+          },
+          {
+            number: '05',
+            name: 'Web Design',
+            desc: 'Designing clean, modern, and conversion-focused websites with attention to layout, typography, and user experience.',
+          },
+        ];
+
+        var cdn = function (file) {
+          return (
+            'https://images.higgs.ai/?default=1&output=webp&url=' +
+            'https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2F' +
+            'user_38xzZboKViGWJOttwIXH07lWA1P%2F' +
+            file +
+            '&w=1280&q=85'
+          );
+        };
+
+        var PROJECTS = [
+          {
+            number: '01',
+            name: 'Nextlevel Studio',
+            category: 'Client',
+            colA: [
+              cdn('hf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png'),
+              cdn('hf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png'),
+            ],
+            colB: cdn('hf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png'),
+          },
+          {
+            number: '02',
+            name: 'Aura Brand Identity',
+            category: 'Personal',
+            colA: [
+              cdn('hf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png'),
+              cdn('hf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png'),
+            ],
+            colB: cdn('hf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png'),
+          },
+          {
+            number: '03',
+            name: 'Solaris Digital',
+            category: 'Client',
+            colA: [
+              cdn('hf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png'),
+              cdn('hf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png'),
+            ],
+            colB: cdn('hf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png'),
+          },
+        ];
+
+        /* ----------------------------------------------------------
+           Build the repeated markup
+        ---------------------------------------------------------- */
+        var makeTile = function (src) {
+          var img = document.createElement('img');
+          img.src = src;
+          img.alt = '';
+          img.loading = 'lazy';
+          return img;
+        };
+
+        var rowOne = document.querySelector('[data-row="1"]');
+        var rowTwo = document.querySelector('[data-row="2"]');
+
+        // Tripled so a full set of tiles is always ready to slide in.
+        [
+          [rowOne, MARQUEE.slice(0, 11)],
+          [rowTwo, MARQUEE.slice(11)],
+        ].forEach(function (pair) {
+          var row = pair[0];
+          for (var copy = 0; copy < 3; copy += 1) {
+            pair[1].forEach(function (src) {
+              row.appendChild(makeTile(src));
+            });
+          }
+        });
+
+        var servicesList = document.querySelector('[data-services]');
+        SERVICES.forEach(function (service, i) {
+          var item = document.createElement('div');
+          item.className = 'service';
+          item.setAttribute('data-reveal', '');
+          item.style.setProperty('--rd', i * 0.1 + 's');
+          item.innerHTML =
+            '<span class="service__number"></span>' +
+            '<div class="service__body">' +
+            '<h3 class="service__name"></h3>' +
+            '<p class="service__desc"></p>' +
+            '</div>';
+          item.querySelector('.service__number').textContent = service.number;
+          item.querySelector('.service__name').textContent = service.name;
+          item.querySelector('.service__desc').textContent = service.desc;
+          servicesList.appendChild(item);
+        });
+
+        var projectsSection = document.querySelector('[data-projects]');
+        PROJECTS.forEach(function (project, i) {
+          var slot = document.createElement('div');
+          slot.className = 'project-slot';
+
+          var card = document.createElement('article');
+          card.className = 'project-card';
+          card.style.top = i * 28 + 'px';
+          card.innerHTML =
+            '<div class="project-card__head">' +
+            '<div class="project-card__id">' +
+            '<span class="project-card__number hero-heading"></span>' +
+            '<div class="project-card__meta">' +
+            '<span class="project-card__category"></span>' +
+            '<h3 class="project-card__name"></h3>' +
+            '</div></div>' +
+            '<a class="btn-live" href="#projects">Live Project</a>' +
+            '</div>' +
+            '<div class="project-card__grid">' +
+            '<div class="project-card__col-a"></div>' +
+            '<div class="project-card__col-b"></div>' +
+            '</div>';
+
+          card.querySelector('.project-card__number').textContent = project.number;
+          card.querySelector('.project-card__category').textContent =
+            project.category;
+          card.querySelector('.project-card__name').textContent = project.name;
+
+          var colA = card.querySelector('.project-card__col-a');
+          project.colA.forEach(function (src, n) {
+            var img = makeTile(src);
+            img.alt = project.name + ' preview ' + (n + 1);
+            colA.appendChild(img);
+          });
+
+          var colB = makeTile(project.colB);
+          colB.alt = project.name + ' preview 3';
+          card.querySelector('.project-card__col-b').appendChild(colB);
+
+          slot.appendChild(card);
+          projectsSection.appendChild(slot);
+        });
+
+        var yearNode = document.querySelector('[data-year]');
+        yearNode.textContent =
+          '© ' + new Date().getFullYear() + ' ' + yearNode.textContent.trim();
+
+        /* ----------------------------------------------------------
+           Remote artwork lives on third-party hosts — degrade to a
+           flat plate rather than a broken-image icon.
+        ---------------------------------------------------------- */
+        document.querySelectorAll('img').forEach(function (img) {
+          img.addEventListener('error', function () {
+            img.classList.add('img-failed');
+          });
+          // Markup-declared images can fail before this script runs.
+          if (img.complete && img.naturalWidth === 0) {
+            img.classList.add('img-failed');
+          }
+        });
+
+        /* ----------------------------------------------------------
+           Reveal on enter
+        ---------------------------------------------------------- */
+        var revealables = document.querySelectorAll('[data-reveal]');
+        if (reduceMotion || !('IntersectionObserver' in window)) {
+          revealables.forEach(function (el) {
+            el.classList.add('is-in');
+          });
+        } else {
+          var observer = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('is-in');
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            { rootMargin: '50px' },
+          );
+          revealables.forEach(function (el) {
+            observer.observe(el);
+          });
+        }
+
+        /* ----------------------------------------------------------
+           Magnetic hover on the hero portrait
+        ---------------------------------------------------------- */
+        var magnets = document.querySelectorAll('[data-magnet]');
+        if (!reduceMotion && magnets.length) {
+          window.addEventListener(
+            'mousemove',
+            function (event) {
+              magnets.forEach(function (node) {
+                var pad = parseFloat(node.getAttribute('data-padding')) || 100;
+                var strength =
+                  parseFloat(node.getAttribute('data-strength')) || 2;
+                var rect = node.getBoundingClientRect();
+                var cx = rect.left + rect.width / 2;
+                var cy = rect.top + rect.height / 2;
+                var inRange =
+                  Math.abs(cx - event.clientX) < rect.width / 2 + pad &&
+                  Math.abs(cy - event.clientY) < rect.height / 2 + pad;
+
+                if (inRange) {
+                  node.classList.add('is-active');
+                  node.style.transform =
+                    'translate3d(' +
+                    (event.clientX - cx) / strength +
+                    'px, ' +
+                    (event.clientY - cy) / strength +
+                    'px, 0)';
+                } else {
+                  node.classList.remove('is-active');
+                  node.style.transform = 'translate3d(0, 0, 0)';
+                }
+              });
+            },
+            { passive: true },
+          );
+        }
+
+        /* ----------------------------------------------------------
+           Scroll-driven pieces, batched into one rAF pass
+        ---------------------------------------------------------- */
+        var marquee = document.querySelector('[data-marquee]');
+        var aboutText = document.querySelector('[data-scroll-text]');
+        var charSpans = [];
+
+        // Split the paragraph into per-character spans once.
+        if (aboutText) {
+          var source = aboutText.textContent.replace(/\s+/g, ' ').trim();
+          aboutText.setAttribute('aria-label', source);
+          aboutText.textContent = '';
+          source.split(' ').forEach(function (word, wordIndex, words) {
+            var wrap = document.createElement('span');
+            wrap.style.display = 'inline-block';
+            wrap.style.opacity = '1';
+            word.split('').forEach(function (char) {
+              var span = document.createElement('span');
+              span.textContent = char;
+              span.setAttribute('aria-hidden', 'true');
+              wrap.appendChild(span);
+              charSpans.push(span);
+            });
+            aboutText.appendChild(wrap);
+            if (wordIndex < words.length - 1) {
+              aboutText.appendChild(document.createTextNode(' '));
+            }
+          });
+        }
+
+        var slots = document.querySelectorAll('.project-slot');
+
+        var update = function () {
+          var vh = window.innerHeight;
+
+          // Marquee — rows counter-slide against the page scroll.
+          if (marquee) {
+            var top = marquee.getBoundingClientRect().top + window.scrollY;
+            var shift = (window.scrollY - top + vh) * 0.3 - 200;
+            rowOne.style.transform =
+              'translateX(calc(-33.333% + ' + shift + 'px))';
+            rowTwo.style.transform =
+              'translateX(calc(-33.333% + ' + -shift + 'px))';
+          }
+
+          // About paragraph — characters brighten as the block crosses.
+          if (aboutText && charSpans.length) {
+            var r = aboutText.getBoundingClientRect();
+            var p = clamp(
+              (0.8 * vh - r.top) / (0.6 * vh + r.height),
+              0,
+              1,
+            );
+            var n = charSpans.length;
+            charSpans.forEach(function (span, i) {
+              var local = clamp((p - i / n) * n, 0, 1);
+              span.style.opacity = 0.2 + 0.8 * local;
+            });
+          }
+
+          // Project cards — each scales down as the next one covers it.
+          if (slots.length) {
+            var box = projectsSection.getBoundingClientRect();
+            var span = box.height - vh;
+            var progress = span > 0 ? clamp(-box.top / span, 0, 1) : 0;
+            var total = slots.length;
+            slots.forEach(function (slot, i) {
+              var start = i / total;
+              var target = 1 - (total - 1 - i) * 0.03;
+              var local = clamp((progress - start) / (1 - start), 0, 1);
+              slot.firstElementChild.style.transform =
+                'scale(' + (1 + (target - 1) * local) + ')';
+            });
+          }
+        };
+
+        var ticking = false;
+        var onScroll = function () {
+          if (ticking) return;
+          ticking = true;
+          window.requestAnimationFrame(function () {
+            update();
+            ticking = false;
+          });
+        };
+
+        if (!reduceMotion) {
+          window.addEventListener('scroll', onScroll, { passive: true });
+        }
+        window.addEventListener('resize', onScroll);
+        update();
+      })();
+    </script>
   </body>
 </html>
