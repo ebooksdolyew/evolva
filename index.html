@@ -1,29 +1,38 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="./assets/iconelogo.png" />
-    <title>Jack — 3D Creator</title>
+    <title>NEXORA — Mídia Digital &amp; Criação</title>
     <meta
       name="description"
-      content="Jack — a 3D creator driven by crafting striking and unforgettable projects. 3D modeling, rendering, motion design, branding and web design."
+      content="A NEXORA conecta criatividade, estratégia, tecnologia e inteligência artificial para transformar marcas e negócios."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
 
     <style>
-      /* ---------------------------------------------------------------
-         Tokens
-      --------------------------------------------------------------- */
+      /* ===============================================================
+         Tokens — paleta e sombras da identidade NEXORA
+      =============================================================== */
       :root {
-        --ink: #0c0c0c;
-        --mist: #d7e2ea;
-        --card-radius: clamp(40px, 4.5vw, 60px);
+        --bg: #020513;
+        --bg2: #050a20;
+        --blue: #1264ff;
+        --cyan: #22a7ff;
+        --violet: #7c3cff;
+        --purple: #b65cff;
+        --text: #f5f7ff;
+        --muted: #aab2ca;
+        --line: rgba(73, 105, 205, 0.22);
+        --glass: rgba(7, 13, 38, 0.62);
+        --shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+        --card-radius: clamp(26px, 3vw, 42px);
         --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
       }
 
@@ -37,7 +46,7 @@
 
       html,
       body {
-        background-color: var(--ink);
+        background-color: var(--bg);
       }
 
       html {
@@ -45,7 +54,9 @@
       }
 
       body {
-        font-family: 'Kanit', sans-serif;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+          Roboto, Arial, sans-serif;
+        color: var(--text);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
@@ -56,6 +67,7 @@
       }
 
       a {
+        color: inherit;
         text-decoration: none;
       }
 
@@ -65,105 +77,162 @@
 
       .page {
         overflow-x: clip;
-        background-color: var(--ink);
+        background-color: var(--bg);
       }
 
       /* ---------------------------------------------------------------
-         Shared type
+         Assinaturas visuais da marca, reconstruídas em CSS
       --------------------------------------------------------------- */
-      .hero-heading {
-        background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+
+      /* A malha de pontos que aparece à esquerda em todas as peças. */
+      .dot-grid::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image: radial-gradient(
+          circle,
+          rgba(36, 102, 255, 0.55) 1px,
+          transparent 1px
+        );
+        background-size: 22px 22px;
+        -webkit-mask-image: linear-gradient(
+          100deg,
+          #000 0%,
+          rgba(0, 0, 0, 0.35) 18%,
+          transparent 34%
+        );
+        mask-image: linear-gradient(
+          100deg,
+          #000 0%,
+          rgba(0, 0, 0, 0.35) 18%,
+          transparent 34%
+        );
+      }
+
+      /* Os feixes diagonais que cortam as artes do logotipo. */
+      .streaks::after {
+        content: '';
+        position: absolute;
+        inset: -20% -10%;
+        pointer-events: none;
+        background:
+          linear-gradient(
+              104deg,
+              transparent 48.6%,
+              rgba(34, 167, 255, 0.55) 49%,
+              transparent 49.4%
+            )
+            no-repeat,
+          linear-gradient(
+              104deg,
+              transparent 61.6%,
+              rgba(124, 60, 255, 0.45) 62%,
+              transparent 62.4%
+            )
+            no-repeat,
+          linear-gradient(
+              104deg,
+              transparent 66.6%,
+              rgba(18, 100, 255, 0.35) 67%,
+              transparent 67.4%
+            )
+            no-repeat;
+        opacity: 0.7;
+      }
+
+      .glow {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+        filter: blur(90px);
+      }
+
+      .gradient-text {
+        background: linear-gradient(90deg, #fff, #4e8fff 45%, #a75cff);
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
         color: transparent;
       }
 
+      .kicker {
+        color: #2782ff;
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
       .section-heading {
-        font-size: clamp(3rem, 12vw, 160px);
+        font-size: clamp(2.75rem, 10vw, 140px);
         font-weight: 900;
         text-transform: uppercase;
-        line-height: 1;
-        letter-spacing: -0.02em;
+        line-height: 0.92;
+        letter-spacing: -0.055em;
         text-align: center;
       }
 
-      /* The logo files ship with a baked-in plate, so blend it away:
-         `screen` drops the black on the dark theme. */
+      /* As logos vêm com fundo chapado: `screen` derruba o preto no tema
+         escuro, `multiply` derruba o branco na seção clara. */
       .logo-on-dark {
         mix-blend-mode: screen;
       }
 
+      .logo-on-light {
+        mix-blend-mode: multiply;
+      }
+
       /* ---------------------------------------------------------------
-         Buttons
+         Botões
       --------------------------------------------------------------- */
-      .btn-contact {
-        display: inline-block;
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
         flex-shrink: 0;
-        border-radius: 9999px;
-        padding: 0.75rem 2rem;
-        font-size: 0.75rem;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
+        border-radius: 999px;
+        border: 1px solid rgba(75, 120, 255, 0.45);
+        padding: 0.9rem 1.6rem;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        transition:
+          transform 0.3s var(--ease),
+          background-color 0.3s var(--ease),
+          box-shadow 0.3s var(--ease);
+      }
+
+      .btn--primary {
+        background: linear-gradient(90deg, #0758ff, #5428ff);
+        box-shadow: 0 15px 40px rgba(33, 71, 255, 0.28);
         color: #fff;
-        background: linear-gradient(
-          123deg,
-          #18011f 7%,
-          #b600a8 37%,
-          #7621b0 72%,
-          #be4c00 100%
-        );
-        box-shadow:
-          0 4px 4px rgba(181, 1, 167, 0.25),
-          4px 4px 12px #7721b1 inset;
-        outline: 2px solid #ffffff;
-        outline-offset: -3px;
-        transition: transform 0.3s var(--ease);
       }
 
-      .btn-contact:hover {
-        transform: scale(1.05);
+      .btn--primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 20px 50px rgba(33, 71, 255, 0.42);
       }
 
-      .btn-live {
-        display: inline-block;
-        flex-shrink: 0;
-        border-radius: 9999px;
-        border: 2px solid var(--mist);
-        padding: 0.75rem 2rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--mist);
-        transition: background-color 0.2s var(--ease);
+      .btn--ghost {
+        background: rgba(255, 255, 255, 0.04);
+        color: #dfe5f5;
       }
 
-      .btn-live:hover {
-        background-color: rgba(215, 226, 234, 0.1);
-      }
-
-      @media (min-width: 640px) {
-        .btn-contact {
-          padding: 0.875rem 2.5rem;
-          font-size: 0.875rem;
-        }
-        .btn-live {
-          padding: 0.875rem 2.5rem;
-          font-size: 1rem;
-        }
+      .btn--ghost:hover {
+        background: rgba(75, 120, 255, 0.16);
       }
 
       @media (min-width: 768px) {
-        .btn-contact {
-          padding: 1rem 3rem;
-          font-size: 1rem;
+        .btn {
+          padding: 1rem 2rem;
+          font-size: 14px;
         }
       }
 
       /* ---------------------------------------------------------------
-         Scroll reveal
+         Entrada em cena
       --------------------------------------------------------------- */
       [data-reveal] {
         opacity: 0;
@@ -178,17 +247,43 @@
         transform: translate3d(0, 0, 0);
       }
 
-      /* ---------------------------------------------------------------
-         Failed remote images degrade to a flat plate instead of a
-         broken-image icon (the artwork is hosted on third parties).
-      --------------------------------------------------------------- */
+      /* Arte que não carregar vira uma chapa da marca em vez de ícone
+         de imagem quebrada. */
       .img-failed {
-        background: linear-gradient(135deg, #161b24 0%, #2b1b3d 100%);
+        background:
+          radial-gradient(
+            circle at 70% 35%,
+            rgba(124, 60, 255, 0.45),
+            transparent 60%
+          ),
+          linear-gradient(135deg, #050a20 0%, #0b1236 60%, #1a1046 100%);
         color: transparent;
       }
 
-      .img-failed.is-portrait {
+      .img-failed[data-fallback='hide'] {
         opacity: 0;
+      }
+
+      /* Sem a arte, a faixa alterna três chapas da paleta em vez de
+         repetir a mesma placa dezenas de vezes. */
+      .marquee__row img:nth-child(3n + 2).img-failed {
+        background:
+          radial-gradient(
+            circle at 32% 60%,
+            rgba(34, 167, 255, 0.4),
+            transparent 58%
+          ),
+          linear-gradient(135deg, #050a20 0%, #0a1a44 60%, #06284f 100%);
+      }
+
+      .marquee__row img:nth-child(3n + 3).img-failed {
+        background:
+          radial-gradient(
+            circle at 60% 30%,
+            rgba(182, 92, 255, 0.34),
+            transparent 60%
+          ),
+          linear-gradient(135deg, #08061f 0%, #150a3a 55%, #24104d 100%);
       }
 
       /* ===============================================================
@@ -200,7 +295,50 @@
         flex-direction: column;
         height: 100vh;
         height: 100svh;
+        min-height: 640px;
         overflow-x: clip;
+      }
+
+      .hero__bg {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        background:
+          radial-gradient(
+            circle at 78% 42%,
+            rgba(124, 60, 255, 0.3),
+            transparent 46%
+          ),
+          radial-gradient(
+            circle at 92% 78%,
+            rgba(18, 100, 255, 0.26),
+            transparent 42%
+          ),
+          linear-gradient(160deg, #020513 0%, #050a20 55%, #070428 100%);
+      }
+
+      .hero__bg img {
+        position: absolute;
+        inset: 0;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: 70% center;
+      }
+
+      /* Véu que segura a leitura do texto sobre a arte. */
+      .hero__scrim {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(
+            90deg,
+            rgba(2, 5, 19, 0.95) 0%,
+            rgba(2, 5, 19, 0.72) 42%,
+            rgba(2, 5, 19, 0.1) 100%
+          ),
+          linear-gradient(transparent 62%, var(--bg) 100%);
       }
 
       .hero__nav {
@@ -210,19 +348,20 @@
         align-items: center;
         justify-content: space-between;
         gap: 0.75rem;
-        padding: 1.5rem 1rem 0;
+        padding: 1.4rem 1.25rem 0;
       }
 
       .hero__brand {
         display: flex;
         flex-shrink: 0;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.6rem;
       }
 
       .hero__brand-icon {
         height: 2rem;
         width: auto;
+        filter: drop-shadow(0 0 14px rgba(36, 102, 255, 0.65));
       }
 
       .hero__brand-word {
@@ -234,79 +373,128 @@
       .hero__links {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 0.75rem;
+        gap: 0.85rem;
       }
 
       .hero__links a {
-        font-size: 0.75rem;
-        font-weight: 500;
+        font-size: 11px;
+        font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--mist);
-        transition: opacity 0.2s var(--ease);
+        letter-spacing: 0.12em;
+        color: #cbd3e8;
+        transition: color 0.2s var(--ease);
+      }
+
+      /* Abaixo de 640px só cabem três itens sem cortar no lado direito.
+         A regra fica no <li> para o item não deixar um gap vazio. */
+      .hero__links li.is-secondary,
+      .hero__links li.is-cta {
+        display: none;
       }
 
       .hero__links a:hover {
-        opacity: 0.7;
+        color: #fff;
+      }
+
+      .hero__links .nav-cta {
+        padding: 0.7rem 1.1rem;
+        border: 1px solid rgba(67, 115, 255, 0.55);
+        border-radius: 999px;
+        background: rgba(23, 56, 150, 0.22);
+      }
+
+      .hero__body {
+        position: relative;
+        z-index: 20;
+        padding: 2.5rem 1.25rem 0;
       }
 
       .hero__title-clip {
-        position: relative;
-        z-index: 20;
         overflow: hidden;
       }
 
       .hero__title {
-        width: 100%;
-        margin-top: 1.5rem;
-        font-size: 14vw;
         font-weight: 900;
         text-transform: uppercase;
-        line-height: 1;
-        letter-spacing: -0.03em;
+        line-height: 0.9;
+        letter-spacing: -0.055em;
+      }
+
+      .hero__title span {
+        display: block;
         white-space: nowrap;
-        text-align: center;
+      }
+
+      /* Dimensionado para caber mesmo com a fonte de fallback, que é mais
+         larga que a Inter — se o Google Fonts falhar, o título não estoura. */
+      .hero__title .line-a {
+        font-size: 8.5vw;
+        color: #e8edff;
+      }
+
+      .hero__title .line-b {
+        font-size: 12.8vw;
+      }
+
+      .hero__lead {
+        max-width: 570px;
+        margin-top: 1.4rem;
+        font-size: 15px;
+        line-height: 1.65;
+        color: #c5cbe0;
+      }
+
+      .hero__actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-top: 1.6rem;
       }
 
       .hero__spacer {
         flex: 1;
+        min-height: 1rem;
       }
 
-      .hero__bar {
+      .hero__stats {
         position: relative;
         z-index: 20;
         display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: 1.5rem;
-        padding: 0 1.5rem 1.75rem;
+        gap: 1.6rem;
+        padding: 0 1.25rem 1.75rem;
       }
 
-      .hero__tagline {
-        max-width: 160px;
-        font-size: clamp(0.75rem, 1.4vw, 1.5rem);
-        font-weight: 300;
-        text-transform: uppercase;
-        letter-spacing: 0.025em;
-        line-height: 1.375;
-        color: var(--mist);
+      .hero__stats strong {
+        font-size: 22px;
+        font-weight: 900;
+        letter-spacing: -0.03em;
       }
 
-      /* Positioning lives on the wrapper so the reveal transform and the
-         magnet transform never fight over the same element. */
-      .hero__portrait {
+      .hero__stats span {
+        display: block;
+        margin-top: 2px;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        color: #8f9ab8;
+      }
+
+      /* O posicionamento fica no wrapper para que o transform da entrada
+         e o do ímã nunca disputem o mesmo elemento. */
+      /* Fica no quadrante inferior direito, livre da mancha do título. */
+      .hero__mark {
         position: absolute;
-        left: 50%;
-        top: 50%;
+        right: -20%;
+        top: 60%;
         z-index: 10;
-        width: 280px;
-        transform: translate(-50%, -50%);
+        width: 290px;
+        transform: translateY(-50%);
       }
 
-      .hero__portrait img {
+      .hero__mark img {
         width: 100%;
-        user-select: none;
+        filter: drop-shadow(0 0 60px rgba(60, 110, 255, 0.55))
+          drop-shadow(0 0 120px rgba(124, 60, 255, 0.35));
       }
 
       .magnet {
@@ -320,85 +508,101 @@
 
       @media (min-width: 640px) {
         .hero__nav {
-          gap: 1.5rem;
-          padding-left: 1.5rem;
-          padding-right: 1.5rem;
+          padding-left: 2rem;
+          padding-right: 2rem;
         }
         .hero__brand-word {
           display: block;
         }
         .hero__links {
-          gap: 2rem;
+          gap: 1.5rem;
         }
         .hero__links a {
-          font-size: 0.875rem;
+          font-size: 12px;
         }
-        .hero__title {
-          margin-top: 1rem;
-          font-size: 15vw;
+        .hero__links li.is-secondary {
+          display: block;
         }
-        .hero__bar {
-          padding-bottom: 2rem;
+        .hero__body,
+        .hero__stats {
+          padding-left: 2rem;
+          padding-right: 2rem;
         }
-        .hero__tagline {
-          max-width: 220px;
+        .hero__lead {
+          font-size: 17px;
         }
-        .hero__portrait {
-          top: auto;
-          bottom: 0;
-          width: 360px;
-          transform: translate(-50%, 0);
+        .hero__stats {
+          gap: 2.2rem;
+          padding-bottom: 2.25rem;
+        }
+        .hero__stats strong {
+          font-size: 27px;
+        }
+        .hero__stats span {
+          font-size: 10px;
+        }
+        .hero__mark {
+          right: -10%;
+          top: 62%;
+          width: 400px;
+        }
+      }
+
+      @media (min-width: 850px) {
+        .hero__links li.is-cta {
+          display: block;
         }
       }
 
       @media (min-width: 768px) {
         .hero__nav {
-          gap: 1.5rem;
-          padding: 2rem 2.5rem 0;
+          padding: 1.8rem 2.75rem 0;
         }
         .hero__brand {
-          gap: 0.75rem;
+          gap: 0.85rem;
         }
         .hero__brand-icon,
         .hero__brand-word {
-          height: 2.5rem;
+          height: 2.4rem;
         }
-        .hero__links {
+        .hero__body,
+        .hero__stats {
+          padding-left: 2.75rem;
+          padding-right: 2.75rem;
+        }
+        .hero__body {
+          padding-top: 3rem;
+        }
+        .hero__lead {
+          font-size: 18px;
+        }
+        .hero__stats {
           gap: 3rem;
+          padding-bottom: 2.75rem;
         }
-        .hero__links a {
-          font-size: 1.125rem;
-        }
-        .hero__title {
-          margin-top: -1.25rem;
-          font-size: 16vw;
-        }
-        .hero__bar {
-          padding: 0 2.5rem 2.5rem;
-        }
-        .hero__tagline {
-          max-width: 260px;
-        }
-        .hero__portrait {
-          width: 440px;
+        .hero__mark {
+          right: -6%;
+          top: 62%;
+          width: 470px;
         }
       }
 
       @media (min-width: 1024px) {
-        .hero__brand-icon,
-        .hero__brand-word {
-          height: 3rem;
-        }
         .hero__links {
-          gap: 4rem;
+          gap: 1.75rem;
         }
         .hero__links a {
-          font-size: 1.4rem;
+          font-size: 13px;
         }
-        .hero__title {
-          font-size: 17.5vw;
+        .hero__title .line-a {
+          font-size: 7.5vw;
         }
-        .hero__portrait {
+        .hero__title .line-b {
+          font-size: 12vw;
+        }
+        .hero__mark {
+          right: -2%;
+          top: 60%;
           width: 520px;
         }
       }
@@ -407,12 +611,13 @@
          2. Marquee
       =============================================================== */
       .marquee {
+        position: relative;
         display: flex;
         flex-direction: column;
         gap: 0.75rem;
         overflow: hidden;
-        background-color: var(--ink);
-        padding: 6rem 0 2.5rem;
+        background-color: var(--bg);
+        padding: 5rem 0 2.5rem;
       }
 
       .marquee__row {
@@ -423,27 +628,26 @@
       }
 
       .marquee__row img {
-        height: 270px;
-        width: 420px;
+        height: 240px;
+        width: 400px;
         flex-shrink: 0;
-        border-radius: 1rem;
+        border-radius: 18px;
+        border: 1px solid var(--line);
         object-fit: cover;
-      }
-
-      @media (min-width: 640px) {
-        .marquee {
-          padding-top: 8rem;
-        }
       }
 
       @media (min-width: 768px) {
         .marquee {
-          padding-top: 10rem;
+          padding-top: 7rem;
+        }
+        .marquee__row img {
+          height: 270px;
+          width: 440px;
         }
       }
 
       /* ===============================================================
-         3. About
+         3. Sobre
       =============================================================== */
       .about {
         position: relative;
@@ -455,33 +659,60 @@
         padding: 5rem 1.25rem;
       }
 
+      .about .glow--a {
+        top: 8%;
+        left: -10%;
+        width: 420px;
+        height: 420px;
+        background: rgba(18, 100, 255, 0.22);
+      }
+
+      .about .glow--b {
+        bottom: 4%;
+        right: -8%;
+        width: 460px;
+        height: 460px;
+        background: rgba(124, 60, 255, 0.2);
+      }
+
       .about__decor {
         position: absolute;
         pointer-events: none;
       }
 
-      .about__decor--moon {
-        top: 4%;
+      .about__decor img {
+        width: 100%;
+        filter: drop-shadow(0 0 30px rgba(60, 110, 255, 0.45));
+      }
+
+      .about__decor--tl {
+        top: 5%;
         left: 1%;
-        width: 120px;
+        width: 96px;
+        opacity: 0.55;
       }
 
-      .about__decor--lego {
-        top: 4%;
+      .about__decor--tr {
+        top: 6%;
         right: 1%;
-        width: 120px;
+        width: 78px;
+        opacity: 0.4;
+        transform: rotate(180deg);
       }
 
-      .about__decor--object {
-        bottom: 8%;
+      .about__decor--bl {
+        bottom: 9%;
         left: 3%;
-        width: 100px;
+        width: 64px;
+        opacity: 0.35;
+        transform: rotate(180deg);
       }
 
-      .about__decor--group {
+      .about__decor--br {
         bottom: 8%;
         right: 3%;
-        width: 130px;
+        width: 110px;
+        opacity: 0.5;
       }
 
       .about__inner {
@@ -490,23 +721,23 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 4rem;
+        gap: 3rem;
+        text-align: center;
       }
 
       .about__block {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2.5rem;
+        gap: 1.75rem;
       }
 
       .about__text {
-        max-width: 560px;
+        max-width: 620px;
         font-size: clamp(1rem, 2vw, 1.35rem);
         font-weight: 500;
-        line-height: 1.625;
-        text-align: center;
-        color: var(--mist);
+        line-height: 1.7;
+        color: #dfe5f5;
       }
 
       .about__text span {
@@ -518,76 +749,74 @@
           padding-left: 2rem;
           padding-right: 2rem;
         }
-        .about__decor--moon,
-        .about__decor--lego {
-          width: 160px;
+        .about__decor--tl {
+          left: 3%;
+          width: 130px;
         }
-        .about__decor--moon {
-          left: 2%;
+        .about__decor--tr {
+          right: 3%;
+          width: 100px;
         }
-        .about__decor--lego {
-          right: 2%;
-        }
-        .about__decor--object {
+        .about__decor--bl {
           left: 6%;
-          width: 140px;
+          width: 84px;
         }
-        .about__decor--group {
+        .about__decor--br {
           right: 6%;
-          width: 170px;
+          width: 150px;
         }
         .about__inner {
-          gap: 5rem;
+          gap: 4rem;
         }
         .about__block {
-          gap: 3.5rem;
+          gap: 2.25rem;
         }
       }
 
       @media (min-width: 768px) {
         .about {
-          padding-left: 2.5rem;
-          padding-right: 2.5rem;
+          padding-left: 2.75rem;
+          padding-right: 2.75rem;
         }
-        .about__decor--moon,
-        .about__decor--lego {
-          width: 210px;
+        .about__decor--tl {
+          left: 5%;
+          width: 170px;
         }
-        .about__decor--moon {
-          left: 4%;
+        .about__decor--tr {
+          right: 5%;
+          width: 130px;
         }
-        .about__decor--lego {
-          right: 4%;
-        }
-        .about__decor--object {
+        .about__decor--bl {
           left: 10%;
-          width: 180px;
+          width: 105px;
         }
-        .about__decor--group {
-          right: 10%;
-          width: 220px;
-        }
-        .about__inner {
-          gap: 6rem;
-        }
-        .about__block {
-          gap: 4rem;
+        .about__decor--br {
+          right: 9%;
+          width: 190px;
         }
       }
 
       /* ===============================================================
-         4. Services
+         4. Serviços (superfície clara)
       =============================================================== */
       .services {
         position: relative;
         border-radius: var(--card-radius) var(--card-radius) 0 0;
-        background-color: #ffffff;
-        padding: 5rem 1.25rem;
+        background: #ffffff;
+        color: var(--bg);
+        padding: 4.5rem 1.25rem;
+      }
+
+      .services__brand {
+        display: block;
+        height: 34px;
+        width: auto;
+        margin: 0 auto 1.25rem;
       }
 
       .services__heading {
-        margin-bottom: 4rem;
-        color: var(--ink);
+        color: var(--bg);
+        margin-bottom: 3.5rem;
       }
 
       .services__list {
@@ -598,112 +827,118 @@
       .service {
         display: flex;
         align-items: flex-start;
-        gap: 1.25rem;
-        padding: 2rem 0;
-        border-top: 1px solid rgba(12, 12, 12, 0.15);
+        gap: 1.1rem;
+        padding: 1.75rem 0;
+        border-top: 1px solid rgba(2, 5, 19, 0.14);
       }
 
       .service:last-child {
-        border-bottom: 1px solid rgba(12, 12, 12, 0.15);
+        border-bottom: 1px solid rgba(2, 5, 19, 0.14);
       }
 
       .service__number {
-        font-size: clamp(3rem, 10vw, 140px);
+        font-size: clamp(2.5rem, 9vw, 120px);
         font-weight: 900;
-        line-height: 1;
-        color: var(--ink);
+        line-height: 0.85;
+        letter-spacing: -0.06em;
+        background: linear-gradient(160deg, #1264ff, #7c3cff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
       }
 
       .service__body {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
-        padding-top: 0.25rem;
+        gap: 0.4rem;
+        padding-top: 0.2rem;
       }
 
       .service__name {
-        font-size: clamp(1rem, 2.2vw, 2.1rem);
-        font-weight: 500;
-        text-transform: uppercase;
-        line-height: 1.2;
-        color: var(--ink);
+        font-size: clamp(1rem, 2.2vw, 2rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
       }
 
       .service__desc {
         max-width: 42rem;
-        font-size: clamp(0.85rem, 1.6vw, 1.25rem);
-        font-weight: 300;
-        line-height: 1.625;
-        color: var(--ink);
-        opacity: 0.6;
+        font-size: clamp(0.85rem, 1.6vw, 1.1rem);
+        font-weight: 400;
+        line-height: 1.65;
+        color: #4a5372;
       }
 
       @media (min-width: 640px) {
         .services {
           padding: 6rem 2rem;
         }
+        .services__brand {
+          height: 42px;
+        }
         .services__heading {
-          margin-bottom: 5rem;
+          margin-bottom: 4.5rem;
         }
         .service {
           gap: 2rem;
-          padding: 2.5rem 0;
+          padding: 2.25rem 0;
         }
       }
 
       @media (min-width: 768px) {
         .services {
-          padding: 8rem 2.5rem;
-        }
-        .services__heading {
-          margin-bottom: 7rem;
+          padding: 7.5rem 2.75rem;
         }
         .service {
           gap: 2.5rem;
-          padding: 3rem 0;
+          padding: 2.75rem 0;
         }
         .service__body {
-          gap: 1rem;
+          gap: 0.7rem;
         }
       }
 
       /* ===============================================================
-         5. Projects
+         5. Soluções — cards que empilham
       =============================================================== */
-      .projects {
+      .solutions {
         position: relative;
         z-index: 10;
-        margin-top: -2.5rem;
+        margin-top: -2rem;
         border-radius: var(--card-radius) var(--card-radius) 0 0;
-        background-color: var(--ink);
-        padding: 5rem 1.25rem;
+        background-color: var(--bg);
+        padding: 4.5rem 1.25rem;
       }
 
-      .projects__heading {
+      .solutions__heading {
         margin-bottom: 2.5rem;
       }
 
-      .project-slot {
+      .solution-slot {
         position: sticky;
-        top: 6rem;
+        top: 5.5rem;
         display: flex;
         height: 85vh;
         align-items: flex-start;
         justify-content: center;
       }
 
-      .project-card {
+      .solution-card {
         position: relative;
         width: 100%;
         max-width: 72rem;
-        border: 2px solid var(--mist);
+        border: 1px solid rgba(100, 135, 255, 0.35);
         border-radius: var(--card-radius);
-        background-color: var(--ink);
+        /* Opaco de propósito: os cards se empilham e qualquer transparência
+           deixa o card de baixo aparecendo através do de cima. */
+        background: linear-gradient(145deg, #081131, #030717);
+        box-shadow: var(--shadow);
         padding: 1rem;
         will-change: transform;
       }
 
-      .project-card__head {
+      .solution-card__head {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -711,156 +946,319 @@
         margin-bottom: 1rem;
       }
 
-      .project-card__id {
+      .solution-card__id {
         display: flex;
         align-items: center;
         gap: 1rem;
+        min-width: 0;
       }
 
-      .project-card__number {
-        /* The vh cap keeps the card inside its 85vh slot on short screens,
-           where the vw-based clamp alone would overflow. */
-        font-size: min(clamp(3rem, 10vw, 140px), 11vh);
+      .solution-card__number {
+        /* O teto em vh mantém o card dentro do slot de 85vh em telas
+           baixas, onde só o clamp em vw estouraria. */
+        font-size: min(clamp(2.5rem, 9vw, 120px), 10vh);
         font-weight: 900;
-        line-height: 1;
+        line-height: 0.85;
+        letter-spacing: -0.06em;
       }
 
-      .project-card__meta {
-        display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
+      .solution-card__meta {
+        min-width: 0;
       }
 
-      .project-card__category {
-        font-size: 0.75rem;
-        font-weight: 300;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--mist);
-        opacity: 0.6;
+      .solution-card__name {
+        font-size: clamp(1rem, 2.2vw, 2rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+        margin-top: 0.25rem;
       }
 
-      .project-card__name {
-        font-size: clamp(1rem, 2.2vw, 2.1rem);
-        font-weight: 500;
-        text-transform: uppercase;
-        line-height: 1.2;
-        color: var(--mist);
-      }
-
-      .project-card__grid {
-        display: flex;
-        gap: 0.75rem;
-      }
-
-      .project-card__col-a {
-        display: flex;
-        width: 40%;
-        flex-direction: column;
-        gap: 0.75rem;
-      }
-
-      .project-card__col-a img:first-child {
-        height: min(clamp(130px, 16vw, 230px), 24vh);
-      }
-
-      .project-card__col-a img:last-child {
-        height: min(clamp(160px, 22vw, 340px), 34vh);
-      }
-
-      /* Absolute fill so the tall image matches the left column's height
-         instead of driving the row height from its own aspect ratio. */
-      .project-card__col-b {
+      .solution-card__visual {
         position: relative;
-        width: 60%;
+        overflow: hidden;
+        border-radius: calc(var(--card-radius) - 10px);
+        border: 1px solid var(--line);
+        height: min(clamp(200px, 30vw, 420px), 46vh);
+        background:
+          radial-gradient(
+            circle at 72% 40%,
+            rgba(124, 60, 255, 0.34),
+            transparent 58%
+          ),
+          linear-gradient(135deg, #050a20 0%, #0b1236 60%, #14093a 100%);
       }
 
-      .project-card__col-b img {
+      .solution-card__visual > img {
         position: absolute;
         inset: 0;
         height: 100%;
         width: 100%;
-      }
-
-      .project-card__grid img {
-        width: 100%;
-        border-radius: var(--card-radius);
         object-fit: cover;
       }
 
-      .project-card .btn-live {
+      .solution-card__veil {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(
+          90deg,
+          rgba(2, 5, 19, 0.92) 0%,
+          rgba(2, 5, 19, 0.35) 58%,
+          rgba(2, 5, 19, 0.05) 100%
+        );
+      }
+
+      .solution-card__copy {
+        position: absolute;
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        max-width: 440px;
+        padding: 1.1rem 1.25rem;
+        border: 1px solid rgba(100, 135, 255, 0.2);
+        background: var(--glass);
+        backdrop-filter: blur(14px);
+        border-radius: 14px;
+      }
+
+      .solution-card__copy p {
+        font-size: 13px;
+        line-height: 1.6;
+        color: #b6bfd5;
+      }
+
+      .solution-card .btn {
         display: none;
       }
 
       @media (min-width: 640px) {
-        .projects {
-          margin-top: -3rem;
+        .solutions {
+          margin-top: -2.5rem;
           padding: 5rem 2rem;
         }
-        .projects__heading {
+        .solutions__heading {
           margin-bottom: 3.5rem;
         }
-        .project-card {
+        .solution-card {
           padding: 1.5rem;
         }
-        .project-card .btn-live {
-          display: inline-block;
+        .solution-card .btn {
+          display: inline-flex;
+        }
+        .solution-card__copy {
+          left: 1.75rem;
+          bottom: 1.75rem;
+        }
+        .solution-card__copy p {
+          font-size: 14px;
         }
       }
 
       @media (min-width: 768px) {
-        .projects {
-          margin-top: -3.5rem;
-          padding: 5rem 2.5rem;
+        .solutions {
+          margin-top: -3rem;
+          padding: 5rem 2.75rem;
         }
-        .projects__heading {
-          margin-bottom: 4rem;
+        .solution-slot {
+          top: 7rem;
         }
-        .project-slot {
-          top: 8rem;
-        }
-        .project-card {
+        .solution-card {
           padding: 2rem;
         }
-        .project-card__id {
-          gap: 2rem;
+        .solution-card__id {
+          gap: 1.75rem;
         }
-        .project-card__head {
+        .solution-card__head {
           margin-bottom: 1.5rem;
-        }
-        .project-card__grid,
-        .project-card__col-a {
-          gap: 1rem;
         }
       }
 
       /* ===============================================================
-         6. Footer
+         6. Processo
       =============================================================== */
-      .footer {
+      .process {
         position: relative;
-        z-index: 10;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 2.5rem;
+        overflow: hidden;
         padding: 5rem 1.25rem;
       }
 
-      .footer__heading {
-        font-size: clamp(2.5rem, 10vw, 130px);
+      .process .glow--c {
+        top: 20%;
+        right: -12%;
+        width: 480px;
+        height: 480px;
+        background: rgba(84, 40, 255, 0.18);
       }
 
-      .footer__bar {
-        display: flex;
-        width: 100%;
+      .process__inner {
+        position: relative;
+        z-index: 2;
+        margin: 0 auto;
         max-width: 72rem;
+      }
+
+      .process__head {
+        max-width: 640px;
+        margin-bottom: 2.5rem;
+      }
+
+      .process__head h2 {
+        font-size: clamp(2rem, 5vw, 3.4rem);
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        line-height: 1;
+        margin: 0.6rem 0 0.9rem;
+      }
+
+      .process__head p {
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 15px;
+      }
+
+      .process__steps {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      .step {
+        padding: 1.25rem 1.25rem;
+        border-left: 2px solid var(--blue);
+        background: rgba(6, 13, 37, 0.55);
+        border-radius: 0 12px 12px 0;
+      }
+
+      .step strong {
+        display: block;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+      }
+
+      .step span {
+        display: block;
+        margin-top: 0.35rem;
+        color: #8893ad;
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
+      .process__checks {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+        margin-top: 1.75rem;
+      }
+
+      .check {
+        color: #d8def0;
+        font-size: 13px;
+      }
+
+      .check b {
+        color: #3285ff;
+        margin-right: 0.5rem;
+      }
+
+      @media (min-width: 640px) {
+        .process {
+          padding: 6rem 2rem;
+        }
+        .process__steps {
+          grid-template-columns: 1fr 1fr;
+        }
+        .process__checks {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .process {
+          padding: 7rem 2.75rem;
+        }
+        .process__steps {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      /* ===============================================================
+         7. Contato
+      =============================================================== */
+      .contact {
+        position: relative;
+        z-index: 10;
+        padding: 4rem 1.25rem 5rem;
+        background:
+          radial-gradient(
+            circle at 70% 30%,
+            rgba(70, 48, 255, 0.28),
+            transparent 38%
+          ),
+          radial-gradient(
+            circle at 30% 50%,
+            rgba(0, 111, 255, 0.16),
+            transparent 35%
+          );
+      }
+
+      .contact__box {
+        margin: 0 auto;
+        max-width: 72rem;
+        border: 1px solid rgba(75, 117, 255, 0.35);
+        border-radius: var(--card-radius);
+        padding: 3rem 1.5rem;
+        text-align: center;
+        background: linear-gradient(
+          145deg,
+          rgba(8, 17, 49, 0.86),
+          rgba(3, 7, 23, 0.94)
+        );
+        box-shadow: var(--shadow);
+      }
+
+      .contact__box h2 {
+        font-size: clamp(2rem, 5vw, 3.6rem);
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        line-height: 1;
+        margin: 0.75rem 0 1rem;
+      }
+
+      .contact__box p {
+        max-width: 600px;
+        margin: 0 auto 1.75rem;
+        color: #aeb7cc;
+        line-height: 1.7;
+        font-size: 15px;
+      }
+
+      @media (min-width: 768px) {
+        .contact {
+          padding: 5rem 2.75rem 6rem;
+        }
+        .contact__box {
+          padding: 4.5rem 3rem;
+        }
+      }
+
+      /* ===============================================================
+         8. Rodapé
+      =============================================================== */
+      .footer {
+        border-top: 1px solid var(--line);
+        padding: 1.75rem 1.25rem;
+      }
+
+      .footer__inner {
+        display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1.25rem;
-        margin-top: 1.5rem;
-        padding-top: 2.5rem;
-        border-top: 1px solid rgba(215, 226, 234, 0.15);
+        gap: 1rem;
+        margin: 0 auto;
+        max-width: 72rem;
+        text-align: center;
       }
 
       .footer__brand {
@@ -870,44 +1268,29 @@
       }
 
       .footer__brand img {
-        height: 2rem;
+        height: 1.9rem;
         width: auto;
       }
 
       .footer__copy {
-        font-size: 0.75rem;
-        font-weight: 300;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        text-align: center;
-        color: var(--mist);
-        opacity: 0.5;
+        font-size: 12px;
+        color: #7f8aa6;
+        line-height: 1.6;
       }
 
       @media (min-width: 640px) {
         .footer {
-          padding: 6rem 2rem;
+          padding: 1.75rem 2.75rem;
         }
-        .footer__bar {
+        .footer__inner {
           flex-direction: row;
           justify-content: space-between;
-        }
-        .footer__copy {
-          font-size: 0.875rem;
-        }
-      }
-
-      @media (min-width: 768px) {
-        .footer {
-          padding: 7rem 2.5rem;
-        }
-        .footer__brand img {
-          height: 2.5rem;
+          text-align: left;
         }
       }
 
       /* ---------------------------------------------------------------
-         Reduced motion
+         Movimento reduzido
       --------------------------------------------------------------- */
       @media (prefers-reduced-motion: reduce) {
         html {
@@ -920,7 +1303,7 @@
         }
         .magnet,
         .marquee__row,
-        .project-card {
+        .solution-card {
           transition: none !important;
           transform: none !important;
         }
@@ -932,64 +1315,89 @@
   </head>
 
   <body>
-    <main class="page" id="top">
+    <main class="page" id="topo">
       <!-- ============================================================
            1. Hero
       ============================================================= -->
-      <section class="hero">
+      <section class="hero dot-grid streaks">
+        <div class="hero__bg">
+          <img
+            src="./assets/hero.png"
+            alt=""
+            data-fallback="hide"
+            aria-hidden="true"
+          />
+        </div>
+        <div class="hero__scrim"></div>
+
         <nav class="hero__nav" data-reveal style="--ry: -20px">
-          <a class="hero__brand" href="#top">
+          <a class="hero__brand" href="#topo">
             <img
               class="hero__brand-icon"
               src="./assets/iconelogo.webp"
-              alt="Nexora"
+              alt="NEXORA"
             />
             <img
               class="hero__brand-word logo-on-dark"
               src="./assets/textologo.webp"
-              alt="Nexora — Mídia Digital &amp; Criação"
+              alt="NEXORA — Mídia Digital &amp; Criação"
             />
           </a>
 
           <ul class="hero__links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Price</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#solucoes">Soluções</a></li>
+            <li class="is-secondary"><a href="#processo">Processo</a></li>
+            <li class="is-cta">
+              <a class="nav-cta" href="#contato">Fale com um especialista</a>
+            </li>
           </ul>
         </nav>
 
-        <div class="hero__title-clip">
-          <h1
-            class="hero__title hero-heading"
-            data-reveal
-            style="--ry: 40px; --rd: 0.15s"
-          >
-            Hi, i&apos;m jack
-          </h1>
+        <div class="hero__body">
+          <p class="kicker" data-reveal style="--ry: 20px; --rd: 0.1s">
+            Nova era digital
+          </p>
+
+          <div class="hero__title-clip">
+            <h1 class="hero__title" data-reveal style="--ry: 40px; --rd: 0.15s">
+              <span class="line-a">Ideias que viram</span>
+              <span class="line-b gradient-text">resultado.</span>
+            </h1>
+          </div>
+
+          <p class="hero__lead" data-reveal style="--ry: 20px; --rd: 0.35s">
+            A NEXORA conecta criatividade, estratégia, tecnologia e inteligência
+            artificial para transformar marcas e negócios.
+          </p>
+
+          <div class="hero__actions" data-reveal style="--ry: 20px; --rd: 0.5s">
+            <a class="btn btn--primary" href="#contato"
+              >Transformar minha marca →</a
+            >
+            <a class="btn btn--ghost" href="#solucoes">Ver soluções</a>
+          </div>
         </div>
 
         <div class="hero__spacer"></div>
 
-        <div class="hero__bar">
-          <p class="hero__tagline" data-reveal style="--ry: 20px; --rd: 0.35s">
-            a 3d creator driven by crafting striking and unforgettable projects
-          </p>
-
-          <div data-reveal style="--ry: 20px; --rd: 0.5s">
-            <a class="btn-contact" href="#contact">Contact Me</a>
+        <div class="hero__stats" data-reveal style="--ry: 20px; --rd: 0.65s">
+          <div>
+            <strong>360°</strong><span>Visão digital</span>
+          </div>
+          <div>
+            <strong>IA</strong><span>Estratégia inteligente</span>
+          </div>
+          <div>
+            <strong>+R</strong><span>Foco em resultados</span>
           </div>
         </div>
 
-        <div class="hero__portrait">
+        <div class="hero__mark">
           <div data-reveal style="--ry: 30px; --rd: 0.6s">
             <div class="magnet" data-magnet data-padding="150" data-strength="3">
-              <img
-                src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
-                alt="Jack, 3D creator"
-                class="is-portrait"
-                draggable="false"
-              />
+              <img src="./assets/iconelogo.png" alt="" aria-hidden="true" />
             </div>
           </div>
         </div>
@@ -998,134 +1406,170 @@
       <!-- ============================================================
            2. Marquee
       ============================================================= -->
-      <section class="marquee" data-marquee>
+      <section class="marquee" data-marquee aria-hidden="true">
         <div class="marquee__row" data-row="1"></div>
         <div class="marquee__row" data-row="2"></div>
       </section>
 
       <!-- ============================================================
-           3. About
+           3. Sobre
       ============================================================= -->
-      <section class="about" id="about">
+      <section class="about" id="sobre">
+        <span class="glow glow--a"></span>
+        <span class="glow glow--b"></span>
+
         <div
-          class="about__decor about__decor--moon"
+          class="about__decor about__decor--tl"
           data-reveal
           style="--rx: -80px; --ry: 0px; --rd: 0.1s; --rt: 0.9s"
         >
-          <img
-            src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png"
-            alt=""
-          />
+          <img src="./assets/iconelogo.png" alt="" />
         </div>
-
         <div
-          class="about__decor about__decor--lego"
+          class="about__decor about__decor--tr"
           data-reveal
           style="--rx: 80px; --ry: 0px; --rd: 0.15s; --rt: 0.9s"
         >
-          <img
-            src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png"
-            alt=""
-          />
+          <img src="./assets/iconelogo.png" alt="" />
         </div>
-
         <div
-          class="about__decor about__decor--object"
+          class="about__decor about__decor--bl"
           data-reveal
           style="--rx: -80px; --ry: 0px; --rd: 0.25s; --rt: 0.9s"
         >
-          <img
-            src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png"
-            alt=""
-          />
+          <img src="./assets/iconelogo.png" alt="" />
         </div>
-
         <div
-          class="about__decor about__decor--group"
+          class="about__decor about__decor--br"
           data-reveal
           style="--rx: 80px; --ry: 0px; --rd: 0.3s; --rt: 0.9s"
         >
-          <img
-            src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png"
-            alt=""
-          />
+          <img src="./assets/iconelogo.png" alt="" />
         </div>
 
         <div class="about__inner">
           <div class="about__block">
-            <h2
-              class="section-heading hero-heading"
-              data-reveal
-              style="--ry: 40px"
-            >
-              About me
+            <p class="kicker" data-reveal style="--ry: 20px">Quem somos</p>
+
+            <h2 class="section-heading" data-reveal style="--ry: 40px">
+              Mais do que criar.<br /><span class="gradient-text">Conectar.</span>
             </h2>
 
             <p class="about__text" data-scroll-text>
-              With more than five years of experience in design, i focus on
-              branding, web design, and user experience, i truly enjoy working
-              with businesses that aim to stand out and present their best image.
-              Let’s build something incredible together!
+              Uma experiência digital premium para empresas que querem crescer, se
+              posicionar e competir na nova era. Unimos criatividade, tecnologia e
+              inteligência para entregar soluções reais, escaláveis e orientadas ao
+              negócio.
             </p>
           </div>
 
           <div data-reveal style="--ry: 20px; --rd: 0.2s">
-            <a class="btn-contact" href="#contact">Contact Me</a>
+            <a class="btn btn--primary" href="#contato"
+              >Fale com um especialista →</a
+            >
           </div>
         </div>
       </section>
 
       <!-- ============================================================
-           4. Services
+           4. Serviços
       ============================================================= -->
-      <section class="services" id="services">
+      <section class="services" id="servicos">
+        <img
+          class="services__brand logo-on-light"
+          src="./assets/textologo-light.webp"
+          alt="NEXORA — Mídia Digital &amp; Criação"
+          data-reveal
+          style="--ry: 20px"
+        />
         <h2 class="section-heading services__heading" data-reveal style="--ry: 40px">
-          Services
+          Serviços
         </h2>
         <div class="services__list" data-services></div>
       </section>
 
       <!-- ============================================================
-           5. Projects
+           5. Soluções
       ============================================================= -->
-      <section class="projects" id="projects" data-projects>
-        <h2
-          class="section-heading hero-heading projects__heading"
-          data-reveal
-          style="--ry: 40px"
-        >
-          Project
+      <section class="solutions" id="solucoes" data-solutions>
+        <p class="kicker" style="text-align: center" data-reveal>Ecossistema</p>
+        <h2 class="section-heading solutions__heading" data-reveal style="--ry: 40px">
+          <span class="gradient-text">Soluções</span>
         </h2>
       </section>
 
       <!-- ============================================================
-           6. Footer
+           6. Processo
       ============================================================= -->
-      <footer class="footer" id="contact">
-        <h2
-          class="section-heading hero-heading footer__heading"
-          data-reveal
-          style="--ry: 40px"
-        >
-          Let&apos;s talk
-        </h2>
+      <section class="process" id="processo">
+        <span class="glow glow--c"></span>
+        <div class="process__inner">
+          <div class="process__head">
+            <p class="kicker" data-reveal style="--ry: 20px">Nosso método</p>
+            <h2 data-reveal style="--ry: 30px; --rd: 0.1s">
+              Do conceito ao <span class="gradient-text">resultado.</span>
+            </h2>
+            <p data-reveal style="--ry: 20px; --rd: 0.2s">
+              Unimos criatividade, tecnologia e inteligência para entregar soluções
+              reais, escaláveis e orientadas ao negócio.
+            </p>
 
-        <div data-reveal style="--ry: 20px; --rd: 0.15s">
-          <!-- TODO: troque o href por um mailto: real ou pelo link do WhatsApp. -->
-          <a class="btn-contact" href="#">Contact Me</a>
+            <div class="process__checks">
+              <div class="check" data-reveal style="--ry: 16px; --rd: 0.25s">
+                <b>✓</b> Diagnóstico estratégico
+              </div>
+              <div class="check" data-reveal style="--ry: 16px; --rd: 0.3s">
+                <b>✓</b> Direção criativa
+              </div>
+              <div class="check" data-reveal style="--ry: 16px; --rd: 0.35s">
+                <b>✓</b> Tecnologia aplicada
+              </div>
+              <div class="check" data-reveal style="--ry: 16px; --rd: 0.4s">
+                <b>✓</b> Mensuração e otimização
+              </div>
+            </div>
+          </div>
+
+          <div class="process__steps" data-steps></div>
         </div>
+      </section>
 
-        <div class="footer__bar" data-reveal style="--ry: 20px; --rd: 0.25s">
-          <a class="footer__brand" href="#top">
+      <!-- ============================================================
+           7. Contato
+      ============================================================= -->
+      <section class="contact" id="contato">
+        <div class="contact__box" data-reveal style="--ry: 30px">
+          <p class="kicker">Próximo passo</p>
+          <h2>
+            Vamos transformar suas ideias em
+            <span class="gradient-text">resultados?</span>
+          </h2>
+          <p>
+            A NEXORA está pronta para levar sua marca para o próximo nível na nova
+            era digital.
+          </p>
+          <a class="btn btn--primary" href="mailto:contato@nexora.com.br"
+            >Fale com um especialista →</a
+          >
+        </div>
+      </section>
+
+      <!-- ============================================================
+           8. Rodapé
+      ============================================================= -->
+      <footer class="footer">
+        <div class="footer__inner">
+          <a class="footer__brand" href="#topo">
             <img src="./assets/iconelogo.webp" alt="" />
             <img
               class="logo-on-dark"
               src="./assets/textologo.webp"
-              alt="Nexora — Mídia Digital &amp; Criação"
+              alt="NEXORA — Mídia Digital &amp; Criação"
             />
           </a>
           <p class="footer__copy" data-year>
-            Nexora — Mídia Digital &amp; Criação
+            NEXORA — Mídia Digital &amp; Criação<br />
+            Estratégia • Criatividade • Tecnologia • Inteligência
           </p>
         </div>
       </footer>
@@ -1144,107 +1588,81 @@
         };
 
         /* ----------------------------------------------------------
-           Content
+           Conteúdo
         ---------------------------------------------------------- */
-        var MARQUEE = [
-          'hero-space-voyage-preview-eECLH3Yc',
-          'hero-codenest-preview-Cgppc2qV',
-          'hero-vex-ventures-preview-BczMFIiw',
-          'hero-stellar-ai-v2-preview-DjvxjG3C',
-          'hero-asme-preview-B_nGDnTP',
-          'hero-transform-data-preview-Cx5OU29N',
-          'hero-vitara-preview-Cjz2QYyU',
-          'hero-terra-preview-BFjrCr7T',
-          'hero-skyelite-preview-DHaZIgUv',
-          'hero-aethera-preview-DknSlcTa',
-          'hero-designpro-preview-D8c5_een',
-          'hero-stellar-ai-preview-D3HL6bw1',
-          'hero-xportfolio-preview-D4A8maiC',
-          'hero-orbit-web3-preview-BXt4OttD',
-          'hero-nexora-preview-cx5HmUgo',
-          'hero-evr-ventures-preview-DZxeVFEX',
-          'hero-planet-orbit-preview-DWAP8Z1P',
-          'hero-new-era-preview-CocuDUm9',
-          'hero-wealth-preview-B70idl_u',
-          'hero-luminex-preview-CxOP7ce6',
-          'hero-celestia-preview-0yO3jXO8',
-        ].map(function (slug) {
-          return 'https://motionsites.ai/assets/' + slug + '.gif';
-        });
+
+        // Artes da marca. Basta colocar os arquivos em assets/ com estes
+        // nomes — enquanto não estiverem lá, cada tile mostra a chapa
+        // gradiente da identidade.
+        var BRAND_ART = [
+          './assets/hero.png',
+          './assets/ai.png',
+          './assets/branding.png',
+          './assets/social.png',
+          './assets/about.png',
+        ];
 
         var SERVICES = [
           {
             number: '01',
-            name: '3D Modeling',
-            desc: 'Creation of detailed objects, characters, or environments tailored to specific client needs, ideal for games, products, and visualizations.',
+            name: 'Estratégia',
+            desc: 'Planejamento orientado a objetivos, posicionamento e crescimento real.',
           },
           {
             number: '02',
-            name: 'Rendering',
-            desc: 'High-quality, photorealistic renders that showcase designs with custom lighting, textures, and materials to bring concepts to life.',
+            name: 'Identidade & Branding',
+            desc: 'Logo, sistema visual, manual, paleta, tipografia e aplicações.',
           },
           {
             number: '03',
-            name: 'Motion Design',
-            desc: 'Dynamic animations and motion graphics that add energy and storytelling to brands, products, and digital experiences.',
+            name: 'Mídia Social',
+            desc: 'Conteúdo estratégico, campanhas, reels, carrosséis e calendário editorial.',
           },
           {
             number: '04',
-            name: 'Branding',
-            desc: 'Crafting cohesive visual identities — from logos to full brand systems — that communicate a clear and memorable presence.',
+            name: 'IA & Automação',
+            desc: 'Automação de processos, integrações, dados e experiências inteligentes.',
           },
           {
             number: '05',
-            name: 'Web Design',
-            desc: 'Designing clean, modern, and conversion-focused websites with attention to layout, typography, and user experience.',
+            name: 'Tecnologia & Web',
+            desc: 'Suporte, infraestrutura e soluções digitais para escalar a operação.',
           },
         ];
 
-        var cdn = function (file) {
-          return (
-            'https://images.higgs.ai/?default=1&output=webp&url=' +
-            'https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2F' +
-            'user_38xzZboKViGWJOttwIXH07lWA1P%2F' +
-            file +
-            '&w=1280&q=85'
-          );
-        };
-
-        var PROJECTS = [
+        var SOLUTIONS = [
           {
             number: '01',
-            name: 'Nextlevel Studio',
-            category: 'Client',
-            colA: [
-              cdn('hf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png'),
-              cdn('hf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png'),
-            ],
-            colB: cdn('hf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png'),
+            kicker: 'Mídia social',
+            name: 'Conteúdo que conecta.',
+            desc: 'Estratégia, criação, calendário e campanhas para fazer sua marca se destacar.',
+            art: './assets/social.png',
           },
           {
             number: '02',
-            name: 'Aura Brand Identity',
-            category: 'Personal',
-            colA: [
-              cdn('hf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png'),
-              cdn('hf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png'),
-            ],
-            colB: cdn('hf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png'),
+            kicker: 'Tecnologia & IA',
+            name: 'Inteligência para crescer.',
+            desc: 'Suporte, infraestrutura, automação, integrações e soluções de IA.',
+            art: './assets/ai.png',
           },
           {
             number: '03',
-            name: 'Solaris Digital',
-            category: 'Client',
-            colA: [
-              cdn('hf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png'),
-              cdn('hf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png'),
-            ],
-            colB: cdn('hf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png'),
+            kicker: 'Branding',
+            name: 'A essência da sua marca.',
+            desc: 'Identidade visual, direção criativa e aplicações pensadas para comunicar valor.',
+            art: './assets/branding.png',
           },
         ];
 
+        var STEPS = [
+          ['01 — Descobrir', 'Entender cenário, marca e objetivos.'],
+          ['02 — Estratégia', 'Definir posicionamento e plano.'],
+          ['03 — Criar', 'Transformar estratégia em experiência.'],
+          ['04 — Escalar', 'Otimizar, automatizar e crescer.'],
+        ];
+
         /* ----------------------------------------------------------
-           Build the repeated markup
+           Montagem
         ---------------------------------------------------------- */
         var makeTile = function (src) {
           var img = document.createElement('img');
@@ -1257,16 +1675,17 @@
         var rowOne = document.querySelector('[data-row="1"]');
         var rowTwo = document.querySelector('[data-row="2"]');
 
-        // Tripled so a full set of tiles is always ready to slide in.
+        // Triplicado para que sempre exista um conjunto inteiro de tiles
+        // pronto para entrar, seja qual for o sentido do deslize.
         [
-          [rowOne, MARQUEE.slice(0, 11)],
-          [rowTwo, MARQUEE.slice(11)],
+          [rowOne, 11],
+          [rowTwo, 10],
         ].forEach(function (pair) {
           var row = pair[0];
           for (var copy = 0; copy < 3; copy += 1) {
-            pair[1].forEach(function (src) {
-              row.appendChild(makeTile(src));
-            });
+            for (var i = 0; i < pair[1]; i += 1) {
+              row.appendChild(makeTile(BRAND_ART[i % BRAND_ART.length]));
+            }
           }
         });
 
@@ -1288,69 +1707,90 @@
           servicesList.appendChild(item);
         });
 
-        var projectsSection = document.querySelector('[data-projects]');
-        PROJECTS.forEach(function (project, i) {
+        var solutionsSection = document.querySelector('[data-solutions]');
+        SOLUTIONS.forEach(function (solution, i) {
           var slot = document.createElement('div');
-          slot.className = 'project-slot';
+          slot.className = 'solution-slot';
 
           var card = document.createElement('article');
-          card.className = 'project-card';
-          card.style.top = i * 28 + 'px';
+          card.className = 'solution-card';
+          card.style.top = i * 24 + 'px';
           card.innerHTML =
-            '<div class="project-card__head">' +
-            '<div class="project-card__id">' +
-            '<span class="project-card__number hero-heading"></span>' +
-            '<div class="project-card__meta">' +
-            '<span class="project-card__category"></span>' +
-            '<h3 class="project-card__name"></h3>' +
+            '<div class="solution-card__head">' +
+            '<div class="solution-card__id">' +
+            '<span class="solution-card__number gradient-text"></span>' +
+            '<div class="solution-card__meta">' +
+            '<p class="kicker"></p>' +
+            '<h3 class="solution-card__name"></h3>' +
             '</div></div>' +
-            '<a class="btn-live" href="#projects">Live Project</a>' +
+            '<a class="btn btn--ghost" href="#contato">Ver solução →</a>' +
             '</div>' +
-            '<div class="project-card__grid">' +
-            '<div class="project-card__col-a"></div>' +
-            '<div class="project-card__col-b"></div>' +
-            '</div>';
+            '<div class="solution-card__visual">' +
+            '<div class="solution-card__veil"></div>' +
+            '<div class="solution-card__copy">' +
+            '<p class="solution-card__desc"></p>' +
+            '</div></div>';
 
-          card.querySelector('.project-card__number').textContent = project.number;
-          card.querySelector('.project-card__category').textContent =
-            project.category;
-          card.querySelector('.project-card__name').textContent = project.name;
+          card.querySelector('.solution-card__number').textContent =
+            solution.number;
+          card.querySelector('.kicker').textContent = solution.kicker;
+          card.querySelector('.solution-card__name').textContent = solution.name;
+          card.querySelector('.solution-card__desc').textContent = solution.desc;
 
-          var colA = card.querySelector('.project-card__col-a');
-          project.colA.forEach(function (src, n) {
-            var img = makeTile(src);
-            img.alt = project.name + ' preview ' + (n + 1);
-            colA.appendChild(img);
-          });
-
-          var colB = makeTile(project.colB);
-          colB.alt = project.name + ' preview 3';
-          card.querySelector('.project-card__col-b').appendChild(colB);
+          var art = makeTile(solution.art);
+          art.setAttribute('data-fallback', 'hide');
+          var visual = card.querySelector('.solution-card__visual');
+          visual.insertBefore(art, visual.firstChild);
 
           slot.appendChild(card);
-          projectsSection.appendChild(slot);
+          solutionsSection.appendChild(slot);
+        });
+
+        var stepsWrap = document.querySelector('[data-steps]');
+        STEPS.forEach(function (step, i) {
+          var node = document.createElement('div');
+          node.className = 'step';
+          node.setAttribute('data-reveal', '');
+          node.style.setProperty('--rd', i * 0.1 + 's');
+          node.innerHTML = '<strong></strong><span></span>';
+          node.querySelector('strong').textContent = step[0];
+          node.querySelector('span').textContent = step[1];
+          stepsWrap.appendChild(node);
         });
 
         var yearNode = document.querySelector('[data-year]');
-        yearNode.textContent =
-          '© ' + new Date().getFullYear() + ' ' + yearNode.textContent.trim();
+        yearNode.insertBefore(
+          document.createTextNode('© ' + new Date().getFullYear() + ' '),
+          yearNode.firstChild,
+        );
 
         /* ----------------------------------------------------------
-           Remote artwork lives on third-party hosts — degrade to a
-           flat plate rather than a broken-image icon.
+           Arte ausente vira chapa da marca, nunca ícone quebrado.
         ---------------------------------------------------------- */
+        // GIF 1x1 transparente: trocar o src remove o ícone de imagem
+        // quebrada que o navegador desenha por cima da chapa.
+        var BLANK =
+          'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+        var markFailed = function (img) {
+          if (img.getAttribute('data-failed')) return;
+          img.setAttribute('data-failed', '1');
+          img.classList.add('img-failed');
+          img.src = BLANK;
+        };
+
         document.querySelectorAll('img').forEach(function (img) {
           img.addEventListener('error', function () {
-            img.classList.add('img-failed');
+            markFailed(img);
           });
-          // Markup-declared images can fail before this script runs.
+          // Imagens declaradas no HTML podem falhar antes deste script.
           if (img.complete && img.naturalWidth === 0) {
-            img.classList.add('img-failed');
+            markFailed(img);
           }
         });
 
         /* ----------------------------------------------------------
-           Reveal on enter
+           Entrada em cena
         ---------------------------------------------------------- */
         var revealables = document.querySelectorAll('[data-reveal]');
         if (reduceMotion || !('IntersectionObserver' in window)) {
@@ -1375,7 +1815,7 @@
         }
 
         /* ----------------------------------------------------------
-           Magnetic hover on the hero portrait
+           Ímã: o símbolo do hero segue o cursor
         ---------------------------------------------------------- */
         var magnets = document.querySelectorAll('[data-magnet]');
         if (!reduceMotion && magnets.length) {
@@ -1412,13 +1852,13 @@
         }
 
         /* ----------------------------------------------------------
-           Scroll-driven pieces, batched into one rAF pass
+           Efeitos de scroll, agrupados num único passe de rAF
         ---------------------------------------------------------- */
         var marquee = document.querySelector('[data-marquee]');
         var aboutText = document.querySelector('[data-scroll-text]');
         var charSpans = [];
 
-        // Split the paragraph into per-character spans once.
+        // Quebra o parágrafo em spans por caractere uma única vez.
         if (aboutText) {
           var source = aboutText.textContent.replace(/\s+/g, ' ').trim();
           aboutText.setAttribute('aria-label', source);
@@ -1441,12 +1881,12 @@
           });
         }
 
-        var slots = document.querySelectorAll('.project-slot');
+        var slots = document.querySelectorAll('.solution-slot');
 
         var update = function () {
           var vh = window.innerHeight;
 
-          // Marquee — rows counter-slide against the page scroll.
+          // Marquee — as faixas deslizam em sentidos opostos.
           if (marquee) {
             var top = marquee.getBoundingClientRect().top + window.scrollY;
             var shift = (window.scrollY - top + vh) * 0.3 - 200;
@@ -1456,14 +1896,10 @@
               'translateX(calc(-33.333% + ' + -shift + 'px))';
           }
 
-          // About paragraph — characters brighten as the block crosses.
+          // Parágrafo do "Sobre" — cada caractere acende na passagem.
           if (aboutText && charSpans.length) {
             var r = aboutText.getBoundingClientRect();
-            var p = clamp(
-              (0.8 * vh - r.top) / (0.6 * vh + r.height),
-              0,
-              1,
-            );
+            var p = clamp((0.8 * vh - r.top) / (0.6 * vh + r.height), 0, 1);
             var n = charSpans.length;
             charSpans.forEach(function (span, i) {
               var local = clamp((p - i / n) * n, 0, 1);
@@ -1471,9 +1907,9 @@
             });
           }
 
-          // Project cards — each scales down as the next one covers it.
+          // Cards de solução — cada um encolhe conforme o próximo o cobre.
           if (slots.length) {
-            var box = projectsSection.getBoundingClientRect();
+            var box = solutionsSection.getBoundingClientRect();
             var span = box.height - vh;
             var progress = span > 0 ? clamp(-box.top / span, 0, 1) : 0;
             var total = slots.length;
