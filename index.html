@@ -441,28 +441,6 @@
         opacity: 0;
       }
 
-      /* Sem a arte, a faixa alterna três chapas da paleta em vez de
-         repetir a mesma placa dezenas de vezes. */
-      .marquee__row img:nth-child(3n + 2).img-failed {
-        background:
-          radial-gradient(
-            circle at 32% 60%,
-            rgba(34, 167, 255, 0.4),
-            transparent 58%
-          ),
-          linear-gradient(135deg, #050a20 0%, #0a1a44 60%, #06284f 100%);
-      }
-
-      .marquee__row img:nth-child(3n + 3).img-failed {
-        background:
-          radial-gradient(
-            circle at 60% 30%,
-            rgba(182, 92, 255, 0.34),
-            transparent 60%
-          ),
-          linear-gradient(135deg, #08061f 0%, #150a3a 55%, #24104d 100%);
-      }
-
       /* ===============================================================
          1. Hero
       =============================================================== */
@@ -794,41 +772,84 @@
       }
 
       /* ===============================================================
-         2. Marquee
+         2. Faixa em parallax — colunas presas ao scroll, cada uma no
+            seu ritmo. Vizinhas andam em sentidos opostos em relação à
+            página, que é o que dá a sensação de profundidade.
       =============================================================== */
-      .marquee {
+      .parallax {
         position: relative;
         display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
+        /* flex-start mantém a coluna na altura do próprio conteúdo: é
+           ela que precisa ser mais alta que a faixa. */
+        align-items: flex-start;
+        gap: 2vw;
         overflow: hidden;
+        height: 130vh;
+        padding: 2vw;
         background-color: var(--bg);
-        padding: 5rem 0 2.5rem;
       }
 
-      .marquee__row {
+      /* A sobra entre a altura da coluna e a da faixa é exatamente o
+         percurso que cada coluna tem para andar sem descobrir o fundo. */
+      .parallax__col {
         display: flex;
-        width: max-content;
-        gap: 0.75rem;
+        flex: 1 1 0;
+        flex-direction: column;
+        gap: 2vw;
+        min-width: 0;
         will-change: transform;
       }
 
-      .marquee__row img {
-        height: 240px;
-        width: 400px;
+      /* Duas colunas no celular; a terceira e a quarta entram quando há
+         largura para elas não virarem tiras. */
+      .parallax__col:nth-child(n + 3) {
+        display: none;
+      }
+
+      .parallax__col img {
+        height: 46vh;
+        width: 100%;
         flex-shrink: 0;
         border-radius: 18px;
         border: 1px solid var(--line);
         object-fit: cover;
       }
 
-      @media (min-width: 768px) {
-        .marquee {
-          padding-top: 7rem;
+      /* Sem a arte, as peças alternam três chapas da paleta. O índice
+         corre entre as colunas para que duas vizinhas nunca repitam a
+         mesma sequência. */
+      .parallax__col img.plate-1.img-failed {
+        background:
+          radial-gradient(
+            circle at 32% 60%,
+            rgba(34, 167, 255, 0.4),
+            transparent 58%
+          ),
+          linear-gradient(135deg, #050a20 0%, #0a1a44 60%, #06284f 100%);
+      }
+
+      .parallax__col img.plate-2.img-failed {
+        background:
+          radial-gradient(
+            circle at 60% 30%,
+            rgba(182, 92, 255, 0.34),
+            transparent 60%
+          ),
+          linear-gradient(135deg, #08061f 0%, #150a3a 55%, #24104d 100%);
+      }
+
+      @media (min-width: 640px) {
+        .parallax {
+          height: 150vh;
         }
-        .marquee__row img {
-          height: 270px;
-          width: 440px;
+        .parallax__col:nth-child(3) {
+          display: flex;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .parallax__col:nth-child(4) {
+          display: flex;
         }
       }
 
@@ -1871,7 +1892,7 @@
           transition: none;
         }
         .magnet,
-        .marquee__row,
+        .parallax__col,
         .solution-card,
         .piece__art img {
           transition: none !important;
@@ -1975,11 +1996,19 @@
       </section>
 
       <!-- ============================================================
-           2. Marquee
+           2. Faixa em parallax
+
+           data-from e data-to são a fração da sobra em que a coluna
+           começa e termina, com o scroll indo de ponta a ponta da
+           faixa. Valores dentro de 0–1 garantem que ela nunca descubra
+           o fundo. Colunas que crescem (0.10 → 0.62) sobem mais rápido
+           que a página; as que diminuem (0.70 → 0.16) ficam para trás.
       ============================================================= -->
-      <section class="marquee" data-marquee aria-hidden="true">
-        <div class="marquee__row" data-row="1"></div>
-        <div class="marquee__row" data-row="2"></div>
+      <section class="parallax" data-parallax aria-hidden="true">
+        <div class="parallax__col" data-from="0.10" data-to="0.62"></div>
+        <div class="parallax__col" data-from="0.70" data-to="0.16"></div>
+        <div class="parallax__col" data-from="0.06" data-to="0.40"></div>
+        <div class="parallax__col" data-from="0.58" data-to="0.10"></div>
       </section>
 
       <!-- ============================================================
@@ -3613,32 +3642,38 @@
         ];
 
         /* ----------------------------------------------------------
-           Montagem — serviços, soluções e processo são HTML estático
-           para que o rastreador leia tudo sem depender de JavaScript.
-           Aqui só se monta a faixa deslizante, que é decorativa.
+           Montagem — serviços, soluções, portfólio e processo são HTML
+           estático para que o rastreador leia tudo sem depender de
+           JavaScript. Aqui só se monta a faixa em parallax, decorativa.
         ---------------------------------------------------------- */
-        var makeTile = function (src) {
+        var makeTile = function (src, plate) {
           var img = document.createElement('img');
           img.src = src;
           img.alt = '';
           img.loading = 'lazy';
+          img.className = 'plate-' + plate;
           return img;
         };
 
-        var rowOne = document.querySelector('[data-row="1"]');
-        var rowTwo = document.querySelector('[data-row="2"]');
+        var parallax = document.querySelector('[data-parallax]');
+        var columns = parallax
+          ? [].slice.call(parallax.querySelectorAll('.parallax__col'))
+          : [];
 
-        // Triplicado para que sempre exista um conjunto inteiro de tiles
-        // pronto para entrar, seja qual for o sentido do deslize.
-        [
-          [rowOne, 11],
-          [rowTwo, 10],
-        ].forEach(function (pair) {
-          var row = pair[0];
-          for (var copy = 0; copy < 3; copy += 1) {
-            for (var i = 0; i < pair[1]; i += 1) {
-              row.appendChild(makeTile(BRAND_ART[i % BRAND_ART.length]));
-            }
+        // Seis peças por coluna deixam a coluna bem mais alta que a
+        // faixa — é essa sobra que vira o percurso do parallax.
+        var TILES_PER_COLUMN = 6;
+        var tile = 0;
+
+        columns.forEach(function (col, colIndex) {
+          for (var i = 0; i < TILES_PER_COLUMN; i += 1) {
+            col.appendChild(
+              makeTile(
+                BRAND_ART[tile % BRAND_ART.length],
+                (tile + colIndex) % 3,
+              ),
+            );
+            tile += 1;
           }
         });
 
@@ -3740,9 +3775,21 @@
         /* ----------------------------------------------------------
            Efeitos de scroll, agrupados num único passe de rAF
         ---------------------------------------------------------- */
-        var marquee = document.querySelector('[data-marquee]');
         var aboutText = document.querySelector('[data-scroll-text]');
         var charSpans = [];
+
+        // A sobra de cada coluna só muda quando a janela muda de
+        // tamanho — medir aqui evita ler layout a cada quadro.
+        var slacks = [];
+        var measureParallax = function () {
+          if (!parallax) return;
+          var pad = parseFloat(getComputedStyle(parallax).paddingTop) || 0;
+          var inner = parallax.clientHeight - pad * 2;
+          slacks = columns.map(function (col) {
+            // Coluna escondida mede zero e simplesmente não se move.
+            return Math.max(0, col.offsetHeight - inner);
+          });
+        };
 
         // Quebra o parágrafo em spans por caractere uma única vez.
         if (aboutText) {
@@ -3772,14 +3819,19 @@
         var update = function () {
           var vh = window.innerHeight;
 
-          // Marquee — as faixas deslizam em sentidos opostos.
-          if (marquee) {
-            var top = marquee.getBoundingClientRect().top + window.scrollY;
-            var shift = (window.scrollY - top + vh) * 0.3 - 200;
-            rowOne.style.transform =
-              'translateX(calc(-33.333% + ' + shift + 'px))';
-            rowTwo.style.transform =
-              'translateX(calc(-33.333% + ' + -shift + 'px))';
+          // Parallax — 0 quando o topo da faixa encosta na base da
+          // janela, 1 quando a base dela passa pelo topo.
+          if (parallax) {
+            var box = parallax.getBoundingClientRect();
+            var p = clamp((vh - box.top) / (box.height + vh), 0, 1);
+            columns.forEach(function (col, i) {
+              var from = parseFloat(col.getAttribute('data-from'));
+              var to = parseFloat(col.getAttribute('data-to'));
+              col.style.transform =
+                'translate3d(0, ' +
+                -(from + (to - from) * p) * slacks[i] +
+                'px, 0)';
+            });
           }
 
           // Parágrafo do "Sobre" — cada caractere acende na passagem.
@@ -3819,10 +3871,16 @@
           });
         };
 
+        var onResize = function () {
+          measureParallax();
+          onScroll();
+        };
+
         if (!reduceMotion) {
           window.addEventListener('scroll', onScroll, { passive: true });
         }
-        window.addEventListener('resize', onScroll);
+        window.addEventListener('resize', onResize);
+        measureParallax();
         update();
       })();
     </script>

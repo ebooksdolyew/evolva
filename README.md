@@ -43,9 +43,10 @@ paleta. Para entrar a arte real, salve os arquivos em `assets/` com estes nomes:
 | `assets/ai.png` | chip isométrico "IA" com servidores | card 02 — Tecnologia & IA |
 | `assets/branding.png` | mockup dos cartões de visita | card 03 — Branding |
 | `assets/social.png` | símbolo com onda de partículas | card 01 — Mídia Social |
-| `assets/about.png` | símbolo com feixes diagonais | faixa deslizante |
+| `assets/about.png` | símbolo com feixes diagonais | faixa em parallax |
 
-Os cinco também alimentam a faixa deslizante logo abaixo do hero.
+Os cinco também alimentam a faixa em parallax logo abaixo do hero — são 24
+peças no total, então as artes se repetem entre as colunas.
 
 ## Portfólio — 21 imagens dos trabalhos
 
@@ -103,10 +104,38 @@ pontos e os feixes diagonais que aparecem nas peças.
 
 ## Movimento
 
-Símbolo magnético no hero, faixa deslizante presa ao scroll, revelação
+Símbolo magnético no hero, faixa em parallax presa ao scroll, revelação
 caractere a caractere no "Quem somos", cards de solução que empilham e reduzem
 de escala, e entradas escalonadas por seção. Tudo desligado sob
 `prefers-reduced-motion`.
+
+### A faixa em parallax
+
+Quatro colunas de peças, mais altas que a faixa, deslizando em ritmos
+diferentes conforme a página rola — vizinhas andam em sentidos opostos em
+relação ao scroll, que é o que dá a profundidade. Três colunas abaixo de
+1024px e duas abaixo de 640px, para as peças não virarem tiras.
+
+O ajuste fica em dois atributos no HTML: `data-from` e `data-to` são a fração
+da **sobra** (altura da coluna menos a altura da faixa) em que a coluna começa
+e termina o percurso. Manter os dois entre 0 e 1 garante que ela nunca descubra
+o fundo, seja qual for o tamanho da tela — a sobra é medida em tempo de
+execução, no `measureParallax()`, e só é relida quando a janela muda.
+
+- `data-from` menor que `data-to` (ex.: `0.10` → `0.62`): a coluna sobe mais
+  rápido que a página.
+- `data-from` maior que `data-to` (ex.: `0.70` → `0.16`): a coluna fica para
+  trás.
+
+A diferença entre os dois números é o tamanho do efeito; alternar o sentido
+entre colunas vizinhas é o que dá o contraste. Para colunas mais longas, mexa
+em `TILES_PER_COLUMN` no `<script>` e na altura de `.parallax__col img`.
+
+O efeito original usa Lenis para suavizar a rolagem. Aqui ele ficou de fora de
+propósito: é uma dependência externa num site sem build e mudaria o
+comportamento de scroll da página inteira, não só desta faixa. O parallax anda
+direto no scroll nativo, dentro do mesmo passe de `requestAnimationFrame` que
+já servia o restante do movimento.
 
 Serviços, peças do portfólio e planos usam a mesma entrada escalonada do resto
 da página: `data-reveal` com `--rd` para o atraso. Um detalhe que economiza
@@ -129,8 +158,8 @@ interna, não no card: no card ele disputaria o `transform` com a entrada.
 - **Todo o conteúdo é HTML estático.** Serviços, soluções e processo já foram
   gerados por JavaScript; agora estão no HTML, junto com o portfólio e os
   valores, então o rastreador lê as cerca de 1.630 palavras da página mesmo sem
-  executar script. O JavaScript cuida apenas do movimento e da faixa deslizante
-  decorativa.
+  executar script. O JavaScript cuida apenas do movimento e da faixa em
+  parallax decorativa.
 
 Só falta a imagem de compartilhamento dedicada: hoje o card de link usa o
 wordmark. Se quiser algo mais rico, gere uma arte 1200×630 e troque o caminho
@@ -140,9 +169,9 @@ nas tags `og:image` e `twitter:image`.
 
 Está tudo direto no HTML — serviços, soluções, portfólio, valores, processo e
 textos das seções. No `<script>` sobrou apenas o array `BRAND_ART`, que
-alimenta a faixa deslizante.
+alimenta a faixa em parallax.
 
 As seções do `index.html` estão numeradas em comentário, na ordem em que
-aparecem: 1. Hero, 2. Marquee, 3. Sobre, 4. Serviços, 5. Soluções,
+aparecem: 1. Hero, 2. Faixa em parallax, 3. Sobre, 4. Serviços, 5. Soluções,
 6. Portfólio & Valores, 7. Processo, 8. Contato, 9. Rodapé. A mesma numeração
 divide o `<style>`, então dá para pular direto para o bloco certo.
