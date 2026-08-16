@@ -9,6 +9,7 @@ robots.txt         libera o rastreamento e aponta o sitemap
 sitemap.xml        mapa do site
 site.webmanifest   ícone e cores para "adicionar à tela de início"
 assets/            logos e artes da marca
+assets/portfolio/  imagens dos trabalhos mostrados na seção de portfólio
 ```
 
 > **Antes de publicar:** as URLs absolutas apontam para `https://nexora.com.br`.
@@ -46,6 +47,42 @@ paleta. Para entrar a arte real, salve os arquivos em `assets/` com estes nomes:
 
 Os cinco também alimentam a faixa deslizante logo abaixo do hero.
 
+## Portfólio — 21 imagens dos trabalhos
+
+A seção "Portfólio & Valores" tem sete grupos e cada um mostra três peças.
+Enquanto a imagem não estiver em `assets/portfolio/`, o quadro exibe a mesma
+chapa em gradiente do resto da página — nunca um ícone quebrado. Salve os
+arquivos com estes nomes (formato paisagem, algo em torno de 800×520):
+
+| Grupo | Arquivos |
+| --- | --- |
+| 01 — Social media | `social-1.png`, `social-2.png`, `social-3.png` |
+| 02 — Criação e desenvolvimento | `web-1.png`, `web-2.png`, `web-3.png` |
+| 03 — Estratégia digital | `estrategia-1.png`, `estrategia-2.png`, `estrategia-3.png` |
+| 04 — Identidade visual | `identidade-1.png`, `identidade-2.png`, `identidade-3.png` |
+| 05 — Tráfego pago e anúncios | `trafego-1.png`, `trafego-2.png`, `trafego-3.png` |
+| 06 — Serviços de T.I. | `ti-1.png`, `ti-2.png`, `ti-3.png` |
+| 07 — Automação e IA | `automacao-1.png`, `automacao-2.png`, `automacao-3.png` |
+
+Ao trocar a imagem, ajuste também o `alt` — hoje ele descreve o tipo de peça,
+não o trabalho real.
+
+## Valores — conferir antes de publicar
+
+> **Os preços da seção de portfólio são um ponto de partida, não a tabela da
+> agência.** Antes de publicar, percorra os 21 blocos `.plan` e troque
+> `.plan__value` (o número), `.plan__period` (`/mês`, `/projeto`, `/hora
+> técnica`) e os itens de `.plan__list` pelas entregas reais.
+
+Cada grupo segue o mesmo par: as peças do portfólio e, logo em seguida, os
+três planos. Para tirar um plano basta apagar o bloco `.plan` — o grid se
+reorganiza sozinho. O destaque é a classe `plan--featured` mais o selo
+`.plan__badge`; só um por grupo.
+
+Os valores não entram nos dados estruturados de propósito: publicar preço em
+JSON-LD com número provisório coloca a informação errada no Google. Depois de
+fechar a tabela, dá para acrescentar `priceSpecification` em cada `Offer`.
+
 ## Logos já no repositório
 
 - `assets/iconelogo.png` — favicon, símbolo magnético do hero e os quatro
@@ -71,19 +108,29 @@ caractere a caractere no "Quem somos", cards de solução que empilham e reduzem
 de escala, e entradas escalonadas por seção. Tudo desligado sob
 `prefers-reduced-motion`.
 
+Serviços, peças do portfólio e planos usam a mesma entrada escalonada do resto
+da página: `data-reveal` com `--rd` para o atraso. Um detalhe que economiza
+horas de depuração: `transition` é shorthand, então quem declara transição
+própria no card (`.service`, `.piece`, `.plan`) precisa repetir `opacity` e
+`transform` na lista — sem isso a regra do card substitui a de `[data-reveal]`
+e o escalonamento some. Por isso o avanço no hover das peças fica na imagem
+interna, não no card: no card ele disputaria o `transform` com a entrada.
+
 ## SEO
 
 - Título (56 caracteres) e descrição (158) dentro do tamanho que o Google exibe.
 - `canonical`, `robots`, Open Graph e Twitter Card — o card de link no WhatsApp
   e no LinkedIn usa `assets/textologo.png` como imagem.
 - Dados estruturados em JSON-LD: `Organization`, `WebSite`, `WebPage` e o
-  catálogo de `Service` com os cinco serviços.
-- Um único `<h1>`, seguido de `<h2>` por seção e `<h3>` em cada serviço e
-  solução. Nenhuma imagem sem atributo `alt`.
+  catálogo de `Service` com os oito serviços.
+- Um único `<h1>`, seguido de `<h2>` por seção, `<h3>` em cada serviço, solução
+  e grupo do portfólio, e `<h4>` em cada peça. Nenhuma imagem sem atributo
+  `alt`.
 - **Todo o conteúdo é HTML estático.** Serviços, soluções e processo já foram
-  gerados por JavaScript; agora estão no HTML, então o rastreador lê as 310
-  palavras da página mesmo sem executar script. O JavaScript cuida apenas do
-  movimento e da faixa deslizante decorativa.
+  gerados por JavaScript; agora estão no HTML, junto com o portfólio e os
+  valores, então o rastreador lê as cerca de 1.630 palavras da página mesmo sem
+  executar script. O JavaScript cuida apenas do movimento e da faixa deslizante
+  decorativa.
 
 Só falta a imagem de compartilhamento dedicada: hoje o card de link usa o
 wordmark. Se quiser algo mais rico, gere uma arte 1200×630 e troque o caminho
@@ -91,6 +138,11 @@ nas tags `og:image` e `twitter:image`.
 
 ## Onde mexer no conteúdo
 
-Está tudo direto no HTML — serviços, soluções, processo e textos das seções.
-No `<script>` sobrou apenas o array `BRAND_ART`, que alimenta a faixa
-deslizante.
+Está tudo direto no HTML — serviços, soluções, portfólio, valores, processo e
+textos das seções. No `<script>` sobrou apenas o array `BRAND_ART`, que
+alimenta a faixa deslizante.
+
+As seções do `index.html` estão numeradas em comentário, na ordem em que
+aparecem: 1. Hero, 2. Marquee, 3. Sobre, 4. Serviços, 5. Soluções,
+6. Portfólio & Valores, 7. Processo, 8. Contato, 9. Rodapé. A mesma numeração
+divide o `<style>`, então dá para pular direto para o bloco certo.

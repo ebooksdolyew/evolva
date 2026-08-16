@@ -126,40 +126,64 @@
                   "@type": "Offer",
                   "itemOffered": {
                     "@type": "Service",
-                    "name": "Estratégia",
-                    "description": "Planejamento orientado a objetivos, posicionamento e crescimento real."
+                    "name": "Estratégia digital",
+                    "description": "Planejamento e estratégias personalizadas para alcançar resultados reais."
                   }
                 },
                 {
                   "@type": "Offer",
                   "itemOffered": {
                     "@type": "Service",
-                    "name": "Identidade & Branding",
-                    "description": "Logo, sistema visual, manual, paleta, tipografia e aplicações."
+                    "name": "Criação de sites",
+                    "description": "Sites modernos, rápidos e otimizados para todos os dispositivos."
                   }
                 },
                 {
                   "@type": "Offer",
                   "itemOffered": {
                     "@type": "Service",
-                    "name": "Mídia Social",
-                    "description": "Conteúdo estratégico, campanhas, reels, carrosséis e calendário editorial."
+                    "name": "Criação de mídia social",
+                    "description": "Produção de conteúdos que conectam sua marca ao público certo."
                   }
                 },
                 {
                   "@type": "Offer",
                   "itemOffered": {
                     "@type": "Service",
-                    "name": "IA & Automação",
-                    "description": "Automação de processos, integrações, dados e experiências inteligentes."
+                    "name": "Gestão de redes sociais",
+                    "description": "Gerenciamos suas redes com estratégia, conteúdo e foco em engajamento."
                   }
                 },
                 {
                   "@type": "Offer",
                   "itemOffered": {
                     "@type": "Service",
-                    "name": "Tecnologia & Web",
-                    "description": "Suporte, infraestrutura e soluções digitais para escalar a operação."
+                    "name": "Identidade visual",
+                    "description": "Criamos marcas fortes, memoráveis e que se destacam no mercado."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Tráfego pago e anúncios",
+                    "description": "Campanhas inteligentes para atrair clientes e maximizar resultados."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Serviços de T.I.",
+                    "description": "Soluções completas em tecnologia para que empresas funcionem melhor."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Automação e IA",
+                    "description": "Integração de inteligência artificial para otimizar processos e gerar eficiência."
                   }
                 }
               ]
@@ -541,6 +565,7 @@
       /* Abaixo de 640px só cabem três itens sem cortar no lado direito.
          A regra fica no <li> para o item não deixar um gap vazio. */
       .hero__links li.is-secondary,
+      .hero__links li.is-tertiary,
       .hero__links li.is-cta {
         display: none;
       }
@@ -703,6 +728,14 @@
 
       @media (min-width: 850px) {
         .hero__links li.is-cta {
+          display: block;
+        }
+      }
+
+      /* Com Portfólio na régua, Processo só entra quando sobra largura
+         para os cinco itens e o botão sem espremer o lockup. */
+      @media (min-width: 1100px) {
+        .hero__links li.is-tertiary {
           display: block;
         }
       }
@@ -972,42 +1005,78 @@
         margin-bottom: 3.5rem;
       }
 
+      /* Grade 4×2 dos oito serviços, como no material da marca. */
       .services__list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.9rem;
         margin: 0 auto;
-        max-width: 64rem;
+        max-width: 76rem;
       }
 
       .service {
         display: flex;
-        align-items: flex-start;
-        gap: 1.1rem;
-        padding: 1.75rem 0;
-        border-top: 1px solid rgba(2, 5, 19, 0.14);
+        flex-direction: column;
+        align-items: center;
+        gap: 0.9rem;
+        padding: 1.9rem 1.35rem;
+        text-align: center;
+        border: 1px solid rgba(2, 5, 19, 0.1);
+        border-radius: 20px;
+        background: #f6f8ff;
+        /* A transição de entrada vem junto: `transition` é shorthand e,
+           declarada aqui, substituiria a de [data-reveal] — o card entraria
+           sem escalonamento. */
+        transition:
+          opacity var(--rt, 0.7s) var(--ease) var(--rd, 0s),
+          transform var(--rt, 0.7s) var(--ease) var(--rd, 0s),
+          border-color 0.35s var(--ease),
+          box-shadow 0.35s var(--ease);
       }
 
-      .service:last-child {
-        border-bottom: 1px solid rgba(2, 5, 19, 0.14);
+      .service:hover {
+        border-color: rgba(18, 100, 255, 0.34);
+        box-shadow: 0 18px 40px rgba(18, 100, 255, 0.14);
+      }
+
+      .service__icon {
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+        width: 58px;
+        height: 58px;
+        border-radius: 17px;
+        color: var(--blue);
+        background: linear-gradient(
+          150deg,
+          rgba(18, 100, 255, 0.13),
+          rgba(124, 60, 255, 0.13)
+        );
+      }
+
+      .service__icon svg {
+        width: 28px;
+        height: 28px;
       }
 
       .service__body {
         display: flex;
         flex-direction: column;
-        gap: 0.4rem;
-        padding-top: 0.2rem;
+        gap: 0.45rem;
       }
 
       .service__name {
-        font-size: clamp(1rem, 2.2vw, 2rem);
-        font-weight: 800;
-        letter-spacing: -0.03em;
-        line-height: 1.15;
+        font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -0.01em;
+        line-height: 1.2;
       }
 
       .service__desc {
-        max-width: 42rem;
-        font-size: clamp(0.85rem, 1.6vw, 1.1rem);
+        font-size: clamp(0.82rem, 1.3vw, 0.9rem);
         font-weight: 400;
-        line-height: 1.65;
+        line-height: 1.6;
         color: #4a5372;
       }
 
@@ -1021,9 +1090,8 @@
         .services__heading {
           margin-bottom: 4.5rem;
         }
-        .service {
-          gap: 2rem;
-          padding: 2.25rem 0;
+        .services__list {
+          grid-template-columns: repeat(2, 1fr);
         }
       }
 
@@ -1032,11 +1100,13 @@
           padding: 7.5rem 2.75rem;
         }
         .service {
-          gap: 2.5rem;
-          padding: 2.75rem 0;
+          padding: 2.2rem 1.5rem;
         }
-        .service__body {
-          gap: 0.7rem;
+      }
+
+      @media (min-width: 1024px) {
+        .services__list {
+          grid-template-columns: repeat(4, 1fr);
         }
       }
 
@@ -1207,7 +1277,374 @@
       }
 
       /* ===============================================================
-         6. Processo
+         6. Portfólio & Valores — um par por serviço: o trabalho e,
+            logo em seguida, quanto custa.
+      =============================================================== */
+      .portfolio {
+        position: relative;
+        overflow: hidden;
+        background-color: var(--bg);
+        padding: 4.5rem 1.25rem;
+      }
+
+      .portfolio .glow--d {
+        top: 6%;
+        left: -16%;
+        width: 460px;
+        height: 460px;
+        background: rgba(18, 100, 255, 0.16);
+      }
+
+      .portfolio .glow--e {
+        bottom: 10%;
+        right: -14%;
+        width: 520px;
+        height: 520px;
+        background: rgba(124, 60, 255, 0.16);
+      }
+
+      .portfolio__inner {
+        position: relative;
+        z-index: 2;
+        margin: 0 auto;
+        max-width: 76rem;
+      }
+
+      .portfolio__head {
+        text-align: center;
+        margin-bottom: 3.25rem;
+      }
+
+      .portfolio__lead {
+        max-width: 620px;
+        margin: 1.25rem auto 0;
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 15px;
+      }
+
+      /* --- Grupo: cabeçalho + trabalhos + valores --- */
+      .pgroup + .pgroup {
+        margin-top: 3.5rem;
+        padding-top: 3.5rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .pgroup__head {
+        margin-bottom: 1.6rem;
+      }
+
+      .pgroup__tag {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+      }
+
+      .pgroup__num {
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.14em;
+        color: #5c6a94;
+      }
+
+      .pgroup__title {
+        margin-top: 0.55rem;
+        font-size: clamp(1.65rem, 4.4vw, 2.9rem);
+        font-weight: 900;
+        letter-spacing: -0.045em;
+        line-height: 1.02;
+      }
+
+      .pgroup__lead {
+        max-width: 46rem;
+        margin-top: 0.7rem;
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 14px;
+      }
+
+      /* --- Peças do portfólio --- */
+      .pwork {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.9rem;
+      }
+
+      .piece {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: linear-gradient(145deg, #081131, #030717);
+        transition:
+          opacity var(--rt, 0.7s) var(--ease) var(--rd, 0s),
+          transform var(--rt, 0.7s) var(--ease) var(--rd, 0s),
+          border-color 0.35s var(--ease),
+          box-shadow 0.35s var(--ease);
+      }
+
+      .piece:hover {
+        border-color: rgba(100, 135, 255, 0.45);
+        box-shadow: var(--shadow);
+      }
+
+      /* Enquanto a arte real não estiver em assets/, o quadro mostra uma
+         chapa da paleta — o mesmo recurso do resto da página. */
+      .piece__art {
+        position: relative;
+        height: clamp(170px, 22vw, 225px);
+        background:
+          radial-gradient(
+            circle at 70% 35%,
+            rgba(124, 60, 255, 0.42),
+            transparent 60%
+          ),
+          linear-gradient(135deg, #050a20 0%, #0b1236 60%, #1a1046 100%);
+      }
+
+      .pwork .piece:nth-child(3n + 2) .piece__art {
+        background:
+          radial-gradient(
+            circle at 32% 60%,
+            rgba(34, 167, 255, 0.4),
+            transparent 58%
+          ),
+          linear-gradient(135deg, #050a20 0%, #0a1a44 60%, #06284f 100%);
+      }
+
+      .pwork .piece:nth-child(3n + 3) .piece__art {
+        background:
+          radial-gradient(
+            circle at 60% 30%,
+            rgba(182, 92, 255, 0.34),
+            transparent 60%
+          ),
+          linear-gradient(135deg, #08061f 0%, #150a3a 55%, #24104d 100%);
+      }
+
+      .piece__art img {
+        position: absolute;
+        inset: 0;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        transition: transform 0.5s var(--ease);
+      }
+
+      /* O avanço no hover fica na arte, elemento interno: no card ele
+         disputaria o transform com a entrada em cena. */
+      .piece:hover .piece__art img {
+        transform: scale(1.05);
+      }
+
+      .piece__cap {
+        padding: 1rem 1.15rem 1.25rem;
+      }
+
+      .piece__kind {
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #2782ff;
+      }
+
+      .piece__name {
+        margin-top: 0.4rem;
+        font-size: 1rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 1.25;
+      }
+
+      .piece__note {
+        margin-top: 0.4rem;
+        font-size: 13px;
+        line-height: 1.6;
+        color: #8893ad;
+      }
+
+      /* --- Valores --- */
+      .pvalues {
+        margin-top: 1.9rem;
+      }
+
+      .pvalues__label {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .pvalues__label::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, var(--line), transparent);
+      }
+
+      .plans {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.9rem;
+      }
+
+      .plan {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid rgba(100, 135, 255, 0.22);
+        border-radius: 20px;
+        padding: 1.6rem 1.35rem 1.5rem;
+        background: linear-gradient(
+          160deg,
+          rgba(8, 17, 49, 0.8),
+          rgba(3, 7, 23, 0.9)
+        );
+        transition:
+          opacity var(--rt, 0.7s) var(--ease) var(--rd, 0s),
+          transform var(--rt, 0.7s) var(--ease) var(--rd, 0s),
+          border-color 0.3s var(--ease);
+      }
+
+      .plan:hover {
+        border-color: rgba(100, 135, 255, 0.45);
+      }
+
+      .plan--featured {
+        border-color: rgba(75, 120, 255, 0.55);
+        box-shadow: 0 20px 60px rgba(33, 71, 255, 0.2);
+        background: linear-gradient(
+          160deg,
+          rgba(14, 26, 72, 0.9),
+          rgba(6, 10, 32, 0.95)
+        );
+      }
+
+      .plan__badge {
+        position: absolute;
+        top: -0.65rem;
+        left: 1.35rem;
+        padding: 0.3rem 0.7rem;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #0758ff, #5428ff);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #fff;
+      }
+
+      .plan__name {
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #cbd3e8;
+      }
+
+      .plan__price {
+        margin-top: 0.7rem;
+      }
+
+      .plan__from {
+        display: block;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #7f8aa6;
+      }
+
+      .plan__value {
+        font-size: clamp(1.7rem, 4vw, 2.1rem);
+        font-weight: 900;
+        letter-spacing: -0.04em;
+      }
+
+      /* Preço aberto ocupa a mesma linha que um número, em corpo menor. */
+      .plan__value--quote {
+        font-size: clamp(1.25rem, 3vw, 1.5rem);
+      }
+
+      .plan__period {
+        font-size: 13px;
+        font-weight: 600;
+        color: #8893ad;
+      }
+
+      .plan__desc {
+        margin-top: 0.6rem;
+        font-size: 13px;
+        line-height: 1.6;
+        color: #aab2ca;
+      }
+
+      .plan__list {
+        flex: 1 1 auto;
+        align-content: start;
+        display: grid;
+        gap: 0.5rem;
+        margin-top: 1.1rem;
+      }
+
+      .plan__list li {
+        display: flex;
+        gap: 0.55rem;
+        font-size: 13px;
+        line-height: 1.55;
+        color: #d8def0;
+      }
+
+      .plan__list b {
+        flex-shrink: 0;
+        color: #3285ff;
+      }
+
+      .plan .btn {
+        width: 100%;
+        margin-top: 1.35rem;
+      }
+
+      .portfolio__note {
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--line);
+        text-align: center;
+        font-size: 13px;
+        line-height: 1.7;
+        color: #8893ad;
+      }
+
+      @media (min-width: 640px) {
+        .portfolio {
+          padding: 5.5rem 2rem;
+        }
+        .pwork,
+        .plans {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (min-width: 768px) {
+        .portfolio {
+          padding: 6.5rem 2.75rem;
+        }
+        .pgroup__head {
+          margin-bottom: 2rem;
+        }
+        .pwork,
+        .plans {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .pvalues {
+          margin-top: 2.25rem;
+        }
+      }
+
+      /* ===============================================================
+         7. Processo
       =============================================================== */
       .process {
         position: relative;
@@ -1316,7 +1753,7 @@
       }
 
       /* ===============================================================
-         7. Contato
+         8. Contato
       =============================================================== */
       .contact {
         position: relative;
@@ -1376,7 +1813,7 @@
       }
 
       /* ===============================================================
-         8. Rodapé
+         9. Rodapé
       =============================================================== */
       .footer {
         border-top: 1px solid var(--line);
@@ -1435,7 +1872,8 @@
         }
         .magnet,
         .marquee__row,
-        .solution-card {
+        .solution-card,
+        .piece__art img {
           transition: none !important;
           transform: none !important;
         }
@@ -1480,7 +1918,8 @@
             <li><a href="#sobre">Sobre</a></li>
             <li><a href="#servicos">Serviços</a></li>
             <li><a href="#solucoes">Soluções</a></li>
-            <li class="is-secondary"><a href="#processo">Processo</a></li>
+            <li class="is-secondary"><a href="#portfolio">Portfólio</a></li>
+            <li class="is-tertiary"><a href="#processo">Processo</a></li>
             <li class="is-cta">
               <a class="nav-cta" href="#contato">Fale com um especialista</a>
             </li>
@@ -1619,50 +2058,212 @@
         </h2>
         <div class="services__list">
           <div class="service" data-reveal style="--rd: 0s">
+            <span class="service__icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M4 20h16" />
+                <rect x="5" y="12" width="3.6" height="6" rx="1" />
+                <rect x="10.2" y="8" width="3.6" height="10" rx="1" />
+                <rect x="15.4" y="4" width="3.6" height="14" rx="1" />
+              </svg>
+            </span>
             <div class="service__body">
-              <h3 class="service__name">Estratégia</h3>
+              <h3 class="service__name">Estratégia digital</h3>
               <p class="service__desc">
-                Planejamento orientado a objetivos, posicionamento e crescimento
-                real.
+                Planejamento e estratégias personalizadas para alcançar
+                resultados reais.
               </p>
             </div>
           </div>
 
-          <div class="service" data-reveal style="--rd: 0.1s">
+          <div class="service" data-reveal style="--rd: 0.06s">
+            <span class="service__icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="3" y="4.5" width="18" height="15" rx="2.5" />
+                <path d="M3 9.2h18" />
+                <path d="M6.2 6.9h.01M8.7 6.9h.01" />
+                <path
+                  d="m12.4 11.6 1 2.3 2.3 1-2.3 1-1 2.3-1-2.3-2.3-1 2.3-1z"
+                />
+              </svg>
+            </span>
             <div class="service__body">
-              <h3 class="service__name">Identidade &amp; Branding</h3>
+              <h3 class="service__name">Criação de sites</h3>
               <p class="service__desc">
-                Logo, sistema visual, manual, paleta, tipografia e aplicações.
+                Sites modernos, rápidos e otimizados para todos os dispositivos.
               </p>
             </div>
           </div>
 
-          <div class="service" data-reveal style="--rd: 0.2s">
+          <div class="service" data-reveal style="--rd: 0.12s">
+            <span class="service__icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M7.6 18.4a4 4 0 0 1-.7-7.94 5 5 0 0 1 9.7-1.2 3.9 3.9 0 0 1 0 7.74z"
+                />
+                <circle cx="9.9" cy="13.6" r="1.1" />
+                <circle cx="14.5" cy="13.6" r="1.1" />
+                <path d="M11 13.6h2.4" />
+              </svg>
+            </span>
             <div class="service__body">
-              <h3 class="service__name">Mídia Social</h3>
+              <h3 class="service__name">Criação de mídia social</h3>
               <p class="service__desc">
-                Conteúdo estratégico, campanhas, reels, carrosséis e calendário
-                editorial.
+                Produção de conteúdos que conectam sua marca ao público certo.
+              </p>
+            </div>
+          </div>
+
+          <div class="service" data-reveal style="--rd: 0.18s">
+            <span class="service__icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M7.9 12.9a3.2 3.2 0 0 1 .4-6.36 4.1 4.1 0 0 1 7.84-.6 3.2 3.2 0 0 1 .1 6.96z"
+                />
+                <circle cx="12" cy="16.6" r="1.6" />
+                <circle cx="5.9" cy="19.9" r="1.6" />
+                <circle cx="18.1" cy="19.9" r="1.6" />
+                <path d="M12 15v-2M10.7 17.5l-3.4 1.7M13.3 17.5l3.4 1.7" />
+              </svg>
+            </span>
+            <div class="service__body">
+              <h3 class="service__name">Gestão de redes sociais</h3>
+              <p class="service__desc">
+                Gerenciamos suas redes com estratégia, conteúdo e foco em
+                engajamento.
+              </p>
+            </div>
+          </div>
+
+          <div class="service" data-reveal style="--rd: 0.24s">
+            <span class="service__icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="8.2" />
+                <path d="m12 7.4 1.6 3 3 1.6-3 1.6-1.6 3-1.6-3-3-1.6 3-1.6z" />
+              </svg>
+            </span>
+            <div class="service__body">
+              <h3 class="service__name">Identidade visual</h3>
+              <p class="service__desc">
+                Criamos marcas fortes, memoráveis e que se destacam no mercado.
               </p>
             </div>
           </div>
 
           <div class="service" data-reveal style="--rd: 0.3s">
+            <span class="service__icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="13" r="7.4" />
+                <circle cx="11" cy="13" r="3.6" />
+                <path d="M13.6 10.4 20 4M16.2 4H20v3.8" />
+              </svg>
+            </span>
             <div class="service__body">
-              <h3 class="service__name">IA &amp; Automação</h3>
+              <h3 class="service__name">Tráfego pago e anúncios</h3>
               <p class="service__desc">
-                Automação de processos, integrações, dados e experiências
-                inteligentes.
+                Campanhas inteligentes para atrair clientes e maximizar
+                resultados.
               </p>
             </div>
           </div>
 
-          <div class="service" data-reveal style="--rd: 0.4s">
+          <div class="service" data-reveal style="--rd: 0.36s">
+            <span class="service__icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="2.8" y="4.4" width="18.4" height="12.2" rx="2" />
+                <path d="M9 20.4h6M12 16.6v3.8" />
+                <path d="M6.6 8.8h6.6M6.6 11.9h3.7" />
+              </svg>
+            </span>
             <div class="service__body">
-              <h3 class="service__name">Tecnologia &amp; Web</h3>
+              <h3 class="service__name">Serviços de T.I.</h3>
               <p class="service__desc">
-                Suporte, infraestrutura e soluções digitais para escalar a
-                operação.
+                Soluções completas em tecnologia para que empresas funcionem
+                melhor.
+              </p>
+            </div>
+          </div>
+
+          <div class="service" data-reveal style="--rd: 0.42s">
+            <span class="service__icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="5" r="2.2" />
+                <circle cx="5.5" cy="18.6" r="2.2" />
+                <circle cx="12" cy="18.6" r="2.2" />
+                <circle cx="18.5" cy="18.6" r="2.2" />
+                <path
+                  d="M12 7.2v9.2M5.5 16.4v-1.8a1.5 1.5 0 0 1 1.5-1.5h10a1.5 1.5 0 0 1 1.5 1.5v1.8"
+                />
+              </svg>
+            </span>
+            <div class="service__body">
+              <h3 class="service__name">Automação e IA</h3>
+              <p class="service__desc">
+                Integração de inteligência artificial para otimizar processos e
+                gerar eficiência.
               </p>
             </div>
           </div>
@@ -1767,7 +2368,1131 @@
       </section>
 
       <!-- ============================================================
-           6. Processo
+           6. Portfólio & Valores
+
+           Um <article class="pgroup"> por frente de trabalho, sempre no
+           mesmo par: as peças do portfólio e, logo em seguida, os valores.
+
+           OS VALORES ABAIXO SÃO UM PONTO DE PARTIDA — troque cada
+           .plan__value, .plan__period e os itens de .plan__list pelos
+           números e entregas reais antes de publicar.
+
+           As artes entram em assets/portfolio/ com os nomes usados em
+           cada <img>. Enquanto não estiverem lá, o quadro mostra uma
+           chapa da paleta em vez de imagem quebrada.
+      ============================================================= -->
+      <section class="portfolio" id="portfolio">
+        <span class="glow glow--d"></span>
+        <span class="glow glow--e"></span>
+
+        <div class="portfolio__inner">
+          <div class="portfolio__head">
+            <p class="kicker" data-reveal style="--ry: 20px">
+              Portfólio &amp; valores
+            </p>
+            <h2 class="section-heading" data-reveal style="--ry: 40px">
+              <span class="gradient-text">Portfólio</span>
+            </h2>
+            <p
+              class="portfolio__lead"
+              data-reveal
+              style="--ry: 20px; --rd: 0.15s"
+            >
+              Cada frente de trabalho aparece com o que entregamos e, logo em
+              seguida, quanto custa começar.
+            </p>
+          </div>
+
+          <!-- ---------- 01. Social media ---------- -->
+          <article class="pgroup" id="portfolio-social">
+            <header class="pgroup__head">
+              <div class="pgroup__tag" data-reveal style="--ry: 20px">
+                <span class="pgroup__num">01</span>
+                <p class="kicker">Social media</p>
+              </div>
+              <h3
+                class="pgroup__title"
+                data-reveal
+                style="--ry: 30px; --rd: 0.05s"
+              >
+                Criação de conteúdo e
+                <span class="gradient-text">gestão de redes.</span>
+              </h3>
+              <p
+                class="pgroup__lead"
+                data-reveal
+                style="--ry: 20px; --rd: 0.1s"
+              >
+                Conteúdo que conecta a marca ao público certo e gestão diária
+                das redes com estratégia, calendário e foco em engajamento.
+              </p>
+            </header>
+
+            <div class="pwork">
+              <figure class="piece" data-reveal style="--rd: 0s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/social-1.png"
+                    alt="Carrossel institucional criado pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Feed</p>
+                  <h4 class="piece__name">Carrosséis institucionais</h4>
+                  <p class="piece__note">
+                    Sequências de até dez telas para explicar serviço,
+                    autoridade e oferta.
+                  </p>
+                </figcaption>
+              </figure>
+
+              <figure class="piece" data-reveal style="--rd: 0.08s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/social-2.png"
+                    alt="Reels e vídeos curtos produzidos pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Reels</p>
+                  <h4 class="piece__name">Vídeos curtos e cortes</h4>
+                  <p class="piece__note">
+                    Roteiro, edição, legenda e capa para o formato que mais
+                    alcança.
+                  </p>
+                </figcaption>
+              </figure>
+
+              <figure class="piece" data-reveal style="--rd: 0.16s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/social-3.png"
+                    alt="Sequência de stories produzida pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Stories</p>
+                  <h4 class="piece__name">Rotina diária e enquetes</h4>
+                  <p class="piece__note">
+                    Bastidor, prova social e chamadas que puxam conversa no
+                    direct.
+                  </p>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="pvalues">
+              <div class="pvalues__label" data-reveal style="--ry: 16px">
+                <p class="kicker">Valores</p>
+              </div>
+
+              <div class="plans">
+                <div class="plan" data-reveal style="--rd: 0s">
+                  <p class="plan__name">Essencial</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 890</span>
+                    <span class="plan__period">/mês</span>
+                  </p>
+                  <p class="plan__desc">
+                    Uma rede com presença constante e identidade aplicada.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> 12 posts por mês</li>
+                    <li><b>✓</b> 1 rede social</li>
+                    <li><b>✓</b> Legendas e hashtags</li>
+                    <li><b>✓</b> Calendário editorial</li>
+                  </ul>
+                  <a class="btn btn--ghost" href="#contato">Contratar</a>
+                </div>
+
+                <div
+                  class="plan plan--featured"
+                  data-reveal
+                  style="--rd: 0.08s"
+                >
+                  <span class="plan__badge">Recomendado</span>
+                  <p class="plan__name">Profissional</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 1.690</span>
+                    <span class="plan__period">/mês</span>
+                  </p>
+                  <p class="plan__desc">
+                    Conteúdo em vídeo e duas redes sob a mesma direção.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> 20 posts e 6 reels por mês</li>
+                    <li><b>✓</b> 2 redes sociais</li>
+                    <li><b>✓</b> Stories três vezes por semana</li>
+                    <li><b>✓</b> Relatório mensal</li>
+                  </ul>
+                  <a class="btn btn--primary" href="#contato">Contratar</a>
+                </div>
+
+                <div class="plan" data-reveal style="--rd: 0.16s">
+                  <p class="plan__name">Premium</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 2.890</span>
+                    <span class="plan__period">/mês</span>
+                  </p>
+                  <p class="plan__desc">
+                    Operação completa, com produção e atendimento do canal.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Conteúdo diário</li>
+                    <li><b>✓</b> 3 redes sociais</li>
+                    <li><b>✓</b> Gravação e edição</li>
+                    <li><b>✓</b> Gestão de comentários e direct</li>
+                  </ul>
+                  <a class="btn btn--ghost" href="#contato">Contratar</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- ---------- 02. Criação e desenvolvimento ---------- -->
+          <article class="pgroup" id="portfolio-desenvolvimento">
+            <header class="pgroup__head">
+              <div class="pgroup__tag" data-reveal style="--ry: 20px">
+                <span class="pgroup__num">02</span>
+                <p class="kicker">Criação e desenvolvimento</p>
+              </div>
+              <h3
+                class="pgroup__title"
+                data-reveal
+                style="--ry: 30px; --rd: 0.05s"
+              >
+                Sites, lojas e
+                <span class="gradient-text">soluções digitais.</span>
+              </h3>
+              <p
+                class="pgroup__lead"
+                data-reveal
+                style="--ry: 20px; --rd: 0.1s"
+              >
+                Sites modernos, rápidos e otimizados para todos os
+                dispositivos — da página de conversão ao sistema sob medida.
+              </p>
+            </header>
+
+            <div class="pwork">
+              <figure class="piece" data-reveal style="--rd: 0s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/web-1.png"
+                    alt="Landing page desenvolvida pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Landing page</p>
+                  <h4 class="piece__name">Página de conversão</h4>
+                  <p class="piece__note">
+                    Uma página, um objetivo: formulário, WhatsApp ou venda
+                    direta.
+                  </p>
+                </figcaption>
+              </figure>
+
+              <figure class="piece" data-reveal style="--rd: 0.08s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/web-2.png"
+                    alt="Site institucional desenvolvido pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Site institucional</p>
+                  <h4 class="piece__name">Presença completa da marca</h4>
+                  <p class="piece__note">
+                    Home, serviços, sobre e contato, com SEO e painel para
+                    editar.
+                  </p>
+                </figcaption>
+              </figure>
+
+              <figure class="piece" data-reveal style="--rd: 0.16s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/web-3.png"
+                    alt="Loja virtual desenvolvida pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">E-commerce</p>
+                  <h4 class="piece__name">Loja virtual</h4>
+                  <p class="piece__note">
+                    Catálogo, carrinho, meios de pagamento e frete integrados.
+                  </p>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="pvalues">
+              <div class="pvalues__label" data-reveal style="--ry: 16px">
+                <p class="kicker">Valores</p>
+              </div>
+
+              <div class="plans">
+                <div class="plan" data-reveal style="--rd: 0s">
+                  <p class="plan__name">Landing page</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 1.490</span>
+                    <span class="plan__period">/projeto</span>
+                  </p>
+                  <p class="plan__desc">
+                    Uma página focada em conversão, no ar em poucos dias.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Página única responsiva</li>
+                    <li><b>✓</b> Formulário e WhatsApp</li>
+                    <li><b>✓</b> SEO básico e analytics</li>
+                    <li><b>✓</b> Uma rodada de ajustes</li>
+                  </ul>
+                  <a class="btn btn--ghost" href="#contato">Contratar</a>
+                </div>
+
+                <div
+                  class="plan plan--featured"
+                  data-reveal
+                  style="--rd: 0.08s"
+                >
+                  <span class="plan__badge">Recomendado</span>
+                  <p class="plan__name">Site institucional</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 3.490</span>
+                    <span class="plan__period">/projeto</span>
+                  </p>
+                  <p class="plan__desc">
+                    A marca inteira no ar, pronta para receber tráfego.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Até 6 páginas</li>
+                    <li><b>✓</b> Painel para editar conteúdo</li>
+                    <li><b>✓</b> SEO técnico e velocidade</li>
+                    <li><b>✓</b> Duas rodadas de ajustes</li>
+                  </ul>
+                  <a class="btn btn--primary" href="#contato">Contratar</a>
+                </div>
+
+                <div class="plan" data-reveal style="--rd: 0.16s">
+                  <p class="plan__name">Sob medida</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 6.900</span>
+                    <span class="plan__period">/projeto</span>
+                  </p>
+                  <p class="plan__desc">
+                    Loja virtual, sistema ou integração desenhada para a
+                    operação.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> E-commerce ou sistema</li>
+                    <li><b>✓</b> Integrações e pagamentos</li>
+                    <li><b>✓</b> Áreas com login</li>
+                    <li><b>✓</b> Escopo fechado em diagnóstico</li>
+                  </ul>
+                  <a class="btn btn--ghost" href="#contato">Falar sobre o projeto</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- ---------- 03. Estratégia digital ---------- -->
+          <article class="pgroup" id="portfolio-estrategia">
+            <header class="pgroup__head">
+              <div class="pgroup__tag" data-reveal style="--ry: 20px">
+                <span class="pgroup__num">03</span>
+                <p class="kicker">Estratégia digital</p>
+              </div>
+              <h3
+                class="pgroup__title"
+                data-reveal
+                style="--ry: 30px; --rd: 0.05s"
+              >
+                Planejamento que
+                <span class="gradient-text">orienta a operação.</span>
+              </h3>
+              <p
+                class="pgroup__lead"
+                data-reveal
+                style="--ry: 20px; --rd: 0.1s"
+              >
+                Planejamento e estratégias personalizadas para alcançar
+                resultados reais: diagnóstico, posicionamento e metas claras.
+              </p>
+            </header>
+
+            <div class="pwork">
+              <figure class="piece" data-reveal style="--rd: 0s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/estrategia-1.png"
+                    alt="Diagnóstico de cenário produzido pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Diagnóstico</p>
+                  <h4 class="piece__name">Leitura de cenário</h4>
+                  <p class="piece__note">
+                    Onde a marca está hoje, o que trava e por onde começar.
+                  </p>
+                </figcaption>
+              </figure>
+
+              <figure class="piece" data-reveal style="--rd: 0.08s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/estrategia-2.png"
+                    alt="Documento de posicionamento de marca da NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Posicionamento</p>
+                  <h4 class="piece__name">Discurso e proposta de valor</h4>
+                  <p class="piece__note">
+                    O que a marca diz, para quem fala e com qual diferencial.
+                  </p>
+                </figcaption>
+              </figure>
+
+              <figure class="piece" data-reveal style="--rd: 0.16s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/estrategia-3.png"
+                    alt="Plano de noventa dias montado pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Plano</p>
+                  <h4 class="piece__name">Rota de 90 dias</h4>
+                  <p class="piece__note">
+                    Canais, entregas e metas em um calendário de execução.
+                  </p>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="pvalues">
+              <div class="pvalues__label" data-reveal style="--ry: 16px">
+                <p class="kicker">Valores</p>
+              </div>
+
+              <div class="plans">
+                <div class="plan" data-reveal style="--rd: 0s">
+                  <p class="plan__name">Diagnóstico</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 1.200</span>
+                    <span class="plan__period">/pontual</span>
+                  </p>
+                  <p class="plan__desc">
+                    Um raio-x dos canais antes de investir em qualquer frente.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Análise dos canais atuais</li>
+                    <li><b>✓</b> Análise de concorrência</li>
+                    <li><b>✓</b> Relatório com prioridades</li>
+                    <li><b>✓</b> Reunião de devolutiva</li>
+                  </ul>
+                  <a class="btn btn--ghost" href="#contato">Contratar</a>
+                </div>
+
+                <div
+                  class="plan plan--featured"
+                  data-reveal
+                  style="--rd: 0.08s"
+                >
+                  <span class="plan__badge">Recomendado</span>
+                  <p class="plan__name">Plano estratégico</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 2.400</span>
+                    <span class="plan__period">/pontual</span>
+                  </p>
+                  <p class="plan__desc">
+                    O diagnóstico vira rota, com metas e responsáveis.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Diagnóstico completo</li>
+                    <li><b>✓</b> Posicionamento e público</li>
+                    <li><b>✓</b> Plano de 90 dias</li>
+                    <li><b>✓</b> Metas e indicadores</li>
+                  </ul>
+                  <a class="btn btn--primary" href="#contato">Contratar</a>
+                </div>
+
+                <div class="plan" data-reveal style="--rd: 0.16s">
+                  <p class="plan__name">Consultoria mensal</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 1.900</span>
+                    <span class="plan__period">/mês</span>
+                  </p>
+                  <p class="plan__desc">
+                    Acompanhamento contínuo para corrigir a rota no caminho.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Reunião quinzenal</li>
+                    <li><b>✓</b> Acompanhamento de metas</li>
+                    <li><b>✓</b> Ajuste de rota</li>
+                    <li><b>✓</b> Canal direto com o time</li>
+                  </ul>
+                  <a class="btn btn--ghost" href="#contato">Contratar</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- ---------- 04. Identidade visual ---------- -->
+          <article class="pgroup" id="portfolio-identidade">
+            <header class="pgroup__head">
+              <div class="pgroup__tag" data-reveal style="--ry: 20px">
+                <span class="pgroup__num">04</span>
+                <p class="kicker">Identidade visual</p>
+              </div>
+              <h3
+                class="pgroup__title"
+                data-reveal
+                style="--ry: 30px; --rd: 0.05s"
+              >
+                Marcas que
+                <span class="gradient-text">se destacam.</span>
+              </h3>
+              <p
+                class="pgroup__lead"
+                data-reveal
+                style="--ry: 20px; --rd: 0.1s"
+              >
+                Criamos marcas fortes e memoráveis — do símbolo ao manual que
+                mantém tudo coerente em qualquer aplicação.
+              </p>
+            </header>
+
+            <div class="pwork">
+              <figure class="piece" data-reveal style="--rd: 0s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/identidade-1.png"
+                    alt="Símbolo e assinatura de marca criados pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Logo</p>
+                  <h4 class="piece__name">Símbolo e assinatura</h4>
+                  <p class="piece__note">
+                    Marca principal, versões reduzidas e regras de uso.
+                  </p>
+                </figcaption>
+              </figure>
+
+              <figure class="piece" data-reveal style="--rd: 0.08s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/identidade-2.png"
+                    alt="Paleta e tipografia de um sistema visual da NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Sistema</p>
+                  <h4 class="piece__name">Paleta e tipografia</h4>
+                  <p class="piece__note">
+                    Cores, fontes e grafismos que sustentam a marca em qualquer
+                    peça.
+                  </p>
+                </figcaption>
+              </figure>
+
+              <figure class="piece" data-reveal style="--rd: 0.16s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/identidade-3.png"
+                    alt="Papelaria e kit de redes sociais criados pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Aplicação</p>
+                  <h4 class="piece__name">Papelaria e kit de redes</h4>
+                  <p class="piece__note">
+                    Cartão, apresentação, capa de perfil e modelos de post.
+                  </p>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="pvalues">
+              <div class="pvalues__label" data-reveal style="--ry: 16px">
+                <p class="kicker">Valores</p>
+              </div>
+
+              <div class="plans">
+                <div class="plan" data-reveal style="--rd: 0s">
+                  <p class="plan__name">Logo essencial</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 1.890</span>
+                    <span class="plan__period">/projeto</span>
+                  </p>
+                  <p class="plan__desc">
+                    A marca resolvida, com os arquivos para usar em tudo.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Duas propostas de marca</li>
+                    <li><b>✓</b> Versões e reduções</li>
+                    <li><b>✓</b> Paleta e tipografia</li>
+                    <li><b>✓</b> Arquivos em vetor</li>
+                  </ul>
+                  <a class="btn btn--ghost" href="#contato">Contratar</a>
+                </div>
+
+                <div
+                  class="plan plan--featured"
+                  data-reveal
+                  style="--rd: 0.08s"
+                >
+                  <span class="plan__badge">Recomendado</span>
+                  <p class="plan__name">Identidade completa</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 3.490</span>
+                    <span class="plan__period">/projeto</span>
+                  </p>
+                  <p class="plan__desc">
+                    Sistema inteiro documentado, pronto para o time aplicar.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Marca e sistema visual</li>
+                    <li><b>✓</b> Manual de uso</li>
+                    <li><b>✓</b> Papelaria e kit de redes</li>
+                    <li><b>✓</b> Grafismos e padrões</li>
+                  </ul>
+                  <a class="btn btn--primary" href="#contato">Contratar</a>
+                </div>
+
+                <div class="plan" data-reveal style="--rd: 0.16s">
+                  <p class="plan__name">Rebranding</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 5.900</span>
+                    <span class="plan__period">/projeto</span>
+                  </p>
+                  <p class="plan__desc">
+                    Para marcas que já rodam e precisam trocar de pele sem
+                    perder história.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Diagnóstico da marca atual</li>
+                    <li><b>✓</b> Nova identidade completa</li>
+                    <li><b>✓</b> Plano de transição</li>
+                    <li><b>✓</b> Aplicação nos canais</li>
+                  </ul>
+                  <a class="btn btn--ghost" href="#contato">Falar sobre o projeto</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- ---------- 05. Tráfego pago e anúncios ---------- -->
+          <article class="pgroup" id="portfolio-trafego">
+            <header class="pgroup__head">
+              <div class="pgroup__tag" data-reveal style="--ry: 20px">
+                <span class="pgroup__num">05</span>
+                <p class="kicker">Tráfego pago e anúncios</p>
+              </div>
+              <h3
+                class="pgroup__title"
+                data-reveal
+                style="--ry: 30px; --rd: 0.05s"
+              >
+                Campanhas que
+                <span class="gradient-text">trazem cliente.</span>
+              </h3>
+              <p
+                class="pgroup__lead"
+                data-reveal
+                style="--ry: 20px; --rd: 0.1s"
+              >
+                Campanhas inteligentes para atrair clientes e maximizar
+                resultados, com criativo, segmentação e leitura dos números.
+              </p>
+            </header>
+
+            <div class="pwork">
+              <figure class="piece" data-reveal style="--rd: 0s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/trafego-1.png"
+                    alt="Campanha de Meta Ads gerenciada pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Meta Ads</p>
+                  <h4 class="piece__name">Instagram e Facebook</h4>
+                  <p class="piece__note">
+                    Públicos, criativos e testes para gerar conversa e venda.
+                  </p>
+                </figcaption>
+              </figure>
+
+              <figure class="piece" data-reveal style="--rd: 0.08s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/trafego-2.png"
+                    alt="Campanha de Google Ads gerenciada pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Google Ads</p>
+                  <h4 class="piece__name">Busca e display</h4>
+                  <p class="piece__note">
+                    Anúncios para quem já está procurando o que a marca vende.
+                  </p>
+                </figcaption>
+              </figure>
+
+              <figure class="piece" data-reveal style="--rd: 0.16s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/trafego-3.png"
+                    alt="Criativos de anúncio produzidos pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Criativos</p>
+                  <h4 class="piece__name">Peças para anúncio</h4>
+                  <p class="piece__note">
+                    Imagens e vídeos feitos para o formato de cada campanha.
+                  </p>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="pvalues">
+              <div class="pvalues__label" data-reveal style="--ry: 16px">
+                <p class="kicker">Valores</p>
+              </div>
+
+              <div class="plans">
+                <div class="plan" data-reveal style="--rd: 0s">
+                  <p class="plan__name">Gestão inicial</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 790</span>
+                    <span class="plan__period">/mês</span>
+                  </p>
+                  <p class="plan__desc">
+                    Primeira estrutura de campanhas. A verba de mídia é paga à
+                    parte, direto na plataforma.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Uma plataforma</li>
+                    <li><b>✓</b> Até duas campanhas</li>
+                    <li><b>✓</b> Quatro criativos por mês</li>
+                    <li><b>✓</b> Relatório mensal</li>
+                  </ul>
+                  <a class="btn btn--ghost" href="#contato">Contratar</a>
+                </div>
+
+                <div
+                  class="plan plan--featured"
+                  data-reveal
+                  style="--rd: 0.08s"
+                >
+                  <span class="plan__badge">Recomendado</span>
+                  <p class="plan__name">Gestão completa</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 1.290</span>
+                    <span class="plan__period">/mês</span>
+                  </p>
+                  <p class="plan__desc">
+                    Duas plataformas sob otimização semanal. Verba de mídia à
+                    parte.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Duas plataformas</li>
+                    <li><b>✓</b> Campanhas sem limite</li>
+                    <li><b>✓</b> Oito criativos por mês</li>
+                    <li><b>✓</b> Otimização semanal</li>
+                    <li><b>✓</b> Relatório quinzenal</li>
+                  </ul>
+                  <a class="btn btn--primary" href="#contato">Contratar</a>
+                </div>
+
+                <div class="plan" data-reveal style="--rd: 0.16s">
+                  <p class="plan__name">Performance</p>
+                  <p class="plan__price">
+                    <span class="plan__from">Percentual</span>
+                    <span class="plan__value">12%</span>
+                    <span class="plan__period">do investimento em mídia</span>
+                  </p>
+                  <p class="plan__desc">
+                    Modelo para quem já investe acima de R$ 10 mil por mês em
+                    anúncios.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Estrutura completa de campanhas</li>
+                    <li><b>✓</b> Criativos sob demanda</li>
+                    <li><b>✓</b> Otimização contínua</li>
+                    <li><b>✓</b> Painel de resultados</li>
+                  </ul>
+                  <a class="btn btn--ghost" href="#contato">Falar sobre o modelo</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- ---------- 06. Serviços de T.I. ---------- -->
+          <article class="pgroup" id="portfolio-ti">
+            <header class="pgroup__head">
+              <div class="pgroup__tag" data-reveal style="--ry: 20px">
+                <span class="pgroup__num">06</span>
+                <p class="kicker">Serviços de T.I.</p>
+              </div>
+              <h3
+                class="pgroup__title"
+                data-reveal
+                style="--ry: 30px; --rd: 0.05s"
+              >
+                Tecnologia para a
+                <span class="gradient-text">empresa funcionar.</span>
+              </h3>
+              <p
+                class="pgroup__lead"
+                data-reveal
+                style="--ry: 20px; --rd: 0.1s"
+              >
+                Soluções completas em tecnologia para que empresas funcionem
+                melhor: infraestrutura, suporte e segurança sem improviso.
+              </p>
+            </header>
+
+            <div class="pwork">
+              <figure class="piece" data-reveal style="--rd: 0s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/ti-1.png"
+                    alt="Infraestrutura de rede montada pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Infraestrutura</p>
+                  <h4 class="piece__name">Rede, servidores e estações</h4>
+                  <p class="piece__note">
+                    Montagem e organização do ambiente que a operação usa todo
+                    dia.
+                  </p>
+                </figcaption>
+              </figure>
+
+              <figure class="piece" data-reveal style="--rd: 0.08s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/ti-2.png"
+                    alt="Atendimento de suporte técnico da NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Suporte</p>
+                  <h4 class="piece__name">Remoto e presencial</h4>
+                  <p class="piece__note">
+                    Chamados resolvidos com prazo e histórico registrado.
+                  </p>
+                </figcaption>
+              </figure>
+
+              <figure class="piece" data-reveal style="--rd: 0.16s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/ti-3.png"
+                    alt="Rotina de backup e segurança implantada pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Segurança</p>
+                  <h4 class="piece__name">Backup e continuidade</h4>
+                  <p class="piece__note">
+                    Rotina de cópia, recuperação e controle de acesso.
+                  </p>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="pvalues">
+              <div class="pvalues__label" data-reveal style="--ry: 16px">
+                <p class="kicker">Valores</p>
+              </div>
+
+              <div class="plans">
+                <div class="plan" data-reveal style="--rd: 0s">
+                  <p class="plan__name">Sob demanda</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 180</span>
+                    <span class="plan__period">/hora técnica</span>
+                  </p>
+                  <p class="plan__desc">
+                    Para quem precisa de socorro pontual, sem contrato.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Atendimento remoto</li>
+                    <li><b>✓</b> Chamado avulso</li>
+                    <li><b>✓</b> Sem fidelidade</li>
+                    <li><b>✓</b> Relatório do atendimento</li>
+                  </ul>
+                  <a class="btn btn--ghost" href="#contato">Contratar</a>
+                </div>
+
+                <div
+                  class="plan plan--featured"
+                  data-reveal
+                  style="--rd: 0.08s"
+                >
+                  <span class="plan__badge">Recomendado</span>
+                  <p class="plan__name">Suporte mensal</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 690</span>
+                    <span class="plan__period">/mês</span>
+                  </p>
+                  <p class="plan__desc">
+                    Time de T.I. à disposição, com prioridade no atendimento.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Até 10 horas por mês</li>
+                    <li><b>✓</b> Atendimento prioritário</li>
+                    <li><b>✓</b> Monitoramento de backup</li>
+                    <li><b>✓</b> Inventário de equipamentos</li>
+                  </ul>
+                  <a class="btn btn--primary" href="#contato">Contratar</a>
+                </div>
+
+                <div class="plan" data-reveal style="--rd: 0.16s">
+                  <p class="plan__name">Infra gerenciada</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 1.490</span>
+                    <span class="plan__period">/mês</span>
+                  </p>
+                  <p class="plan__desc">
+                    A operação inteira sob cuidado, incluindo servidores e
+                    nuvem.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Horas sem limite</li>
+                    <li><b>✓</b> Servidores e nuvem</li>
+                    <li><b>✓</b> Política de segurança</li>
+                    <li><b>✓</b> Visita técnica mensal</li>
+                  </ul>
+                  <a class="btn btn--ghost" href="#contato">Contratar</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- ---------- 07. Automação e IA ---------- -->
+          <article class="pgroup" id="portfolio-automacao">
+            <header class="pgroup__head">
+              <div class="pgroup__tag" data-reveal style="--ry: 20px">
+                <span class="pgroup__num">07</span>
+                <p class="kicker">Automação e IA</p>
+              </div>
+              <h3
+                class="pgroup__title"
+                data-reveal
+                style="--ry: 30px; --rd: 0.05s"
+              >
+                Processos que
+                <span class="gradient-text">rodam sozinhos.</span>
+              </h3>
+              <p
+                class="pgroup__lead"
+                data-reveal
+                style="--ry: 20px; --rd: 0.1s"
+              >
+                Integração de inteligência artificial para otimizar processos e
+                gerar eficiência, do atendimento aos fluxos internos.
+              </p>
+            </header>
+
+            <div class="pwork">
+              <figure class="piece" data-reveal style="--rd: 0s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/automacao-1.png"
+                    alt="Fluxo de atendimento automatizado criado pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Atendimento</p>
+                  <h4 class="piece__name">Respostas no WhatsApp</h4>
+                  <p class="piece__note">
+                    Fluxo que qualifica, responde e encaminha para o time certo.
+                  </p>
+                </figcaption>
+              </figure>
+
+              <figure class="piece" data-reveal style="--rd: 0.08s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/automacao-2.png"
+                    alt="Integração entre sistemas implementada pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Integrações</p>
+                  <h4 class="piece__name">Sistemas conversando</h4>
+                  <p class="piece__note">
+                    Formulário, planilha, CRM e financeiro no mesmo caminho.
+                  </p>
+                </figcaption>
+              </figure>
+
+              <figure class="piece" data-reveal style="--rd: 0.16s">
+                <div class="piece__art">
+                  <img
+                    src="./assets/portfolio/automacao-3.png"
+                    alt="Agente de inteligência artificial treinado pela NEXORA"
+                    loading="lazy"
+                    data-fallback="hide"
+                  />
+                </div>
+                <figcaption class="piece__cap">
+                  <p class="piece__kind">Agentes de IA</p>
+                  <h4 class="piece__name">Assistentes treinados</h4>
+                  <p class="piece__note">
+                    Modelos alimentados com o conteúdo e as regras da empresa.
+                  </p>
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="pvalues">
+              <div class="pvalues__label" data-reveal style="--ry: 16px">
+                <p class="kicker">Valores</p>
+              </div>
+
+              <div class="plans">
+                <div class="plan" data-reveal style="--rd: 0s">
+                  <p class="plan__name">Automação pontual</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 1.900</span>
+                    <span class="plan__period">/fluxo</span>
+                  </p>
+                  <p class="plan__desc">
+                    Um processo repetido sai da mão da equipe.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Um fluxo automatizado</li>
+                    <li><b>✓</b> Integração com duas ferramentas</li>
+                    <li><b>✓</b> Testes e ajuste fino</li>
+                    <li><b>✓</b> Treinamento da equipe</li>
+                  </ul>
+                  <a class="btn btn--ghost" href="#contato">Contratar</a>
+                </div>
+
+                <div
+                  class="plan plan--featured"
+                  data-reveal
+                  style="--rd: 0.08s"
+                >
+                  <span class="plan__badge">Recomendado</span>
+                  <p class="plan__name">Fluxos integrados</p>
+                  <p class="plan__price">
+                    <span class="plan__from">A partir de</span>
+                    <span class="plan__value">R$ 3.900</span>
+                    <span class="plan__period">/projeto</span>
+                  </p>
+                  <p class="plan__desc">
+                    Vários processos ligados entre si, com painel para
+                    acompanhar.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Até quatro fluxos</li>
+                    <li><b>✓</b> Integrações múltiplas</li>
+                    <li><b>✓</b> Painel de acompanhamento</li>
+                    <li><b>✓</b> 30 dias de ajustes</li>
+                  </ul>
+                  <a class="btn btn--primary" href="#contato">Contratar</a>
+                </div>
+
+                <div class="plan" data-reveal style="--rd: 0.16s">
+                  <p class="plan__name">IA sob medida</p>
+                  <p class="plan__price">
+                    <span class="plan__from">Escopo dedicado</span>
+                    <span class="plan__value plan__value--quote"
+                      >Sob consulta</span
+                    >
+                  </p>
+                  <p class="plan__desc">
+                    Agente treinado na operação, com base de conhecimento
+                    própria.
+                  </p>
+                  <ul class="plan__list">
+                    <li><b>✓</b> Agente treinado na operação</li>
+                    <li><b>✓</b> Base de conhecimento própria</li>
+                    <li><b>✓</b> Integração com os sistemas</li>
+                    <li><b>✓</b> Escopo definido em diagnóstico</li>
+                  </ul>
+                  <a class="btn btn--ghost" href="#contato">Pedir proposta</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <p class="portfolio__note" data-reveal style="--ry: 16px">
+            Os valores acima são o ponto de partida de cada frente. Escopos
+            maiores recebem proposta dedicada depois do diagnóstico.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           7. Processo
       ============================================================= -->
       <section class="process" id="processo">
         <span class="glow glow--c"></span>
@@ -1820,7 +3545,7 @@
       </section>
 
       <!-- ============================================================
-           7. Contato
+           8. Contato
       ============================================================= -->
       <section class="contact" id="contato">
         <div class="contact__box" data-reveal style="--ry: 30px">
@@ -1840,7 +3565,7 @@
       </section>
 
       <!-- ============================================================
-           8. Rodapé
+           9. Rodapé
       ============================================================= -->
       <footer class="footer">
         <div class="footer__inner">
