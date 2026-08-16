@@ -776,6 +776,9 @@
             seu ritmo. Vizinhas andam em sentidos opostos em relação à
             página, que é o que dá a sensação de profundidade.
       =============================================================== */
+      /* Superfície clara, como a de Serviços: a faixa é a primeira
+         troca de fundo da página. O `overflow` recorta as peças pelo
+         raio, então elas acompanham o canto arredondado do topo. */
       .parallax {
         position: relative;
         display: flex;
@@ -786,7 +789,8 @@
         overflow: hidden;
         height: 130vh;
         padding: 2vw;
-        background-color: var(--bg);
+        border-radius: var(--card-radius) var(--card-radius) 0 0;
+        background: #ffffff;
       }
 
       /* A sobra entre a altura da coluna e a da faixa é exatamente o
@@ -806,13 +810,15 @@
         display: none;
       }
 
+      /* No claro a peça se apoia numa sombra, não numa borda azul —
+         mesmo tratamento dos cards de Serviços. */
       .parallax__col img {
         height: 46vh;
         width: 100%;
         flex-shrink: 0;
         border-radius: 18px;
-        border: 1px solid var(--line);
         object-fit: cover;
+        box-shadow: 0 14px 34px rgba(2, 5, 19, 0.14);
       }
 
       /* Sem a arte, as peças alternam três chapas da paleta. O índice
@@ -856,13 +862,19 @@
       /* ===============================================================
          3. Sobre
       =============================================================== */
+      /* Volta ao escuro por cima da faixa clara, do mesmo jeito que
+         Soluções sobe sobre Serviços. */
       .about {
         position: relative;
+        z-index: 10;
         display: flex;
         align-items: center;
         justify-content: center;
         min-height: 100vh;
         overflow: hidden;
+        margin-top: -2rem;
+        border-radius: var(--card-radius) var(--card-radius) 0 0;
+        background-color: var(--bg);
         padding: 5rem 1.25rem;
       }
 
@@ -953,6 +965,7 @@
 
       @media (min-width: 640px) {
         .about {
+          margin-top: -2.5rem;
           padding-left: 2rem;
           padding-right: 2rem;
         }
@@ -982,6 +995,7 @@
 
       @media (min-width: 768px) {
         .about {
+          margin-top: -3rem;
           padding-left: 2.75rem;
           padding-right: 2.75rem;
         }

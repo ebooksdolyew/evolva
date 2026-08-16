@@ -116,6 +116,13 @@ diferentes conforme a página rola — vizinhas andam em sentidos opostos em
 relação ao scroll, que é o que dá a profundidade. Três colunas abaixo de
 1024px e duas abaixo de 640px, para as peças não virarem tiras.
 
+A faixa é a primeira das duas superfícies claras da página — ela e Serviços.
+As trocas de fundo seguem sempre o mesmo recurso: a seção clara arredonda o
+topo e a escura seguinte sobe por cima dela com margem negativa e o mesmo
+raio. Aqui, a faixa arredonda o topo sobre o hero e o "Quem somos" volta ao
+escuro por cima dela, exatamente como Soluções faz sobre Serviços. No claro a
+peça se apoia numa sombra em vez da borda azul do tema escuro.
+
 O ajuste fica em dois atributos no HTML: `data-from` e `data-to` são a fração
 da **sobra** (altura da coluna menos a altura da faixa) em que a coluna começa
 e termina o percurso. Manter os dois entre 0 e 1 garante que ela nunca descubra
