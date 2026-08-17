@@ -32,7 +32,7 @@ python3 -m http.server 8000
 Publicar no GitHub Pages: Settings → Pages → Deploy from a branch, apontando
 para a raiz. Não há passo de build.
 
-## Artes da marca — falta colocar 5 arquivos
+## Artes da marca — falta colocar 4 arquivos
 
 A página já funciona sem eles: cada espaço mostra uma chapa em gradiente da
 paleta. Para entrar a arte real, salve os arquivos em `assets/` com estes nomes:
@@ -43,10 +43,9 @@ paleta. Para entrar a arte real, salve os arquivos em `assets/` com estes nomes:
 | `assets/ai.png` | chip isométrico "IA" com servidores | card 02 — Tecnologia & IA |
 | `assets/branding.png` | mockup dos cartões de visita | card 03 — Branding |
 | `assets/social.png` | símbolo com onda de partículas | card 01 — Mídia Social |
-| `assets/about.png` | símbolo com feixes diagonais | faixa em parallax |
 
-Os cinco também alimentam a faixa em parallax logo abaixo do hero — são 24
-peças no total, então as artes se repetem entre as colunas.
+A faixa em parallax logo abaixo do hero usa uma fonte separada — veja
+"A faixa em parallax" mais abaixo.
 
 ## Portfólio — 21 imagens dos trabalhos
 
@@ -116,6 +115,13 @@ diferentes conforme a página rola — vizinhas andam em sentidos opostos em
 relação ao scroll, que é o que dá a profundidade. Três colunas abaixo de
 1024px e duas abaixo de 640px, para as peças não virarem tiras.
 
+As peças são as imagens de `assets/portfolio/` (array `PORTFOLIO_ART` no
+`<script>`), cada uma aparecendo no máximo uma vez em toda a faixa — nunca
+repetida. A faixa tem 4 colunas × `TILES_PER_COLUMN` vagas; com 12 peças hoje
+em `assets/portfolio/` e 36 vagas (4 × 9), sobram 24 vagas sem peça própria,
+que caem na mesma chapa gradiente de uma arte que falha ao carregar. Some
+mais arquivos a `PORTFOLIO_ART` para preencher as vagas restantes.
+
 A faixa é a primeira das duas superfícies claras da página — ela e Serviços.
 As trocas de fundo seguem sempre o mesmo recurso: a seção clara arredonda o
 topo e a escura seguinte sobe por cima dela com margem negativa e o mesmo
@@ -175,7 +181,7 @@ nas tags `og:image` e `twitter:image`.
 ## Onde mexer no conteúdo
 
 Está tudo direto no HTML — serviços, soluções, portfólio, valores, processo e
-textos das seções. No `<script>` sobrou apenas o array `BRAND_ART`, que
+textos das seções. No `<script>` sobrou apenas o array `PORTFOLIO_ART`, que
 alimenta a faixa em parallax.
 
 As seções do `index.html` estão numeradas em comentário, na ordem em que

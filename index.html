@@ -3559,25 +3559,24 @@
            Conteúdo
         ---------------------------------------------------------- */
 
-        // Artes da marca. Basta colocar os arquivos em assets/ com estes
-        // nomes — enquanto não estiverem lá, cada tile mostra a chapa
-        // gradiente da identidade.
-        var BRAND_ART = [
-          './assets/hero.png',
-          './assets/ai.png',
-          './assets/branding.png',
-          './assets/social.png',
-          './assets/about.png',
+        // Peças reais do portfólio (assets/portfolio/). Cada uma aparece
+        // no máximo uma vez na faixa inteira — sem repetição. Como há mais
+        // vagas do que peças, o restante das vagas fica sem `src` e cai na
+        // mesma chapa gradiente de uma arte que falha ao carregar.
+        var PORTFOLIO_ART = [
+          './assets/portfolio/1.webp',
+          './assets/portfolio/2.webp',
+          './assets/portfolio/3.webp',
+          './assets/portfolio/4.webp',
+          './assets/portfolio/5.webp',
+          './assets/portfolio/13.11 -FAMILIA-TABERNA-FEED.webp',
+          './assets/portfolio/FEED2.webp',
+          './assets/portfolio/Prancheta 3.webp',
+          './assets/portfolio/altonivelModerno.webp',
+          './assets/portfolio/feed.marcos.filtro combustivel.webp',
+          './assets/portfolio/pascoa.webp',
+          './assets/portfolio/MKT-VINICIUS-2.jpg.jpeg',
         ];
-
-        // Arte de campanha que entra sorteada no meio das chapas.
-        var PROMO_ART = './assets/promo-pizza.webp';
-
-        // Espalhada por coluna, e não pela faixa inteira: no celular só as
-        // duas primeiras colunas ficam visíveis, e um sorteio geral poderia
-        // jogar a arte toda para as colunas que ninguém vê ali. Três de
-        // nove mantém a mesma presença de antes, quando eram duas de seis.
-        var PROMO_PER_COLUMN = 3;
 
         /* ----------------------------------------------------------
            Montagem — serviços, soluções, portfólio e processo são HTML
@@ -3586,7 +3585,7 @@
         ---------------------------------------------------------- */
         var makeTile = function (src, plate) {
           var img = document.createElement('img');
-          img.src = src;
+          if (src) img.src = src;
           img.alt = '';
           img.loading = 'lazy';
           img.className = 'plate-' + plate;
@@ -3604,30 +3603,26 @@
         // com seis, no tablet a coluna ficava menor que a faixa e o fundo
         // branco aparecia embaixo.
         var TILES_PER_COLUMN = 9;
+        var TOTAL_TILES = columns.length * TILES_PER_COLUMN;
+
+        // Um baralho só para a faixa inteira (não por coluna): garante que
+        // nenhuma peça se repita em lugar nenhum, e sorteia em quais das
+        // TOTAL_TILES vagas as PORTFOLIO_ART caem.
+        var deck = PORTFOLIO_ART.slice();
+        while (deck.length < TOTAL_TILES) deck.push(null);
+
+        for (var j = deck.length - 1; j > 0; j -= 1) {
+          var k = Math.floor(Math.random() * (j + 1));
+          var swap = deck[j];
+          deck[j] = deck[k];
+          deck[k] = swap;
+        }
+
         var tile = 0;
 
         columns.forEach(function (col, colIndex) {
-          // Monta a coluna e embaralha antes de pendurar: a promoção cai
-          // em posições diferentes a cada carregamento, em vez de repetir
-          // sempre o mesmo desenho.
-          var deck = [];
-          for (var i = 0; i < TILES_PER_COLUMN; i += 1) {
-            deck.push(
-              i < PROMO_PER_COLUMN
-                ? PROMO_ART
-                : BRAND_ART[(tile + i) % BRAND_ART.length],
-            );
-          }
-
-          for (var j = deck.length - 1; j > 0; j -= 1) {
-            var k = Math.floor(Math.random() * (j + 1));
-            var swap = deck[j];
-            deck[j] = deck[k];
-            deck[k] = swap;
-          }
-
-          for (var n = 0; n < deck.length; n += 1) {
-            col.appendChild(makeTile(deck[n], (tile + colIndex) % 3));
+          for (var n = 0; n < TILES_PER_COLUMN; n += 1) {
+            col.appendChild(makeTile(deck[tile], (tile + colIndex) % 3));
             tile += 1;
           }
         });
