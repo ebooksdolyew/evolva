@@ -126,14 +126,6 @@
                   "@type": "Offer",
                   "itemOffered": {
                     "@type": "Service",
-                    "name": "Estratégia digital",
-                    "description": "Planejamento e estratégias personalizadas para alcançar resultados reais."
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
                     "name": "Criação de sites",
                     "description": "Sites modernos, rápidos e otimizados para todos os dispositivos."
                   }
@@ -144,14 +136,6 @@
                     "@type": "Service",
                     "name": "Criação de mídia social",
                     "description": "Produção de conteúdos que conectam sua marca ao público certo."
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Gestão de redes sociais",
-                    "description": "Gerenciamos suas redes com estratégia, conteúdo e foco em engajamento."
                   }
                 },
                 {
@@ -176,14 +160,6 @@
                     "@type": "Service",
                     "name": "Serviços de T.I.",
                     "description": "Soluções completas em tecnologia para que empresas funcionem melhor."
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Automação e IA",
-                    "description": "Integração de inteligência artificial para otimizar processos e gerar eficiência."
                   }
                 }
               ]
@@ -337,6 +313,14 @@
            embaixo). A folga vertical estende só a área pintada: em
            elemento inline ela não empurra nada no layout. */
         padding-block: 0.2em;
+        /* Mesmo problema na horizontal: `letter-spacing` negativo é
+           aplicado também DEPOIS da última letra, então a caixa pintada
+           termina antes do desenho dela e o glifo saía cortado à direita
+           (o "O" de PORTFÓLIO vinha com o lado direito reto). A folga
+           estende a área pintada e a margem negativa devolve exatamente
+           o mesmo valor ao layout — o texto seguinte fica onde estava. */
+        padding-inline-end: 0.08em;
+        margin-inline-end: -0.08em;
       }
 
       .kicker {
@@ -641,32 +625,11 @@
         margin-top: 1.6rem;
       }
 
+      /* A folga que antes vinha do padding da faixa de números fica aqui:
+         sem ela o título encostaria na borda de baixo do hero. */
       .hero__spacer {
         flex: 1;
-        min-height: 1rem;
-      }
-
-      .hero__stats {
-        position: relative;
-        z-index: 20;
-        display: flex;
-        gap: 1.6rem;
-        padding: 0 1.25rem 1.75rem;
-      }
-
-      .hero__stats strong {
-        font-size: 22px;
-        font-weight: 900;
-        letter-spacing: -0.03em;
-      }
-
-      .hero__stats span {
-        display: block;
-        margin-top: 2px;
-        font-size: 9px;
-        font-weight: 700;
-        letter-spacing: 0.16em;
-        color: #8f9ab8;
+        min-height: 2.75rem;
       }
 
       /* O posicionamento fica no wrapper para que o transform da entrada
@@ -713,23 +676,12 @@
         .hero__links li.is-secondary {
           display: block;
         }
-        .hero__body,
-        .hero__stats {
+        .hero__body {
           padding-left: 2rem;
           padding-right: 2rem;
         }
         .hero__lead {
           font-size: 17px;
-        }
-        .hero__stats {
-          gap: 2.2rem;
-          padding-bottom: 2.25rem;
-        }
-        .hero__stats strong {
-          font-size: 27px;
-        }
-        .hero__stats span {
-          font-size: 10px;
         }
         .hero__mark {
           right: -10%;
@@ -763,20 +715,13 @@
         .hero__brand-word {
           height: 2.4rem;
         }
-        .hero__body,
-        .hero__stats {
+        .hero__body {
           padding-left: 2.75rem;
           padding-right: 2.75rem;
-        }
-        .hero__body {
           padding-top: 3rem;
         }
         .hero__lead {
           font-size: 18px;
-        }
-        .hero__stats {
-          gap: 3rem;
-          padding-bottom: 2.75rem;
         }
         .hero__mark {
           right: -6%;
@@ -1078,7 +1023,9 @@
         margin-bottom: 3.5rem;
       }
 
-      /* Grade 4×2 dos oito serviços, como no material da marca. */
+      /* Uma coluna no celular, duas no tablet; no desktop a régua passa a
+         ser flex para a última fila ficar centrada — com cinco serviços a
+         grade fixa deixaria um card órfão encostado na esquerda. */
       .services__list {
         display: grid;
         grid-template-columns: 1fr;
@@ -1178,8 +1125,16 @@
       }
 
       @media (min-width: 1024px) {
+        /* A base de 22rem cabe três vezes na régua de 76rem e nunca
+           quatro, então os cinco cards saem 3 + 2, com a segunda fila
+           centrada pelo `justify-content`. */
         .services__list {
-          grid-template-columns: repeat(4, 1fr);
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        .service {
+          flex: 0 1 22rem;
         }
       }
 
@@ -1501,6 +1456,18 @@
       .portfolio__head {
         text-align: center;
         margin-bottom: 3.25rem;
+      }
+
+      /* Frase inteira no lugar de uma palavra só: no corpo de 140px da
+         régua padrão ela viraria quatro linhas gigantes. A escala menor
+         mantém o peso de título de seção e ainda cabe em duas linhas no
+         desktop. */
+      .portfolio__heading {
+        font-size: clamp(1.9rem, 5.2vw, 4.25rem);
+        letter-spacing: -0.04em;
+        line-height: 1.04;
+        max-width: 20ch;
+        margin-inline: auto;
       }
 
       .portfolio__lead {
@@ -2118,21 +2085,20 @@
         background: rgba(75, 120, 255, 0.08);
       }
 
-      /* A logo entra em escala de cinza para as marcas não brigarem entre
-         si nem com a paleta; ganha cor ao passar o mouse. */
+      /* As logos entram na cor da marca, só um pouco recuadas, e vêm à
+         frente no hover. Nenhum filtro uniforme serve para este conjunto:
+         a escala de cinza apagava as escuras (o vermelho do Amigão) no
+         fundo escuro, e chapar tudo em branco transformava as que são
+         emblema preenchido (Magma, Mega 96) em manchas sem desenho. */
       .client img {
         max-height: 100%;
         max-width: 100%;
         object-fit: contain;
-        filter: grayscale(1);
-        opacity: 0.75;
-        transition:
-          filter 0.3s var(--ease),
-          opacity 0.3s var(--ease);
+        opacity: 0.85;
+        transition: opacity 0.3s var(--ease);
       }
 
       .client:hover img {
-        filter: grayscale(0);
         opacity: 1;
       }
 
@@ -2301,18 +2267,6 @@
 
         <div class="hero__spacer"></div>
 
-        <div class="hero__stats" data-reveal style="--ry: 20px; --rd: 0.65s">
-          <div>
-            <strong>360°</strong><span>Visão digital</span>
-          </div>
-          <div>
-            <strong>IA</strong><span>Estratégia inteligente</span>
-          </div>
-          <div>
-            <strong>+R</strong><span>Foco em resultados</span>
-          </div>
-        </div>
-
         <div class="hero__mark">
           <div data-reveal style="--ry: 30px; --rd: 0.6s">
             <div class="magnet" data-magnet data-padding="150" data-strength="3">
@@ -2424,32 +2378,6 @@
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <path d="M4 20h16" />
-                <rect x="5" y="12" width="3.6" height="6" rx="1" />
-                <rect x="10.2" y="8" width="3.6" height="10" rx="1" />
-                <rect x="15.4" y="4" width="3.6" height="14" rx="1" />
-              </svg>
-            </span>
-            <div class="service__body">
-              <h3 class="service__name">Estratégia digital</h3>
-              <p class="service__desc">
-                Planejamento e estratégias personalizadas para alcançar
-                resultados reais.
-              </p>
-            </div>
-          </div>
-
-          <div class="service" data-reveal style="--rd: 0.06s">
-            <span class="service__icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.7"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
                 <rect x="3" y="4.5" width="18" height="15" rx="2.5" />
                 <path d="M3 9.2h18" />
                 <path d="M6.2 6.9h.01M8.7 6.9h.01" />
@@ -2466,7 +2394,7 @@
             </div>
           </div>
 
-          <div class="service" data-reveal style="--rd: 0.12s">
+          <div class="service" data-reveal style="--rd: 0.06s">
             <span class="service__icon">
               <svg
                 viewBox="0 0 24 24"
@@ -2493,36 +2421,7 @@
             </div>
           </div>
 
-          <div class="service" data-reveal style="--rd: 0.18s">
-            <span class="service__icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.7"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path
-                  d="M7.9 12.9a3.2 3.2 0 0 1 .4-6.36 4.1 4.1 0 0 1 7.84-.6 3.2 3.2 0 0 1 .1 6.96z"
-                />
-                <circle cx="12" cy="16.6" r="1.6" />
-                <circle cx="5.9" cy="19.9" r="1.6" />
-                <circle cx="18.1" cy="19.9" r="1.6" />
-                <path d="M12 15v-2M10.7 17.5l-3.4 1.7M13.3 17.5l3.4 1.7" />
-              </svg>
-            </span>
-            <div class="service__body">
-              <h3 class="service__name">Gestão de redes sociais</h3>
-              <p class="service__desc">
-                Gerenciamos suas redes com estratégia, conteúdo e foco em
-                engajamento.
-              </p>
-            </div>
-          </div>
-
-          <div class="service" data-reveal style="--rd: 0.24s">
+          <div class="service" data-reveal style="--rd: 0.12s">
             <span class="service__icon">
               <svg
                 viewBox="0 0 24 24"
@@ -2545,7 +2444,7 @@
             </div>
           </div>
 
-          <div class="service" data-reveal style="--rd: 0.3s">
+          <div class="service" data-reveal style="--rd: 0.18s">
             <span class="service__icon">
               <svg
                 viewBox="0 0 24 24"
@@ -2570,7 +2469,7 @@
             </div>
           </div>
 
-          <div class="service" data-reveal style="--rd: 0.36s">
+          <div class="service" data-reveal style="--rd: 0.24s">
             <span class="service__icon">
               <svg
                 viewBox="0 0 24 24"
@@ -2595,34 +2494,6 @@
             </div>
           </div>
 
-          <div class="service" data-reveal style="--rd: 0.42s">
-            <span class="service__icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.7"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="5" r="2.2" />
-                <circle cx="5.5" cy="18.6" r="2.2" />
-                <circle cx="12" cy="18.6" r="2.2" />
-                <circle cx="18.5" cy="18.6" r="2.2" />
-                <path
-                  d="M12 7.2v9.2M5.5 16.4v-1.8a1.5 1.5 0 0 1 1.5-1.5h10a1.5 1.5 0 0 1 1.5 1.5v1.8"
-                />
-              </svg>
-            </span>
-            <div class="service__body">
-              <h3 class="service__name">Automação e IA</h3>
-              <p class="service__desc">
-                Integração de inteligência artificial para otimizar processos e
-                gerar eficiência.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -2803,11 +2674,12 @@
               Portfólio &amp; valores
             </p>
             <h2
-              class="section-heading"
+              class="section-heading portfolio__heading"
               data-reveal
               style="--ry: 56px; --rt: 0.9s; --rd: 0.08s"
             >
-              <span class="gradient-text">Portfólio</span>
+              Encontre a solução ideal para
+              <span class="gradient-text">sua marca</span>
             </h2>
             <p
               class="portfolio__lead"
@@ -3389,10 +3261,9 @@
 
         <!-- ---------- Clientes e parceiros ----------
 
-             TROQUE PELOS CLIENTES REAIS: cada peça aponta para um arquivo
-             em assets/clientes/. Enquanto o arquivo não existir, a peça
-             mostra o nome escrito no <span> em vez de imagem quebrada —
-             então dá para publicar antes de ter todas as logos. -->
+             As logos ficam em assets/carrosel_empresas/. Se um arquivo
+             faltar, a peça mostra o nome escrito no <span> em vez de
+             imagem quebrada. -->
         <div class="closing-block" data-reveal style="--ry: 26px">
           <p class="kicker">Clientes e parceiros</p>
           <h3>Marcas que já <span class="gradient-text">confiaram</span> na NEXORA</h3>
@@ -3400,55 +3271,55 @@
           <div class="clients__marquee">
             <ul class="clients__track">
               <li class="client">
-                <img src="./assets/clientes/cliente-1.webp" alt="Cliente 01" loading="lazy" />
-                <span class="client__name">Cliente 01</span>
+                <img src="./assets/carrosel_empresas/amigao.webp" alt="Amigão Pizzas &amp; Esfihas" loading="lazy" />
+                <span class="client__name">Amigão</span>
               </li>
               <li class="client">
-                <img src="./assets/clientes/cliente-2.webp" alt="Cliente 02" loading="lazy" />
-                <span class="client__name">Cliente 02</span>
+                <img src="./assets/carrosel_empresas/taberna.webp" alt="Taberna Petiscos &amp; Pub" loading="lazy" />
+                <span class="client__name">Taberna</span>
               </li>
               <li class="client">
-                <img src="./assets/clientes/cliente-3.webp" alt="Cliente 03" loading="lazy" />
-                <span class="client__name">Cliente 03</span>
+                <img src="./assets/carrosel_empresas/magma.webp" alt="Magma Eletrônica de Autos" loading="lazy" />
+                <span class="client__name">Magma</span>
               </li>
               <li class="client">
-                <img src="./assets/clientes/cliente-4.webp" alt="Cliente 04" loading="lazy" />
-                <span class="client__name">Cliente 04</span>
+                <img src="./assets/carrosel_empresas/mega-96fm.webp" alt="Mega 96 FM" loading="lazy" />
+                <span class="client__name">Mega 96 FM</span>
               </li>
               <li class="client">
-                <img src="./assets/clientes/cliente-5.webp" alt="Cliente 05" loading="lazy" />
-                <span class="client__name">Cliente 05</span>
+                <img src="./assets/carrosel_empresas/creativity.webp" alt="Creativity Marketing Digital" loading="lazy" />
+                <span class="client__name">Creativity</span>
               </li>
               <li class="client">
-                <img src="./assets/clientes/cliente-6.webp" alt="Cliente 06" loading="lazy" />
-                <span class="client__name">Cliente 06</span>
+                <img src="./assets/carrosel_empresas/fortaleza-regional-11.webp" alt="Prefeitura de Fortaleza — Regional 11" loading="lazy" />
+                <span class="client__name">Regional 11</span>
               </li>
 
               <!-- Cópia da lista: é ela que fecha o laço sem emenda.
                 Ao mexer nos clientes acima, replique aqui também. -->
               <li class="client" aria-hidden="true">
-                <img src="./assets/clientes/cliente-1.webp" alt="" loading="lazy" />
-                <span class="client__name">Cliente 01</span>
+                <img src="./assets/carrosel_empresas/amigao.webp" alt="" loading="lazy" />
+                <span class="client__name">Amigão</span>
               </li>
               <li class="client" aria-hidden="true">
-                <img src="./assets/clientes/cliente-2.webp" alt="" loading="lazy" />
-                <span class="client__name">Cliente 02</span>
+                <img src="./assets/carrosel_empresas/taberna.webp" alt="" loading="lazy" />
+                <span class="client__name">Taberna</span>
               </li>
               <li class="client" aria-hidden="true">
-                <img src="./assets/clientes/cliente-3.webp" alt="" loading="lazy" />
-                <span class="client__name">Cliente 03</span>
+                <img src="./assets/carrosel_empresas/magma.webp" alt="" loading="lazy" />
+                <span class="client__name">Magma</span>
               </li>
               <li class="client" aria-hidden="true">
-                <img src="./assets/clientes/cliente-4.webp" alt="" loading="lazy" />
-                <span class="client__name">Cliente 04</span>
+                <img src="./assets/carrosel_empresas/mega-96fm.webp" alt="" loading="lazy" />
+                <span class="client__name">Mega 96 FM</span>
               </li>
               <li class="client" aria-hidden="true">
-                <img src="./assets/clientes/cliente-5.webp" alt="" loading="lazy" />
-                <span class="client__name">Cliente 05</span>
+                <img src="./assets/carrosel_empresas/creativity.webp" alt="" loading="lazy" />
+                <span class="client__name">Creativity</span>
               </li>
               <li class="client" aria-hidden="true">
-                <img src="./assets/clientes/cliente-6.webp" alt="" loading="lazy" />
-                <span class="client__name">Cliente 06</span>
+                <img src="./assets/carrosel_empresas/fortaleza-regional-11.webp" alt="" loading="lazy" />
+                <span class="client__name">Regional 11</span>
               </li>
             </ul>
           </div>

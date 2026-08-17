@@ -94,6 +94,24 @@ Os arquivos de wordmark têm fundo chapado, então `.logo-on-dark`
 (`mix-blend-mode: screen`) derruba o preto no tema escuro e `.logo-on-light`
 (`multiply`) derruba o branco na seção clara.
 
+## Clientes e parceiros
+
+As seis logos do carrossel ficam em `assets/carrosel_empresas/`, em WEBP com
+transparência e no máximo 600px de lado (elas aparecem a ~192×96 CSS px):
+`amigao`, `taberna`, `magma`, `mega-96fm`, `creativity` e
+`fortaleza-regional-11`.
+
+Elas entram na cor da marca, a 85% de opacidade, e vêm à frente no hover.
+Nenhum filtro uniforme serve para esse conjunto: escala de cinza apagava as
+escuras (o vermelho do Amigão) no fundo escuro, e chapar tudo em branco
+(`brightness(0) invert(1)`) transformava as que são emblema preenchido — Magma
+e Mega 96 — em manchas sem desenho.
+
+A esteira roda em laço, então a lista aparece duas vezes no HTML: ao mexer nos
+clientes, replique a alteração na segunda cópia (a marcada com `aria-hidden`).
+Se um arquivo faltar, a peça mostra o nome do `<span>` em vez de imagem
+quebrada.
+
 ## Identidade aplicada
 
 Paleta e tipografia vêm do protótipo da marca: fundo `#020513`, azul `#1264ff`,
@@ -164,7 +182,9 @@ interna, não no card: no card ele disputaria o `transform` com a entrada.
 - `canonical`, `robots`, Open Graph e Twitter Card — o card de link no WhatsApp
   e no LinkedIn usa `assets/textologo.png` como imagem.
 - Dados estruturados em JSON-LD: `Organization`, `WebSite`, `WebPage` e o
-  catálogo de `Service` com os oito serviços.
+  catálogo de `Service` com os cinco serviços. Ao acrescentar ou tirar um card
+  na seção Serviços, mexa também nesse catálogo — o JSON-LD anunciando serviço
+  que não está na página é divergência que o Google penaliza.
 - Um único `<h1>`, seguido de `<h2>` por seção, `<h3>` em cada serviço, solução
   e grupo do portfólio, e `<h4>` em cada peça. Nenhuma imagem sem atributo
   `alt`.
