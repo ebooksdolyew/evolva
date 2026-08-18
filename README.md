@@ -1,6 +1,6 @@
 # nexorasite
 
-Site da NEXORA — Mídia Digital & Criação. Sem build.
+Site da EVOLVA — Mídia Digital & Criação. Sem build.
 
 ```
 index.html         a página inteira (HTML + CSS + JS)
