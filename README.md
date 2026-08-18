@@ -1,6 +1,6 @@
 # nexorasite
 
-Site da EVOLVA — Mídia Digital & Criação. Sem build.
+Site da EVOLVA — Soluções Digitais. Sem build.
 
 ```
 index.html         a página inteira (HTML + CSS + JS)
@@ -12,7 +12,7 @@ assets/            logos e artes da marca
 assets/portfolio/  imagens dos trabalhos mostrados na seção de portfólio
 ```
 
-> **Antes de publicar:** as URLs absolutas apontam para `https://nexora.com.br`.
+> **Antes de publicar:** as URLs absolutas apontam para `https://evolva.com.br`.
 > Se o endereço final for outro (GitHub Pages, por exemplo), troque o domínio em
 > três lugares — o bloco de metadados no topo do `index.html`, o `sitemap.xml` e
 > o `robots.txt`. Um `canonical` apontando para o endereço errado tira a página
@@ -190,7 +190,7 @@ interna, não no card: no card ele disputaria o `transform` com a entrada.
 
 ## SEO
 
-- Título (56 caracteres) e descrição (158) dentro do tamanho que o Google exibe.
+- Título (50 caracteres) e descrição (158) dentro do tamanho que o Google exibe.
 - `canonical`, `robots`, Open Graph e Twitter Card — o card de link no WhatsApp
   e no LinkedIn usa `assets/evolva_solucoes_digitais-og.png` como imagem (PNG
   de propósito, veja
