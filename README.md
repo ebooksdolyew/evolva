@@ -1,6 +1,6 @@
 # nexorasite
 
-Site da NEXORA — Mídia Digital & Criação. Sem build.
+Site da EVOLVA — Soluções Digitais. Sem build.
 
 ```
 index.html         a página inteira (HTML + CSS + JS)
@@ -12,7 +12,7 @@ assets/            logos e artes da marca
 assets/portfolio/  imagens dos trabalhos mostrados na seção de portfólio
 ```
 
-> **Antes de publicar:** as URLs absolutas apontam para `https://nexora.com.br`.
+> **Antes de publicar:** as URLs absolutas apontam para `https://evolva.com.br`.
 > Se o endereço final for outro (GitHub Pages, por exemplo), troque o domínio em
 > três lugares — o bloco de metadados no topo do `index.html`, o `sitemap.xml` e
 > o `robots.txt`. Um `canonical` apontando para o endereço errado tira a página
@@ -87,20 +87,24 @@ fechar a tabela, dá para acrescentar `priceSpecification` em cada `Offer`.
 
 - `assets/iconelogo.webp` — símbolo magnético do hero, os quatro ornamentos do
   "Quem somos", o lockup da navbar/rodapé e a marca do `404.html`.
-- `assets/textologo.webp` — wordmark do lockup na navbar, no rodapé e no `404.html`.
-- `assets/textologo-light.webp` — versão escura, usada na seção clara de Serviços.
-- `assets/textologo.png` — **só** para `og:image`/`twitter:image` e o `logo` do
-  JSON-LD. Fica em PNG de propósito: o card de link do WhatsApp, do Facebook e
-  do LinkedIn não renderiza WEBP de forma confiável.
+- `assets/evolva_solucoes_digitais.webp` — wordmark "EVOLVA — Soluções
+  Digitais" do lockup na navbar, no rodapé e no `404.html`. Fundo transparente,
+  com o nome em branco: é arte para fundo escuro.
+- `assets/evolva_solucoes_digitais-light.webp` — mesma arte com o nome em
+  azul-noite (`#020513`), usada na seção clara de Serviços.
+- `assets/evolva_solucoes_digitais-og.png` — cartão 1200×630 com o wordmark
+  centrado sobre o fundo da marca, **só** para `og:image`/`twitter:image` e o
+  `logo` do JSON-LD. Fica em PNG de propósito: o card de link do WhatsApp, do
+  Facebook e do LinkedIn não renderiza WEBP de forma confiável. O fundo é
+  chapado porque o nome é branco e sumiria no preview claro dessas redes.
 - `assets/icon-192.png`, `assets/icon-512.png`, `assets/icon-maskable-512.png` e
   `assets/apple-touch-icon.png` — ícones quadrados gerados a partir do símbolo,
   usados pelo `site.webmanifest` e pelo `apple-touch-icon`. PNG por compatibilidade.
 
 Fora esses, todas as artes do site estão em WEBP.
 
-Os arquivos de wordmark têm fundo chapado, então `.logo-on-dark`
-(`mix-blend-mode: screen`) derruba o preto no tema escuro e `.logo-on-light`
-(`multiply`) derruba o branco na seção clara.
+O wordmark tem fundo transparente, então entra direto, sem `mix-blend-mode`:
+a versão padrão nos fundos escuros e a `-light` na seção branca de Serviços.
 
 ## Clientes e parceiros
 
@@ -186,9 +190,10 @@ interna, não no card: no card ele disputaria o `transform` com a entrada.
 
 ## SEO
 
-- Título (56 caracteres) e descrição (158) dentro do tamanho que o Google exibe.
+- Título (50 caracteres) e descrição (158) dentro do tamanho que o Google exibe.
 - `canonical`, `robots`, Open Graph e Twitter Card — o card de link no WhatsApp
-  e no LinkedIn usa `assets/textologo.png` como imagem (PNG de propósito, veja
+  e no LinkedIn usa `assets/evolva_solucoes_digitais-og.png` como imagem (PNG
+  de propósito, veja
   "Logos já no repositório").
 - `sitemap.xml` traz a única URL da página mais um índice `image:image` com as
   28 artes exibidas. Ao trocar arte do portfólio, regenere essa lista e atualize
