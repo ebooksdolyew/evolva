@@ -7,7 +7,8 @@
     <meta name="robots" content="noindex, follow" />
     <meta name="theme-color" content="#020513" />
     <meta name="color-scheme" content="dark" />
-    <link rel="icon" type="image/png" href="/assets/iconelogo.png" />
+    <link rel="icon" type="image/webp" href="./assets/iconelogo.webp" />
+    <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -59,9 +60,43 @@
         max-width: 520px;
       }
 
-      .mark {
-        width: 96px;
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.85rem;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: none;
+        box-shadow: none;
+        border-radius: 0;
         filter: drop-shadow(0 0 40px rgba(60, 110, 255, 0.55));
+      }
+
+      .brand:hover {
+        transform: none;
+      }
+
+      .brand__icon {
+        width: 56px;
+        height: auto;
+      }
+
+      .brand__word {
+        width: auto;
+        height: 46px;
+      }
+
+      @media (max-width: 480px) {
+        .brand {
+          gap: 0.65rem;
+        }
+        .brand__icon {
+          width: 44px;
+        }
+        .brand__word {
+          height: 36px;
+        }
       }
 
       .code {
@@ -119,14 +154,26 @@
   </head>
   <body>
     <div class="wrap">
-      <img class="mark" src="/assets/iconelogo.png" alt="NEXORA" />
+      <a class="brand" href="./">
+        <img
+          class="brand__icon"
+          src="./assets/iconelogo.webp"
+          alt=""
+          aria-hidden="true"
+        />
+        <img
+          class="brand__word"
+          src="./assets/textologo.webp"
+          alt="NEXORA — Mídia Digital &amp; Criação"
+        />
+      </a>
       <p class="code">404</p>
       <h1>Esta página não existe.</h1>
       <p>
         O endereço que você abriu não está no ar — pode ter sido movido ou o link
         veio errado.
       </p>
-      <a href="/">Voltar para o início</a>
+      <a href="./">Voltar para o início</a>
     </div>
   </body>
 </html>

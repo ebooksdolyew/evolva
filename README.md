@@ -85,10 +85,18 @@ fechar a tabela, dá para acrescentar `priceSpecification` em cada `Offer`.
 
 ## Logos já no repositório
 
-- `assets/iconelogo.png` — favicon, símbolo magnético do hero e os quatro
-  ornamentos do "Quem somos" (é o único com fundo transparente).
-- `assets/iconelogo.webp` + `assets/textologo.webp` — lockup na navbar e rodapé.
+- `assets/iconelogo.webp` — símbolo magnético do hero, os quatro ornamentos do
+  "Quem somos", o lockup da navbar/rodapé e a marca do `404.html`.
+- `assets/textologo.webp` — wordmark do lockup na navbar, no rodapé e no `404.html`.
 - `assets/textologo-light.webp` — versão escura, usada na seção clara de Serviços.
+- `assets/textologo.png` — **só** para `og:image`/`twitter:image` e o `logo` do
+  JSON-LD. Fica em PNG de propósito: o card de link do WhatsApp, do Facebook e
+  do LinkedIn não renderiza WEBP de forma confiável.
+- `assets/icon-192.png`, `assets/icon-512.png`, `assets/icon-maskable-512.png` e
+  `assets/apple-touch-icon.png` — ícones quadrados gerados a partir do símbolo,
+  usados pelo `site.webmanifest` e pelo `apple-touch-icon`. PNG por compatibilidade.
+
+Fora esses, todas as artes do site estão em WEBP.
 
 Os arquivos de wordmark têm fundo chapado, então `.logo-on-dark`
 (`mix-blend-mode: screen`) derruba o preto no tema escuro e `.logo-on-light`
@@ -180,8 +188,15 @@ interna, não no card: no card ele disputaria o `transform` com a entrada.
 
 - Título (56 caracteres) e descrição (158) dentro do tamanho que o Google exibe.
 - `canonical`, `robots`, Open Graph e Twitter Card — o card de link no WhatsApp
-  e no LinkedIn usa `assets/textologo.png` como imagem.
-- Dados estruturados em JSON-LD: `Organization`, `WebSite`, `WebPage` e o
+  e no LinkedIn usa `assets/textologo.png` como imagem (PNG de propósito, veja
+  "Logos já no repositório").
+- `sitemap.xml` traz a única URL da página mais um índice `image:image` com as
+  28 artes exibidas. Ao trocar arte do portfólio, regenere essa lista e atualize
+  o `lastmod`.
+- `site.webmanifest` declara ícones quadrados de 192 e 512 px mais um `maskable`
+  — sem ícone quadrado o Chrome não oferece a instalação como app.
+- Dados estruturados em JSON-LD: `Organization` (com os dois `contactPoint` de
+  WhatsApp que aparecem na seção de contato), `WebSite`, `WebPage` e o
   catálogo de `Service` com os cinco serviços. Ao acrescentar ou tirar um card
   na seção Serviços, mexa também nesse catálogo — o JSON-LD anunciando serviço
   que não está na página é divergência que o Google penaliza.
