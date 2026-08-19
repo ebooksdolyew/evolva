@@ -4,4 +4,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://evolva.com.br/sitemap.xml
+Sitemap: https://agencianexora.pages.dev/sitemap.xml

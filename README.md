@@ -12,11 +12,12 @@ assets/            logos e artes da marca
 assets/portfolio/  imagens dos trabalhos mostrados na seção de portfólio
 ```
 
-> **Antes de publicar:** as URLs absolutas apontam para `https://evolva.com.br`.
-> Se o endereço final for outro (GitHub Pages, por exemplo), troque o domínio em
-> três lugares — o bloco de metadados no topo do `index.html`, o `sitemap.xml` e
-> o `robots.txt`. Um `canonical` apontando para o endereço errado tira a página
-> do índice do Google.
+> **Domínio:** as URLs absolutas apontam para `https://agencianexora.pages.dev`,
+> onde o site está publicado (Cloudflare Pages). Ao migrar para um domínio
+> próprio, troque em três lugares — o bloco de metadados no topo do
+> `index.html`, o `sitemap.xml` e o `robots.txt`. Um `canonical` apontando para
+> o endereço errado tira a página do índice do Google, e um `og:image` apontando
+> para um servidor que não responde derruba a prévia do link no WhatsApp.
 
 ## Como visualizar
 
