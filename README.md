@@ -196,7 +196,7 @@ interna, não no card: no card ele disputaria o `transform` com a entrada.
   de propósito, veja
   "Logos já no repositório").
 - `sitemap.xml` traz a única URL da página mais um índice `image:image` com as
-  28 artes exibidas. Ao trocar arte do portfólio, regenere essa lista e atualize
+  30 artes exibidas. Ao trocar arte do portfólio, regenere essa lista e atualize
   o `lastmod`.
 - `site.webmanifest` declara ícones quadrados de 192 e 512 px mais um `maskable`
   — sem ícone quadrado o Chrome não oferece a instalação como app.

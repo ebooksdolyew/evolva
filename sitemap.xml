@@ -5,7 +5,7 @@
 >
   <url>
     <loc>https://evolva.com.br/</loc>
-    <lastmod>2026-08-18</lastmod>
+    <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -16,6 +16,12 @@
     </image:image>
     <image:image>
       <image:loc>https://evolva.com.br/assets/solucoes/tecnologia-ia.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://evolva.com.br/assets/solucoes/identidade-visual.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://evolva.com.br/assets/solucoes/performance.webp</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://evolva.com.br/assets/carrosel_empresas/amigao.webp</image:loc>
