@@ -1897,18 +1897,45 @@
          a grade vira uma coluna e elas passam em sequência, sempre com a
          peça amarrada ao plano dela.
 
-         Nada aqui pode ganhar vão entre um slot e outro: a conta do scroll
-         lê a coluna como exatamente dois slots. */
+         O empilhamento não começa no instante em que a peça trava: entre
+         ela e o plano existe `--pstack-hold`, um respiro que o plano ainda
+         precisa percorrer antes de encostar. Enquanto ele percorre, a peça
+         já está parada no topo e os dois cards aparecem inteiros. */
       .pstack {
+        --pstack-top: 2.5rem;
+        --pstack-hold: 4rem;
         display: grid;
         grid-template-columns: 1fr;
         gap: 0.9rem;
       }
 
+      /* A altura é amarrada à janela porque o que precisa caber nela é o
+         par inteiro — topo travado, peça, respiro e plano. Sem isso não
+         existe momento nenhum com os dois completos à vista. O piso é o
+         conteúdo do plano, que não pode ficar espremido; o teto é o
+         tamanho de card que a seção já tinha. */
       .pstack__slot {
         position: sticky;
-        top: 3.5rem;
-        height: clamp(24rem, 62vh, 27rem);
+        top: var(--pstack-top);
+        height: clamp(
+          23rem,
+          calc((100vh - var(--pstack-top) - var(--pstack-hold) - 1rem) / 2),
+          27rem
+        );
+        /* No celular a barra do navegador entra e sai: `svh` é a medida da
+           janela encolhida, a única que garante o par visível nos dois
+           estados. Quem não conhece a unidade fica com a linha de `vh`. */
+        height: clamp(
+          23rem,
+          calc((100svh - var(--pstack-top) - var(--pstack-hold) - 1rem) / 2),
+          27rem
+        );
+      }
+
+      /* O respiro mora entre os dois slots da mesma coluna. Não dá para
+         usar o `gap` da grade: no desktop ele também abre as colunas. */
+      .pstack__slot + .pstack__slot {
+        margin-top: var(--pstack-hold);
       }
 
       /* Quem fica na frente da pilha é a peça; o plano sobe por trás dela.
@@ -1948,15 +1975,32 @@
         flex: 1 1 auto;
       }
 
+      /* Entre 768px e 1024px as três colunas ficam estreitas e o plano
+         precisa de mais altura do que a janela teria para dar ao par:
+         nessa faixa vale o card no tamanho que a seção já usava. O respiro
+         atrasa o empilhamento do mesmo jeito, só não há como deixar os
+         dois inteiros na tela. */
       @media (min-width: 768px) {
         .pstack {
+          --pstack-hold: 6rem;
           grid-template-columns: repeat(3, 1fr);
           align-items: start;
         }
 
         .pstack__slot {
-          top: 6rem;
           height: clamp(25rem, 30vw, 28rem);
+        }
+      }
+
+      /* Coluna larga o bastante para o plano caber no seu conteúdo: aqui
+         a altura volta a ser a da janela, para o par inteiro aparecer. */
+      @media (min-width: 1024px) {
+        .pstack__slot {
+          height: clamp(
+            23.5rem,
+            calc((100vh - var(--pstack-top) - var(--pstack-hold) - 1rem) / 2),
+            28rem
+          );
         }
       }
 
@@ -4006,7 +4050,8 @@
         // Colunas empilhadas do portfólio. Cada uma é uma pilha própria e
         // curta, então não dá para usar a janela como régua: a medida é a
         // altura da coluna menos a de um slot, que é o quanto o card de
-        // baixo tem para percorrer até cobrir o de cima.
+        // baixo tem para percorrer — o respiro mais a peça — até sumir
+        // atrás dela.
         var stackCols = [].slice.call(
           document.querySelectorAll('[data-stack] .pstack__col'),
         );
