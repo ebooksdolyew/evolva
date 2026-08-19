@@ -1,10 +1,10 @@
-# nexorasite
+# EVOLVA — Soluções Digitais
 
-Site da EVOLVA — Soluções Digitais. Sem build.
+Site institucional da EVOLVA. Sem build.
 
 ```
 index.html         a página inteira (HTML + CSS + JS)
-404.html           página de erro (GitHub Pages usa automaticamente)
+404.html           página de erro servida quando a rota não existe
 robots.txt         libera o rastreamento e aponta o sitemap
 sitemap.xml        mapa do site
 site.webmanifest   ícone e cores para "adicionar à tela de início"
