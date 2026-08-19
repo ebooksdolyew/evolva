@@ -12,7 +12,7 @@ assets/            logos e artes da marca
 assets/portfolio/  imagens dos trabalhos mostrados na seção de portfólio
 ```
 
-> **Domínio:** as URLs absolutas apontam para `https://agencianexora.pages.dev`,
+> **Domínio:** as URLs absolutas apontam para `https://agenciaevolva.pages.dev`,
 > onde o site está publicado (Cloudflare Pages). Ao migrar para um domínio
 > próprio, troque em três lugares — o bloco de metadados no topo do
 > `index.html`, o `sitemap.xml` e o `robots.txt`. Um `canonical` apontando para
