@@ -48,22 +48,21 @@ paleta. Para entrar a arte real, salve os arquivos em `assets/` com estes nomes:
 A faixa em parallax logo abaixo do hero usa uma fonte separada — veja
 "A faixa em parallax" mais abaixo.
 
-## Portfólio — 21 imagens dos trabalhos
+## Portfólio — 9 imagens dos trabalhos
 
-A seção "Portfólio & Valores" tem sete grupos e cada um mostra três peças.
+A seção "Portfólio & Valores" tem três grupos e cada um mostra três peças.
 Enquanto a imagem não estiver em `assets/portfolio/`, o quadro exibe a mesma
-chapa em gradiente do resto da página — nunca um ícone quebrado. Salve os
-arquivos com estes nomes (formato paisagem, algo em torno de 800×520):
+chapa em gradiente do resto da página — nunca um ícone quebrado. O `src` de
+cada `<img>` aponta para o nome exato da tabela: um arquivo salvo com outro
+nome (ou em outra pasta) não entra na página, mesmo estando no repositório.
 
 | Grupo | Arquivos |
 | --- | --- |
-| 01 — Social media | `social-1.png`, `social-2.png`, `social-3.png` |
-| 02 — Criação e desenvolvimento | `web-1.png`, `web-2.png`, `web-3.png` |
-| 03 — Estratégia digital | `estrategia-1.png`, `estrategia-2.png`, `estrategia-3.png` |
-| 04 — Identidade visual | `identidade-1.png`, `identidade-2.png`, `identidade-3.png` |
-| 05 — Tráfego pago e anúncios | `trafego-1.png`, `trafego-2.png`, `trafego-3.png` |
-| 06 — Serviços de T.I. | `ti-1.png`, `ti-2.png`, `ti-3.png` |
-| 07 — Automação e IA | `automacao-1.png`, `automacao-2.png`, `automacao-3.png` |
+| 01 — Social media | `social-1.webp`, `social-2.webp`, `social-3.webp` |
+| 02 — Criação e desenvolvimento | `web-1.webp`, `web-2.webp`, `web-3.webp` |
+| 03 — Identidade visual | `identidade-1.webp`, `identidade-2.webp`, `identidade-3.webp` |
+
+As nove peças estão no repositório, em WEBP 1448×1086 (formato paisagem, ~4:3).
 
 Ao trocar a imagem, ajuste também o `alt` — hoje ele descreve o tipo de peça,
 não o trabalho real.
@@ -71,7 +70,7 @@ não o trabalho real.
 ## Valores — conferir antes de publicar
 
 > **Os preços da seção de portfólio são um ponto de partida, não a tabela da
-> agência.** Antes de publicar, percorra os 21 blocos `.plan` e troque
+> agência.** Antes de publicar, percorra os nove blocos `.plan` e troque
 > `.plan__value` (o número), `.plan__period` (`/mês`, `/projeto`, `/hora
 > técnica`) e os itens de `.plan__list` pelas entregas reais.
 
