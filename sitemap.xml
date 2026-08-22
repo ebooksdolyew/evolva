@@ -5,7 +5,7 @@
 >
   <url>
     <loc>https://agenciaevolva.pages.dev/</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -22,6 +22,33 @@
     </image:image>
     <image:image>
       <image:loc>https://agenciaevolva.pages.dev/assets/solucoes/performance.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/social-1.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/social-2.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/social-3.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/web-1.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/web-2.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/web-3.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/identidade-1.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/identidade-2.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/identidade-3.webp</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://agenciaevolva.pages.dev/assets/carrosel_empresas/amigao.webp</image:loc>
@@ -57,19 +84,19 @@
       <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/5.webp</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/13.11%20-FAMILIA-TABERNA-FEED.webp</image:loc>
+      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/familia-taberna-feed.webp</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/FEED2.webp</image:loc>
+      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/feed-2.webp</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/Prancheta%203.webp</image:loc>
+      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/prancheta-3.webp</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/altonivelModerno.webp</image:loc>
+      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/alto-nivel-moderno.webp</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/feed.marcos.filtro%20combustivel.webp</image:loc>
+      <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/filtro-combustivel.webp</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/pascoa.webp</image:loc>

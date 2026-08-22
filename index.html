@@ -84,7 +84,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
 
@@ -515,13 +515,54 @@
           linear-gradient(160deg, #020513 0%, #050a20 55%, #070428 100%);
       }
 
-      .hero__bg img {
+      /* Luz em movimento no lugar de uma foto: duas manchas da paleta
+         derivam devagar sobre o gradiente e dão profundidade ao hero sem
+         custar um asset. Se um dia entrar arte fotográfica, basta pôr um
+         <img> com object-fit: cover dentro de .hero__bg. */
+      .hero__aurora {
         position: absolute;
-        inset: 0;
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        object-position: 70% center;
+        border-radius: 50%;
+        pointer-events: none;
+        filter: blur(90px);
+        will-change: transform;
+      }
+
+      .hero__aurora--a {
+        top: -12%;
+        right: -8%;
+        width: min(58vw, 720px);
+        height: min(58vw, 720px);
+        background: radial-gradient(
+          circle,
+          rgba(18, 100, 255, 0.38),
+          transparent 65%
+        );
+        animation: aurora-drift-a 18s ease-in-out infinite alternate;
+      }
+
+      .hero__aurora--b {
+        bottom: -18%;
+        right: 12%;
+        width: min(48vw, 600px);
+        height: min(48vw, 600px);
+        background: radial-gradient(
+          circle,
+          rgba(124, 60, 255, 0.36),
+          transparent 65%
+        );
+        animation: aurora-drift-b 22s ease-in-out infinite alternate;
+      }
+
+      @keyframes aurora-drift-a {
+        to {
+          transform: translate3d(-10%, 12%, 0) scale(1.12);
+        }
+      }
+
+      @keyframes aurora-drift-b {
+        to {
+          transform: translate3d(12%, -10%, 0) scale(0.92);
+        }
       }
 
       /* Véu que segura a leitura do texto sobre a arte. */
@@ -583,11 +624,11 @@
         transition: color 0.2s var(--ease);
       }
 
-      /* Abaixo de 640px só cabem três itens sem cortar no lado direito.
+      /* Abaixo de 640px cabem dois links mais o botão de contato — que é
+         o clique mais importante e por isso nunca sai da régua estreita.
          A regra fica no <li> para o item não deixar um gap vazio. */
       .hero__links li.is-secondary,
-      .hero__links li.is-tertiary,
-      .hero__links li.is-cta {
+      .hero__links li.is-tertiary {
         display: none;
       }
 
@@ -700,6 +741,11 @@
         }
         .hero__links li.is-secondary {
           display: block;
+        }
+        /* Entre 640px e 850px os quatro links ocupam a régua inteira ao
+           lado do lockup completo: o botão sai e volta quando há largura. */
+        .hero__links li.is-cta {
+          display: none;
         }
         .hero__body {
           padding-left: 2rem;
@@ -1260,7 +1306,7 @@
       }
 
       .solution-panel.is-open .solution-panel__label {
-        color: var(--fg);
+        color: var(--text);
       }
 
       .solution-panel__stage {
@@ -1461,7 +1507,7 @@
         .solutions__rail:not(:hover):not(:focus-within)
           .solution-panel:first-child
           .solution-panel__label {
-          color: var(--fg);
+          color: var(--text);
         }
 
         .solution-panel:hover .solution-panel__stage,
@@ -1851,11 +1897,6 @@
         font-size: clamp(1.7rem, 4vw, 2.1rem);
         font-weight: 900;
         letter-spacing: -0.04em;
-      }
-
-      /* Preço aberto ocupa a mesma linha que um número, em corpo menor. */
-      .plan__value--quote {
-        font-size: clamp(1.25rem, 3vw, 1.5rem);
       }
 
       .plan__period {
@@ -2440,9 +2481,11 @@
           transition: none !important;
           transform: none !important;
         }
-        /* Esteira em laço infinito: sem isso ficaria rodando para sempre
-           justamente para quem pediu para não ter movimento. */
-        .clients__track {
+        /* Laços infinitos — a esteira de clientes e a aurora do hero:
+           sem isso ficariam rodando para sempre justamente para quem
+           pediu para não ter movimento. */
+        .clients__track,
+        .hero__aurora {
           animation: none !important;
         }
         .about__text span {
@@ -2450,6 +2493,18 @@
         }
       }
     </style>
+
+    <!-- Sem JavaScript não há quem acrescente .is-in: os elementos de
+         [data-reveal] nasceriam invisíveis e ficariam assim. Aqui eles
+         entram já montados. -->
+    <noscript>
+      <style>
+        [data-reveal] {
+          opacity: 1;
+          transform: none;
+        }
+      </style>
+    </noscript>
   </head>
 
   <body>
@@ -2458,13 +2513,9 @@
            1. Hero
       ============================================================= -->
       <section class="hero dot-grid streaks">
-        <div class="hero__bg">
-          <img
-            src="./assets/hero.png"
-            alt=""
-            data-fallback="hide"
-            aria-hidden="true"
-          />
+        <div class="hero__bg" aria-hidden="true">
+          <span class="hero__aurora hero__aurora--a"></span>
+          <span class="hero__aurora hero__aurora--b"></span>
         </div>
         <div class="hero__scrim"></div>
 
@@ -2485,7 +2536,7 @@
           <ul class="hero__links">
             <li><a href="#sobre">Sobre</a></li>
             <li><a href="#servicos">Serviços</a></li>
-            <li><a href="#solucoes">Soluções</a></li>
+            <li class="is-secondary"><a href="#solucoes">Soluções</a></li>
             <li class="is-tertiary"><a href="#processo">Processo</a></li>
             <li class="is-secondary"><a href="#portfolio">Portfólio</a></li>
             <li class="is-cta">
@@ -2891,8 +2942,9 @@
               Do conceito ao <span class="gradient-text">resultado.</span>
             </h2>
             <p data-reveal style="--ry: 26px; --rd: 0.2s">
-              Unimos criatividade, tecnologia e inteligência para entregar soluções
-              reais, escaláveis e orientadas ao negócio.
+              Nada aqui é improviso: todo projeto percorre as mesmas quatro
+              etapas — entender o negócio, definir a estratégia, criar a
+              experiência e escalar o que funciona.
             </p>
 
             <div class="process__checks">
@@ -3042,7 +3094,12 @@
                       <li><b>✓</b> Legendas e hashtags</li>
                       <li><b>✓</b> Calendário editorial</li>
                     </ul>
-                    <a class="btn btn--ghost" href="#contato">Contratar</a>
+                    <a
+                      class="btn btn--ghost"
+                      href="#contato"
+                      data-plan="o plano Essencial de social media"
+                      >Contratar</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3087,7 +3144,12 @@
                       <li><b>✓</b> Stories três vezes por semana</li>
                       <li><b>✓</b> Relatório mensal</li>
                     </ul>
-                    <a class="btn btn--primary" href="#contato">Contratar</a>
+                    <a
+                      class="btn btn--primary"
+                      href="#contato"
+                      data-plan="o plano Profissional de social media"
+                      >Contratar</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3131,7 +3193,12 @@
                       <li><b>✓</b> Gravação e edição</li>
                       <li><b>✓</b> Gestão de comentários e direct</li>
                     </ul>
-                    <a class="btn btn--ghost" href="#contato">Contratar</a>
+                    <a
+                      class="btn btn--ghost"
+                      href="#contato"
+                      data-plan="o plano Premium de social media"
+                      >Contratar</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3202,7 +3269,12 @@
                       <li><b>✓</b> SEO básico e analytics</li>
                       <li><b>✓</b> Uma rodada de ajustes</li>
                     </ul>
-                    <a class="btn btn--ghost" href="#contato">Contratar</a>
+                    <a
+                      class="btn btn--ghost"
+                      href="#contato"
+                      data-plan="uma landing page"
+                      >Contratar</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3247,7 +3319,12 @@
                       <li><b>✓</b> SEO técnico e velocidade</li>
                       <li><b>✓</b> Duas rodadas de ajustes</li>
                     </ul>
-                    <a class="btn btn--primary" href="#contato">Contratar</a>
+                    <a
+                      class="btn btn--primary"
+                      href="#contato"
+                      data-plan="um site institucional"
+                      >Contratar</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3291,7 +3368,12 @@
                       <li><b>✓</b> Áreas com login</li>
                       <li><b>✓</b> Escopo fechado em diagnóstico</li>
                     </ul>
-                    <a class="btn btn--ghost" href="#contato">Falar sobre o projeto</a>
+                    <a
+                      class="btn btn--ghost"
+                      href="#contato"
+                      data-plan="um projeto sob medida"
+                      >Falar sobre o projeto</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3362,7 +3444,12 @@
                       <li><b>✓</b> Paleta e tipografia</li>
                       <li><b>✓</b> Arquivos em vetor</li>
                     </ul>
-                    <a class="btn btn--ghost" href="#contato">Contratar</a>
+                    <a
+                      class="btn btn--ghost"
+                      href="#contato"
+                      data-plan="o pacote Logo essencial"
+                      >Contratar</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3407,7 +3494,12 @@
                       <li><b>✓</b> Papelaria e kit de redes</li>
                       <li><b>✓</b> Grafismos e padrões</li>
                     </ul>
-                    <a class="btn btn--primary" href="#contato">Contratar</a>
+                    <a
+                      class="btn btn--primary"
+                      href="#contato"
+                      data-plan="o pacote Identidade completa"
+                      >Contratar</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3451,7 +3543,12 @@
                       <li><b>✓</b> Plano de transição</li>
                       <li><b>✓</b> Aplicação nos canais</li>
                     </ul>
-                    <a class="btn btn--ghost" href="#contato">Falar sobre o projeto</a>
+                    <a
+                      class="btn btn--ghost"
+                      href="#contato"
+                      data-plan="um rebranding"
+                      >Falar sobre o projeto</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3504,7 +3601,7 @@
             <div class="whatsapp__grid">
               <a
                 class="whatsapp-card"
-                href="https://wa.me/5585991323925"
+                href="https://wa.me/5585991323925?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20EVOLVA."
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -3522,7 +3619,7 @@
               </a>
               <a
                 class="whatsapp-card"
-                href="https://wa.me/558597498750"
+                href="https://wa.me/558597498750?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20EVOLVA."
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -3608,12 +3705,19 @@
           </div>
         </div>
 
-        <!-- ---------- Redes sociais ----------
+        <!-- ---------- Redes sociais (fora do ar de propósito) ----------
 
-             PREENCHA OS href: estão em "#" porque eu não tenho os perfis
-             da EVOLVA, e chutar um endereço levaria o visitante para a
-             conta de outra pessoa. -->
-        <div class="closing-block" data-reveal style="--ry: 26px; --rd: 0.1s">
+             Os href estão em "#" porque os perfis da EVOLVA ainda não
+             foram informados — e botão que abre aba em branco passa
+             impressão de site inacabado. O atributo `hidden` abaixo tira
+             o bloco da página; para reativar, preencha cada href com o
+             perfil real e apague o `hidden`. -->
+        <div
+          class="closing-block"
+          data-reveal
+          style="--ry: 26px; --rd: 0.1s"
+          hidden
+        >
           <p class="kicker">Onde nos encontrar</p>
           <h3>Acompanhe a EVOLVA nas <span class="gradient-text">redes</span></h3>
 
@@ -3723,11 +3827,11 @@
           './assets/portfolio/3.webp',
           './assets/portfolio/4.webp',
           './assets/portfolio/5.webp',
-          './assets/portfolio/13.11 -FAMILIA-TABERNA-FEED.webp',
-          './assets/portfolio/FEED2.webp',
-          './assets/portfolio/Prancheta 3.webp',
-          './assets/portfolio/altonivelModerno.webp',
-          './assets/portfolio/feed.marcos.filtro combustivel.webp',
+          './assets/portfolio/familia-taberna-feed.webp',
+          './assets/portfolio/feed-2.webp',
+          './assets/portfolio/prancheta-3.webp',
+          './assets/portfolio/alto-nivel-moderno.webp',
+          './assets/portfolio/filtro-combustivel.webp',
           './assets/portfolio/pascoa.webp',
           './assets/portfolio/mkt-vinicius-2.webp',
           './assets/portfolio/canoa-quebrada.webp',
@@ -4181,9 +4285,32 @@
         var panel = document.querySelector('[data-whatsapp-panel]');
         if (!toggle || !panel) return;
 
-        toggle.addEventListener('click', function () {
-          var isOpen = panel.classList.toggle('is-open');
+        var setOpen = function (isOpen) {
+          panel.classList.toggle('is-open', isOpen);
           toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        };
+
+        toggle.addEventListener('click', function () {
+          setOpen(!panel.classList.contains('is-open'));
+        });
+
+        // "Contratar" encurta o funil: o clique rola até o contato, abre o
+        // painel e deixa a mensagem do plano pré-preenchida nos dois
+        // contatos — o visitante só escolhe com quem falar, e o
+        // atendimento já sabe qual plano interessou.
+        var cards = [].slice.call(panel.querySelectorAll('a[href*="wa.me"]'));
+        document.querySelectorAll('[data-plan]').forEach(function (link) {
+          link.addEventListener('click', function () {
+            var msg =
+              'Olá! Vim pelo site da EVOLVA e quero falar sobre ' +
+              link.getAttribute('data-plan') +
+              '.';
+            cards.forEach(function (card) {
+              card.href =
+                card.href.split('?')[0] + '?text=' + encodeURIComponent(msg);
+            });
+            setOpen(true);
+          });
         });
       })();
     </script>
