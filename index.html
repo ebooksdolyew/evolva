@@ -17,7 +17,7 @@
     <title>EVOLVA — Ideias que viram resultado</title>
     <meta
       name="description"
-      content="Branding, mídia social, sites, tráfego pago e IA para transformar sua marca. Comece com um diagnóstico gratuito pelo WhatsApp."
+      content="Menos curtida, mais cliente: branding, mídia social, sites e tráfego pago com estratégia. Comece com um diagnóstico gratuito pelo WhatsApp."
     />
     <link rel="canonical" href="https://agenciaevolva.pages.dev/" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -36,7 +36,7 @@
     />
     <meta
       property="og:description"
-      content="Branding, mídia social, sites, tráfego pago e IA para transformar sua marca. Comece com um diagnóstico gratuito."
+      content="Menos curtida, mais cliente: branding, social, sites e tráfego com estratégia. Comece com um diagnóstico gratuito."
     />
     <meta property="og:image" content="https://agenciaevolva.pages.dev/assets/evolva_solucoes_digitais-og.png" />
     <meta property="og:image:type" content="image/png" />
@@ -49,7 +49,7 @@
     <meta name="twitter:title" content="EVOLVA — Ideias que viram resultado" />
     <meta
       name="twitter:description"
-      content="Branding, mídia social, sites, tráfego pago e IA para transformar sua marca. Comece com um diagnóstico gratuito."
+      content="Menos curtida, mais cliente: branding, social, sites e tráfego com estratégia. Comece com um diagnóstico gratuito."
     />
     <meta
       name="twitter:image"
@@ -250,6 +250,7 @@
         letter-spacing: 0.22em;
         font-size: 12px;
         font-weight: 800;
+        line-height: 1.5;
       }
 
       .section-heading {
@@ -507,6 +508,16 @@
         padding: 2.5rem 1.25rem 0;
       }
 
+      /* Abaixo de 380px a linha de contexto do hero não cabe inteira com
+         o tracking cheio; apertar aqui a mantém em uma linha só, sem
+         mexer nos outros kickers da página. */
+      @media (max-width: 379.98px) {
+        .hero__body .kicker {
+          font-size: 11px;
+          letter-spacing: 0.14em;
+        }
+      }
+
       .hero__title-clip {
         overflow: hidden;
       }
@@ -523,13 +534,18 @@
         white-space: nowrap;
       }
 
+      /* A escala é ditada pela linha mais longa em `nowrap` — hoje
+         "Mais cliente.", que tem mais glifos que a linha de cima. Os
+         valores deixam ~8% de folga para a fonte de fallback, que é mais
+         larga que a Inter: se o Google Fonts falhar, o título não estoura.
+         Ao trocar a chamada, meça a linha nova antes de publicar. */
       .hero__title .line-a {
-        font-size: 8.5vw;
+        font-size: 7.6vw;
         color: #e8edff;
       }
 
       .hero__title .line-b {
-        font-size: 12.8vw;
+        font-size: 10.4vw;
       }
 
       .hero__lead {
@@ -644,10 +660,10 @@
 
       @media (min-width: 1024px) {
         .hero__title .line-a {
-          font-size: 7.5vw;
+          font-size: 7vw;
         }
         .hero__title .line-b {
-          font-size: 12vw;
+          font-size: 10.6vw;
         }
         .hero__mark {
           right: -2%;
@@ -1619,20 +1635,20 @@
 
         <div class="hero__body">
           <p class="kicker" data-reveal style="--ry: 20px; --rd: 0.1s">
-            Nova era digital
+            Marketing digital em Fortaleza
           </p>
 
           <div class="hero__title-clip">
             <h1 class="hero__title" data-reveal style="--ry: 40px; --rd: 0.15s">
-              <span class="line-a">Ideias que viram</span>
-              <span class="line-b gradient-text">resultado.</span>
+              <span class="line-a">Menos curtida.</span>
+              <span class="line-b gradient-text">Mais cliente.</span>
             </h1>
           </div>
 
           <p class="hero__lead" data-reveal style="--ry: 20px; --rd: 0.35s">
-            Branding, mídia social, sites, tráfego pago e IA — a EVOLVA monta o
-            plano e executa. Tudo começa com um diagnóstico gratuito da sua
-            presença digital.
+            Se a sua marca posta e nada volta, o problema não é o algoritmo — é
+            a falta de estratégia. A EVOLVA monta o plano e executa: branding,
+            social, sites e tráfego. Tudo começa com um diagnóstico gratuito.
           </p>
 
           <div class="hero__actions" data-reveal style="--ry: 20px; --rd: 0.5s">
@@ -1643,8 +1659,8 @@
           </div>
 
           <p class="hero__note" data-reveal style="--ry: 16px; --rd: 0.6s">
-            <b>✓</b>Sem compromisso — uma conversa no WhatsApp para entender
-            cenário, marca e objetivos.
+            <b>✓</b>Gratuito e sem compromisso · leva dois minutos para pedir ·
+            resposta direto no WhatsApp
           </p>
         </div>
 
@@ -1766,13 +1782,13 @@
           <p class="kicker" data-reveal style="--ry: 20px">Por que a EVOLVA</p>
 
           <h2 class="section-heading" data-reveal style="--ry: 40px">
-            Mais do que criar.<br /><span class="gradient-text">Conectar.</span>
+            Mais do que postar.<br /><span class="gradient-text">Vender.</span>
           </h2>
 
           <p class="manifesto__text" data-scroll-text>
-            Uma experiência digital premium para empresas que querem crescer, se
-            posicionar e competir na nova era. Unimos criatividade, tecnologia e
-            inteligência para entregar soluções reais, escaláveis e orientadas ao
+            Estratégia sem execução é apresentação bonita. Execução sem
+            estratégia é post no vazio. A EVOLVA junta as duas: criatividade,
+            tecnologia e inteligência trabalhando pelo crescimento do seu
             negócio.
           </p>
 
@@ -1844,10 +1860,11 @@
             </span>
             <h3 class="service-row__name">Criação de sites</h3>
             <p class="service-row__desc">
-              Sites modernos, rápidos e otimizados para todos os dispositivos.
+              Um site rápido, que transforma visita em contato — pronto para
+              receber tráfego.
             </p>
             <span class="service-row__cta">
-              <span class="service-row__cta-label">Começar</span>
+              <span class="service-row__cta-label">Quero isso</span>
               <b aria-hidden="true">→</b>
             </span>
           </a>
@@ -1879,10 +1896,11 @@
             </span>
             <h3 class="service-row__name">Criação de mídia social</h3>
             <p class="service-row__desc">
-              Produção de conteúdos que conectam sua marca ao público certo.
+              Conteúdo com estratégia e calendário — presença constante que
+              fala com o público certo.
             </p>
             <span class="service-row__cta">
-              <span class="service-row__cta-label">Começar</span>
+              <span class="service-row__cta-label">Quero isso</span>
               <b aria-hidden="true">→</b>
             </span>
           </a>
@@ -1910,10 +1928,11 @@
             </span>
             <h3 class="service-row__name">Identidade visual</h3>
             <p class="service-row__desc">
-              Criamos marcas fortes, memoráveis e que se destacam no mercado.
+              Uma marca que o cliente reconhece — e respeita — antes do
+              primeiro contato.
             </p>
             <span class="service-row__cta">
-              <span class="service-row__cta-label">Começar</span>
+              <span class="service-row__cta-label">Quero isso</span>
               <b aria-hidden="true">→</b>
             </span>
           </a>
@@ -1942,11 +1961,11 @@
             </span>
             <h3 class="service-row__name">Tráfego pago e anúncios</h3>
             <p class="service-row__desc">
-              Campanhas inteligentes para atrair clientes e maximizar
-              resultados.
+              Anúncios com verba controlada e resultado medido — cada real com
+              destino.
             </p>
             <span class="service-row__cta">
-              <span class="service-row__cta-label">Começar</span>
+              <span class="service-row__cta-label">Quero isso</span>
               <b aria-hidden="true">→</b>
             </span>
           </a>
@@ -1975,11 +1994,11 @@
             </span>
             <h3 class="service-row__name">Serviços de T.I.</h3>
             <p class="service-row__desc">
-              Soluções completas em tecnologia para que empresas funcionem
-              melhor.
+              Automação, integrações e suporte para a operação rodar sem
+              fricção.
             </p>
             <span class="service-row__cta">
-              <span class="service-row__cta-label">Começar</span>
+              <span class="service-row__cta-label">Quero isso</span>
               <b aria-hidden="true">→</b>
             </span>
           </a>
@@ -2068,6 +2087,14 @@
               </p>
             </details>
             <details>
+              <summary>Em quanto tempo fica pronto?</summary>
+              <p>
+                Depende do escopo: uma landing page fica no ar em poucos dias;
+                projetos maiores — site completo, identidade, operação de
+                social — ganham prazo fechado na proposta, junto com o plano.
+              </p>
+            </details>
+            <details>
               <summary>O diagnóstico me compromete a fechar?</summary>
               <p>
                 Não. É uma conversa sem compromisso — você sai com uma leitura
@@ -2087,14 +2114,15 @@
           data-reveal="zoom"
           style="--ry: 40px; --rs: 0.95; --rt: 0.85s"
         >
-          <p class="kicker">Diagnóstico gratuito</p>
+          <p class="kicker">Último passo</p>
           <h2>
-            Vamos transformar suas ideias em
-            <span class="gradient-text">resultados?</span>
+            Peça seu diagnóstico
+            <span class="gradient-text">gratuito.</span>
           </h2>
           <p>
-            Chame no WhatsApp e receba o diagnóstico da sua presença digital.
-            Sem compromisso — só o próximo passo da sua marca.
+            Chame Wesley ou Romero no WhatsApp. Você sai com uma leitura clara
+            da presença digital da sua marca e um caminho para crescer — feche
+            com a gente ou não.
           </p>
 
           <div class="whatsapp__grid">
