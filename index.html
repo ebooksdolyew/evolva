@@ -84,7 +84,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
 
@@ -515,13 +515,54 @@
           linear-gradient(160deg, #020513 0%, #050a20 55%, #070428 100%);
       }
 
-      .hero__bg img {
+      /* Luz em movimento no lugar de uma foto: duas manchas da paleta
+         derivam devagar sobre o gradiente e dão profundidade ao hero sem
+         custar um asset. Se um dia entrar arte fotográfica, basta pôr um
+         <img> com object-fit: cover dentro de .hero__bg. */
+      .hero__aurora {
         position: absolute;
-        inset: 0;
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        object-position: 70% center;
+        border-radius: 50%;
+        pointer-events: none;
+        filter: blur(90px);
+        will-change: transform;
+      }
+
+      .hero__aurora--a {
+        top: -12%;
+        right: -8%;
+        width: min(58vw, 720px);
+        height: min(58vw, 720px);
+        background: radial-gradient(
+          circle,
+          rgba(18, 100, 255, 0.38),
+          transparent 65%
+        );
+        animation: aurora-drift-a 18s ease-in-out infinite alternate;
+      }
+
+      .hero__aurora--b {
+        bottom: -18%;
+        right: 12%;
+        width: min(48vw, 600px);
+        height: min(48vw, 600px);
+        background: radial-gradient(
+          circle,
+          rgba(124, 60, 255, 0.36),
+          transparent 65%
+        );
+        animation: aurora-drift-b 22s ease-in-out infinite alternate;
+      }
+
+      @keyframes aurora-drift-a {
+        to {
+          transform: translate3d(-10%, 12%, 0) scale(1.12);
+        }
+      }
+
+      @keyframes aurora-drift-b {
+        to {
+          transform: translate3d(12%, -10%, 0) scale(0.92);
+        }
       }
 
       /* Véu que segura a leitura do texto sobre a arte. */
@@ -583,11 +624,11 @@
         transition: color 0.2s var(--ease);
       }
 
-      /* Abaixo de 640px só cabem três itens sem cortar no lado direito.
+      /* Abaixo de 640px cabem dois links mais o botão de contato — que é
+         o clique mais importante e por isso nunca sai da régua estreita.
          A regra fica no <li> para o item não deixar um gap vazio. */
       .hero__links li.is-secondary,
-      .hero__links li.is-tertiary,
-      .hero__links li.is-cta {
+      .hero__links li.is-tertiary {
         display: none;
       }
 
@@ -700,6 +741,11 @@
         }
         .hero__links li.is-secondary {
           display: block;
+        }
+        /* Entre 640px e 850px os quatro links ocupam a régua inteira ao
+           lado do lockup completo: o botão sai e volta quando há largura. */
+        .hero__links li.is-cta {
+          display: none;
         }
         .hero__body {
           padding-left: 2rem;
@@ -1053,81 +1099,169 @@
         margin-bottom: 3.5rem;
       }
 
-      /* Uma coluna no celular, duas no tablet; no desktop a régua passa a
-         ser flex para a última fila ficar centrada — com cinco serviços a
-         grade fixa deixaria um card órfão encostado na esquerda. */
+      /* Régua editorial: uma faixa por serviço, separadas por um fio, com
+         índice, nome, descrição e destino — a faixa inteira é um link, que
+         leva aos planos do serviço ou abre a conversa. Ecoa o "01 —" do
+         Processo e os fios da sanfona de Soluções; e, com cinco itens, a
+         lista vertical não deixa o card órfão que a grade deixava. */
       .services__list {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 0.9rem;
         margin: 0 auto;
         max-width: 76rem;
+        border-top: 1px solid rgba(2, 5, 19, 0.12);
       }
 
-      .service {
-        display: flex;
-        flex-direction: column;
+      .service-row {
+        display: grid;
+        grid-template-columns: 2.4rem minmax(0, 1fr) auto;
+        grid-template-areas:
+          'index name arrow'
+          'index desc arrow';
         align-items: center;
-        gap: 0.9rem;
-        padding: 1.9rem 1.35rem;
-        text-align: center;
-        border: 1px solid rgba(2, 5, 19, 0.1);
-        border-radius: 20px;
-        background: #f6f8ff;
+        column-gap: 0.9rem;
+        row-gap: 0.4rem;
+        padding: 1.35rem 0.35rem;
+        border-bottom: 1px solid rgba(2, 5, 19, 0.12);
         /* A transição de entrada vem junto: `transition` é shorthand e,
-           declarada aqui, substituiria a de [data-reveal] — o card entraria
-           sem escalonamento. */
+           declarada aqui, substituiria a de [data-reveal] — a faixa
+           entraria sem escalonamento. */
         transition:
           opacity var(--rt, 0.7s) var(--ease) var(--rd, 0s),
           transform var(--rt, 0.7s) var(--ease) var(--rd, 0s),
-          border-color 0.35s var(--ease),
-          box-shadow 0.35s var(--ease);
+          background-color 0.35s var(--ease);
       }
 
-      .service:hover {
-        border-color: rgba(18, 100, 255, 0.34);
-        box-shadow: 0 18px 40px rgba(18, 100, 255, 0.14);
+      .service-row:hover {
+        background-color: rgba(18, 100, 255, 0.05);
       }
 
-      .service__icon {
-        display: grid;
+      .service-row:focus-visible {
+        background-color: rgba(18, 100, 255, 0.05);
+        outline: 2px solid rgba(18, 100, 255, 0.45);
+        outline-offset: -2px;
+      }
+
+      .service-row__index {
+        grid-area: index;
+        align-self: start;
+        padding-top: 0.28rem;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        color: #8893ad;
+        transition: color 0.35s var(--ease);
+      }
+
+      .service-row:hover .service-row__index {
+        color: var(--blue);
+      }
+
+      /* O ícone entra quando há largura; no celular índice + nome bastam.
+         A chapa gradiente cheia mora num ::before que acende no hover —
+         background-image não anima, opacidade sim. */
+      .service-row__icon {
+        grid-area: icon;
+        position: relative;
+        display: none;
         place-items: center;
-        flex-shrink: 0;
-        width: 58px;
-        height: 58px;
-        border-radius: 17px;
+        overflow: hidden;
+        width: 3.25rem;
+        height: 3.25rem;
+        border-radius: 16px;
         color: var(--blue);
         background: linear-gradient(
           150deg,
           rgba(18, 100, 255, 0.13),
           rgba(124, 60, 255, 0.13)
         );
+        transition: color 0.35s var(--ease);
       }
 
-      .service__icon svg {
-        width: 28px;
-        height: 28px;
+      .service-row__icon::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(150deg, #1264ff, #7c3cff);
+        opacity: 0;
+        transition: opacity 0.35s var(--ease);
       }
 
-      .service__body {
-        display: flex;
-        flex-direction: column;
-        gap: 0.45rem;
+      .service-row:hover .service-row__icon {
+        color: #fff;
       }
 
-      .service__name {
-        font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+      .service-row:hover .service-row__icon::before {
+        opacity: 1;
+      }
+
+      .service-row__icon svg {
+        position: relative;
+        z-index: 1;
+        width: 26px;
+        height: 26px;
+      }
+
+      .service-row__name {
+        grid-area: name;
+        font-size: clamp(1.02rem, 2.6vw, 1.45rem);
         font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: -0.01em;
-        line-height: 1.2;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        color: var(--bg);
+        transition: transform 0.35s var(--ease);
       }
 
-      .service__desc {
+      .service-row:hover .service-row__name {
+        transform: translateX(0.35rem);
+      }
+
+      .service-row__desc {
+        grid-area: desc;
         font-size: clamp(0.82rem, 1.3vw, 0.9rem);
         font-weight: 400;
         line-height: 1.6;
         color: #4a5372;
+      }
+
+      .service-row__cta {
+        grid-area: arrow;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        white-space: nowrap;
+        color: var(--blue);
+      }
+
+      /* No celular fica só o círculo com a seta; o rótulo entra em 640. */
+      .service-row__cta-label {
+        display: none;
+      }
+
+      .service-row__cta b {
+        display: grid;
+        place-items: center;
+        width: 2.4rem;
+        height: 2.4rem;
+        border: 1px solid rgba(18, 100, 255, 0.35);
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 700;
+        transition:
+          transform 0.35s var(--ease),
+          background-color 0.35s var(--ease),
+          border-color 0.35s var(--ease),
+          color 0.35s var(--ease);
+      }
+
+      .service-row:hover .service-row__cta b {
+        transform: translateX(4px);
+        border-color: transparent;
+        background: linear-gradient(90deg, #0758ff, #5428ff);
+        color: #fff;
       }
 
       @media (min-width: 640px) {
@@ -1141,8 +1275,19 @@
         .services__heading {
           margin-bottom: 4.5rem;
         }
-        .services__list {
-          grid-template-columns: repeat(2, 1fr);
+        .service-row {
+          grid-template-columns: 2.6rem 3.25rem minmax(0, 1fr) auto;
+          grid-template-areas:
+            'index icon name arrow'
+            'index icon desc arrow';
+          column-gap: 1.1rem;
+          padding: 1.5rem 0.6rem;
+        }
+        .service-row__icon {
+          display: grid;
+        }
+        .service-row__cta-label {
+          display: inline;
         }
       }
 
@@ -1154,22 +1299,20 @@
           height: 108px;
           margin-bottom: 2rem;
         }
-        .service {
-          padding: 2.2rem 1.5rem;
-        }
       }
 
       @media (min-width: 1024px) {
-        /* A base de 22rem cabe três vezes na régua de 76rem e nunca
-           quatro, então os cinco cards saem 3 + 2, com a segunda fila
-           centrada pelo `justify-content`. */
-        .services__list {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
+        /* Com largura, cada faixa vira uma linha só: nome à esquerda,
+           descrição em coluna própria no meio e o destino na ponta. */
+        .service-row {
+          grid-template-columns: 3rem 3.25rem minmax(0, 1.05fr) minmax(0, 1fr) auto;
+          grid-template-areas: 'index icon name desc arrow';
+          column-gap: 1.5rem;
+          padding: 1.65rem 0.75rem;
         }
-        .service {
-          flex: 0 1 22rem;
+        .service-row__index {
+          align-self: center;
+          padding-top: 0;
         }
       }
 
@@ -1260,7 +1403,7 @@
       }
 
       .solution-panel.is-open .solution-panel__label {
-        color: var(--fg);
+        color: var(--text);
       }
 
       .solution-panel__stage {
@@ -1461,7 +1604,7 @@
         .solutions__rail:not(:hover):not(:focus-within)
           .solution-panel:first-child
           .solution-panel__label {
-          color: var(--fg);
+          color: var(--text);
         }
 
         .solution-panel:hover .solution-panel__stage,
@@ -1735,14 +1878,17 @@
       }
 
       /* As artes vêm em 4:3, na mesma proporção do quadro: `cover` faz a
-         peça ocupar o card inteiro, de borda a borda, sem sobra da chapa
-         e sem corte que atrapalhe. */
+         peça ocupar o card inteiro, de borda a borda, sem sobra da chapa.
+         A âncora fica no topo porque os títulos desenhados nas peças
+         moram lá: quando o quadro é mais alto que 4:3 e o corte vira
+         vertical, quem sai é a base da composição, nunca o título. */
       .piece__art img {
         position: absolute;
         inset: 0;
         height: 100%;
         width: 100%;
         object-fit: cover;
+        object-position: 50% 0;
         transition: transform 0.5s var(--ease);
       }
 
@@ -1851,11 +1997,6 @@
         font-size: clamp(1.7rem, 4vw, 2.1rem);
         font-weight: 900;
         letter-spacing: -0.04em;
-      }
-
-      /* Preço aberto ocupa a mesma linha que um número, em corpo menor. */
-      .plan__value--quote {
-        font-size: clamp(1.25rem, 3vw, 1.5rem);
       }
 
       .plan__period {
@@ -1983,26 +2124,20 @@
         flex: 1 1 auto;
       }
 
-      /* Entre 768px e 1024px as três colunas ficam estreitas e o plano
-         precisa de mais altura do que a janela teria para dar ao par:
-         nessa faixa vale o card no tamanho que a seção já usava. O respiro
-         atrasa o empilhamento do mesmo jeito, só não há como deixar os
-         dois inteiros na tela. */
-      @media (min-width: 768px) {
+      /* Entre 768px e 1024px três colunas ficariam estreitas demais: o
+         conteúdo do plano estoura a altura do slot e o corte vertical da
+         arte engole os títulos desenhados nas peças. Nessa faixa vale a
+         pilha única do celular, que tem folga; as três colunas entram
+         quando há largura de verdade para elas. */
+      @media (min-width: 1024px) {
         .pstack {
           --pstack-hold: 6rem;
           grid-template-columns: repeat(3, 1fr);
           align-items: start;
         }
 
-        .pstack__slot {
-          height: clamp(25rem, 30vw, 28rem);
-        }
-      }
-
-      /* Coluna larga o bastante para o plano caber no seu conteúdo: aqui
-         a altura volta a ser a da janela, para o par inteiro aparecer. */
-      @media (min-width: 1024px) {
+        /* Coluna larga o bastante para o plano caber no seu conteúdo: a
+           altura é a da janela, para o par inteiro aparecer. */
         .pstack__slot {
           height: clamp(
             23.5rem,
@@ -2440,9 +2575,11 @@
           transition: none !important;
           transform: none !important;
         }
-        /* Esteira em laço infinito: sem isso ficaria rodando para sempre
-           justamente para quem pediu para não ter movimento. */
-        .clients__track {
+        /* Laços infinitos — a esteira de clientes e a aurora do hero:
+           sem isso ficariam rodando para sempre justamente para quem
+           pediu para não ter movimento. */
+        .clients__track,
+        .hero__aurora {
           animation: none !important;
         }
         .about__text span {
@@ -2450,6 +2587,18 @@
         }
       }
     </style>
+
+    <!-- Sem JavaScript não há quem acrescente .is-in: os elementos de
+         [data-reveal] nasceriam invisíveis e ficariam assim. Aqui eles
+         entram já montados. -->
+    <noscript>
+      <style>
+        [data-reveal] {
+          opacity: 1;
+          transform: none;
+        }
+      </style>
+    </noscript>
   </head>
 
   <body>
@@ -2458,13 +2607,9 @@
            1. Hero
       ============================================================= -->
       <section class="hero dot-grid streaks">
-        <div class="hero__bg">
-          <img
-            src="./assets/hero.png"
-            alt=""
-            data-fallback="hide"
-            aria-hidden="true"
-          />
+        <div class="hero__bg" aria-hidden="true">
+          <span class="hero__aurora hero__aurora--a"></span>
+          <span class="hero__aurora hero__aurora--b"></span>
         </div>
         <div class="hero__scrim"></div>
 
@@ -2485,7 +2630,7 @@
           <ul class="hero__links">
             <li><a href="#sobre">Sobre</a></li>
             <li><a href="#servicos">Serviços</a></li>
-            <li><a href="#solucoes">Soluções</a></li>
+            <li class="is-secondary"><a href="#solucoes">Soluções</a></li>
             <li class="is-tertiary"><a href="#processo">Processo</a></li>
             <li class="is-secondary"><a href="#portfolio">Portfólio</a></li>
             <li class="is-cta">
@@ -2620,9 +2765,19 @@
         <h2 class="section-heading services__heading" data-reveal style="--ry: 40px">
           Serviços
         </h2>
+        <!-- Cada faixa é um link: as três primeiras caem nos planos do
+             serviço na seção Portfólio & Valores; Tráfego e T.I. não têm
+             tabela própria, então caem no contato com o data-plan abrindo
+             o WhatsApp já com a mensagem certa. -->
         <div class="services__list">
-          <div class="service" data-reveal style="--rd: 0s">
-            <span class="service__icon">
+          <a
+            class="service-row"
+            href="#portfolio-desenvolvimento"
+            data-reveal
+            style="--rd: 0s"
+          >
+            <span class="service-row__index">01</span>
+            <span class="service-row__icon">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -2640,16 +2795,24 @@
                 />
               </svg>
             </span>
-            <div class="service__body">
-              <h3 class="service__name">Criação de sites</h3>
-              <p class="service__desc">
-                Sites modernos, rápidos e otimizados para todos os dispositivos.
-              </p>
-            </div>
-          </div>
+            <h3 class="service-row__name">Criação de sites</h3>
+            <p class="service-row__desc">
+              Sites modernos, rápidos e otimizados para todos os dispositivos.
+            </p>
+            <span class="service-row__cta">
+              <span class="service-row__cta-label">Ver planos</span>
+              <b aria-hidden="true">→</b>
+            </span>
+          </a>
 
-          <div class="service" data-reveal style="--rd: 0.06s">
-            <span class="service__icon">
+          <a
+            class="service-row"
+            href="#portfolio-social"
+            data-reveal
+            style="--rd: 0.06s"
+          >
+            <span class="service-row__index">02</span>
+            <span class="service-row__icon">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -2667,16 +2830,24 @@
                 <path d="M11 13.6h2.4" />
               </svg>
             </span>
-            <div class="service__body">
-              <h3 class="service__name">Criação de mídia social</h3>
-              <p class="service__desc">
-                Produção de conteúdos que conectam sua marca ao público certo.
-              </p>
-            </div>
-          </div>
+            <h3 class="service-row__name">Criação de mídia social</h3>
+            <p class="service-row__desc">
+              Produção de conteúdos que conectam sua marca ao público certo.
+            </p>
+            <span class="service-row__cta">
+              <span class="service-row__cta-label">Ver planos</span>
+              <b aria-hidden="true">→</b>
+            </span>
+          </a>
 
-          <div class="service" data-reveal style="--rd: 0.12s">
-            <span class="service__icon">
+          <a
+            class="service-row"
+            href="#portfolio-identidade"
+            data-reveal
+            style="--rd: 0.12s"
+          >
+            <span class="service-row__index">03</span>
+            <span class="service-row__icon">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -2690,16 +2861,25 @@
                 <path d="m12 7.4 1.6 3 3 1.6-3 1.6-1.6 3-1.6-3-3-1.6 3-1.6z" />
               </svg>
             </span>
-            <div class="service__body">
-              <h3 class="service__name">Identidade visual</h3>
-              <p class="service__desc">
-                Criamos marcas fortes, memoráveis e que se destacam no mercado.
-              </p>
-            </div>
-          </div>
+            <h3 class="service-row__name">Identidade visual</h3>
+            <p class="service-row__desc">
+              Criamos marcas fortes, memoráveis e que se destacam no mercado.
+            </p>
+            <span class="service-row__cta">
+              <span class="service-row__cta-label">Ver planos</span>
+              <b aria-hidden="true">→</b>
+            </span>
+          </a>
 
-          <div class="service" data-reveal style="--rd: 0.18s">
-            <span class="service__icon">
+          <a
+            class="service-row"
+            href="#contato"
+            data-plan="tráfego pago e anúncios"
+            data-reveal
+            style="--rd: 0.18s"
+          >
+            <span class="service-row__index">04</span>
+            <span class="service-row__icon">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -2714,17 +2894,26 @@
                 <path d="M13.6 10.4 20 4M16.2 4H20v3.8" />
               </svg>
             </span>
-            <div class="service__body">
-              <h3 class="service__name">Tráfego pago e anúncios</h3>
-              <p class="service__desc">
-                Campanhas inteligentes para atrair clientes e maximizar
-                resultados.
-              </p>
-            </div>
-          </div>
+            <h3 class="service-row__name">Tráfego pago e anúncios</h3>
+            <p class="service-row__desc">
+              Campanhas inteligentes para atrair clientes e maximizar
+              resultados.
+            </p>
+            <span class="service-row__cta">
+              <span class="service-row__cta-label">Pedir proposta</span>
+              <b aria-hidden="true">→</b>
+            </span>
+          </a>
 
-          <div class="service" data-reveal style="--rd: 0.24s">
-            <span class="service__icon">
+          <a
+            class="service-row"
+            href="#contato"
+            data-plan="serviços de T.I."
+            data-reveal
+            style="--rd: 0.24s"
+          >
+            <span class="service-row__index">05</span>
+            <span class="service-row__icon">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -2739,15 +2928,16 @@
                 <path d="M6.6 8.8h6.6M6.6 11.9h3.7" />
               </svg>
             </span>
-            <div class="service__body">
-              <h3 class="service__name">Serviços de T.I.</h3>
-              <p class="service__desc">
-                Soluções completas em tecnologia para que empresas funcionem
-                melhor.
-              </p>
-            </div>
-          </div>
-
+            <h3 class="service-row__name">Serviços de T.I.</h3>
+            <p class="service-row__desc">
+              Soluções completas em tecnologia para que empresas funcionem
+              melhor.
+            </p>
+            <span class="service-row__cta">
+              <span class="service-row__cta-label">Pedir proposta</span>
+              <b aria-hidden="true">→</b>
+            </span>
+          </a>
         </div>
       </section>
 
@@ -2891,8 +3081,9 @@
               Do conceito ao <span class="gradient-text">resultado.</span>
             </h2>
             <p data-reveal style="--ry: 26px; --rd: 0.2s">
-              Unimos criatividade, tecnologia e inteligência para entregar soluções
-              reais, escaláveis e orientadas ao negócio.
+              Nada aqui é improviso: todo projeto percorre as mesmas quatro
+              etapas — entender o negócio, definir a estratégia, criar a
+              experiência e escalar o que funciona.
             </p>
 
             <div class="process__checks">
@@ -3042,7 +3233,12 @@
                       <li><b>✓</b> Legendas e hashtags</li>
                       <li><b>✓</b> Calendário editorial</li>
                     </ul>
-                    <a class="btn btn--ghost" href="#contato">Contratar</a>
+                    <a
+                      class="btn btn--ghost"
+                      href="#contato"
+                      data-plan="o plano Essencial de social media"
+                      >Contratar</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3087,7 +3283,12 @@
                       <li><b>✓</b> Stories três vezes por semana</li>
                       <li><b>✓</b> Relatório mensal</li>
                     </ul>
-                    <a class="btn btn--primary" href="#contato">Contratar</a>
+                    <a
+                      class="btn btn--primary"
+                      href="#contato"
+                      data-plan="o plano Profissional de social media"
+                      >Contratar</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3131,7 +3332,12 @@
                       <li><b>✓</b> Gravação e edição</li>
                       <li><b>✓</b> Gestão de comentários e direct</li>
                     </ul>
-                    <a class="btn btn--ghost" href="#contato">Contratar</a>
+                    <a
+                      class="btn btn--ghost"
+                      href="#contato"
+                      data-plan="o plano Premium de social media"
+                      >Contratar</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3202,7 +3408,12 @@
                       <li><b>✓</b> SEO básico e analytics</li>
                       <li><b>✓</b> Uma rodada de ajustes</li>
                     </ul>
-                    <a class="btn btn--ghost" href="#contato">Contratar</a>
+                    <a
+                      class="btn btn--ghost"
+                      href="#contato"
+                      data-plan="uma landing page"
+                      >Contratar</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3247,7 +3458,12 @@
                       <li><b>✓</b> SEO técnico e velocidade</li>
                       <li><b>✓</b> Duas rodadas de ajustes</li>
                     </ul>
-                    <a class="btn btn--primary" href="#contato">Contratar</a>
+                    <a
+                      class="btn btn--primary"
+                      href="#contato"
+                      data-plan="um site institucional"
+                      >Contratar</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3291,7 +3507,12 @@
                       <li><b>✓</b> Áreas com login</li>
                       <li><b>✓</b> Escopo fechado em diagnóstico</li>
                     </ul>
-                    <a class="btn btn--ghost" href="#contato">Falar sobre o projeto</a>
+                    <a
+                      class="btn btn--ghost"
+                      href="#contato"
+                      data-plan="um projeto sob medida"
+                      >Falar sobre o projeto</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3362,7 +3583,12 @@
                       <li><b>✓</b> Paleta e tipografia</li>
                       <li><b>✓</b> Arquivos em vetor</li>
                     </ul>
-                    <a class="btn btn--ghost" href="#contato">Contratar</a>
+                    <a
+                      class="btn btn--ghost"
+                      href="#contato"
+                      data-plan="o pacote Logo essencial"
+                      >Contratar</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3407,7 +3633,12 @@
                       <li><b>✓</b> Papelaria e kit de redes</li>
                       <li><b>✓</b> Grafismos e padrões</li>
                     </ul>
-                    <a class="btn btn--primary" href="#contato">Contratar</a>
+                    <a
+                      class="btn btn--primary"
+                      href="#contato"
+                      data-plan="o pacote Identidade completa"
+                      >Contratar</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3451,7 +3682,12 @@
                       <li><b>✓</b> Plano de transição</li>
                       <li><b>✓</b> Aplicação nos canais</li>
                     </ul>
-                    <a class="btn btn--ghost" href="#contato">Falar sobre o projeto</a>
+                    <a
+                      class="btn btn--ghost"
+                      href="#contato"
+                      data-plan="um rebranding"
+                      >Falar sobre o projeto</a
+                    >
                   </div>
                 </div>
               </div>
@@ -3504,7 +3740,7 @@
             <div class="whatsapp__grid">
               <a
                 class="whatsapp-card"
-                href="https://wa.me/5585991323925"
+                href="https://wa.me/5585991323925?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20EVOLVA."
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -3522,7 +3758,7 @@
               </a>
               <a
                 class="whatsapp-card"
-                href="https://wa.me/558597498750"
+                href="https://wa.me/558597498750?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20EVOLVA."
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -3608,12 +3844,19 @@
           </div>
         </div>
 
-        <!-- ---------- Redes sociais ----------
+        <!-- ---------- Redes sociais (fora do ar de propósito) ----------
 
-             PREENCHA OS href: estão em "#" porque eu não tenho os perfis
-             da EVOLVA, e chutar um endereço levaria o visitante para a
-             conta de outra pessoa. -->
-        <div class="closing-block" data-reveal style="--ry: 26px; --rd: 0.1s">
+             Os href estão em "#" porque os perfis da EVOLVA ainda não
+             foram informados — e botão que abre aba em branco passa
+             impressão de site inacabado. O atributo `hidden` abaixo tira
+             o bloco da página; para reativar, preencha cada href com o
+             perfil real e apague o `hidden`. -->
+        <div
+          class="closing-block"
+          data-reveal
+          style="--ry: 26px; --rd: 0.1s"
+          hidden
+        >
           <p class="kicker">Onde nos encontrar</p>
           <h3>Acompanhe a EVOLVA nas <span class="gradient-text">redes</span></h3>
 
@@ -3723,11 +3966,11 @@
           './assets/portfolio/3.webp',
           './assets/portfolio/4.webp',
           './assets/portfolio/5.webp',
-          './assets/portfolio/13.11 -FAMILIA-TABERNA-FEED.webp',
-          './assets/portfolio/FEED2.webp',
-          './assets/portfolio/Prancheta 3.webp',
-          './assets/portfolio/altonivelModerno.webp',
-          './assets/portfolio/feed.marcos.filtro combustivel.webp',
+          './assets/portfolio/familia-taberna-feed.webp',
+          './assets/portfolio/feed-2.webp',
+          './assets/portfolio/prancheta-3.webp',
+          './assets/portfolio/alto-nivel-moderno.webp',
+          './assets/portfolio/filtro-combustivel.webp',
           './assets/portfolio/pascoa.webp',
           './assets/portfolio/mkt-vinicius-2.webp',
           './assets/portfolio/canoa-quebrada.webp',
@@ -4181,9 +4424,32 @@
         var panel = document.querySelector('[data-whatsapp-panel]');
         if (!toggle || !panel) return;
 
-        toggle.addEventListener('click', function () {
-          var isOpen = panel.classList.toggle('is-open');
+        var setOpen = function (isOpen) {
+          panel.classList.toggle('is-open', isOpen);
           toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        };
+
+        toggle.addEventListener('click', function () {
+          setOpen(!panel.classList.contains('is-open'));
+        });
+
+        // "Contratar" encurta o funil: o clique rola até o contato, abre o
+        // painel e deixa a mensagem do plano pré-preenchida nos dois
+        // contatos — o visitante só escolhe com quem falar, e o
+        // atendimento já sabe qual plano interessou.
+        var cards = [].slice.call(panel.querySelectorAll('a[href*="wa.me"]'));
+        document.querySelectorAll('[data-plan]').forEach(function (link) {
+          link.addEventListener('click', function () {
+            var msg =
+              'Olá! Vim pelo site da EVOLVA e quero falar sobre ' +
+              link.getAttribute('data-plan') +
+              '.';
+            cards.forEach(function (card) {
+              card.href =
+                card.href.split('?')[0] + '?text=' + encodeURIComponent(msg);
+            });
+            setOpen(true);
+          });
         });
       })();
     </script>

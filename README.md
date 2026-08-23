@@ -19,6 +19,21 @@ assets/portfolio/  imagens dos trabalhos mostrados na seção de portfólio
 > o endereço errado tira a página do índice do Google, e um `og:image` apontando
 > para um servidor que não responde derruba a prévia do link no WhatsApp.
 
+## Pendências que só o dono do site resolve
+
+- [ ] **Telefone do Romero**: `+55 85 9749-8750` tem 8 dígitos — celulares no
+      Brasil têm 9 (começando com 9). Se estiver faltando um dígito, o botão
+      de WhatsApp dele abre conversa com número errado. Conferir e corrigir
+      nos dois lugares: o card de WhatsApp na seção de contato e o
+      `contactPoint` do JSON-LD.
+- [ ] **Redes sociais**: o bloco "Acompanhe a EVOLVA nas redes" está com
+      `hidden` porque os perfis não foram informados. Preencher os `href` e
+      remover o atributo `hidden` do bloco.
+- [ ] **E-mail**: o JSON-LD declara `contato@evolva.com.br` — confirmar que o
+      domínio e a caixa existem; se não, trocar ou remover.
+- [ ] **Valores dos planos**: são ponto de partida, não a tabela real — ver
+      "Valores" abaixo.
+
 ## Como visualizar
 
 Abra o `index.html` no navegador — clique duplo já funciona.
@@ -33,17 +48,17 @@ python3 -m http.server 8000
 Publicar no GitHub Pages: Settings → Pages → Deploy from a branch, apontando
 para a raiz. Não há passo de build.
 
-## Artes da marca — falta colocar 4 arquivos
+## Fundo do hero
 
-A página já funciona sem eles: cada espaço mostra uma chapa em gradiente da
-paleta. Para entrar a arte real, salve os arquivos em `assets/` com estes nomes:
+O hero não usa foto: duas manchas de luz da paleta (`.hero__aurora`) derivam
+devagar sobre o gradiente, em CSS puro — nada a baixar e nada que quebre. Se
+um dia entrar arte fotográfica, basta pôr um `<img>` com `object-fit: cover`
+dentro de `.hero__bg` (e o véu `.hero__scrim` segue garantindo a leitura do
+texto por cima).
 
-| Arquivo | Qual imagem | Onde aparece |
-| --- | --- | --- |
-| `assets/hero.png` | ondas azul/roxo, espaço vazio à esquerda | fundo do hero |
-| `assets/ai.png` | chip isométrico "IA" com servidores | card 02 — Tecnologia & IA |
-| `assets/branding.png` | mockup dos cartões de visita | card 03 — Branding |
-| `assets/social.png` | símbolo com onda de partículas | card 01 — Mídia Social |
+As artes dos quatro cards de Soluções já estão no repositório, em
+`assets/solucoes/` (`midia-social`, `tecnologia-ia`, `identidade-visual` e
+`performance`, todas WEBP).
 
 A faixa em parallax logo abaixo do hero usa uma fonte separada — veja
 "A faixa em parallax" mais abaixo.
@@ -146,11 +161,17 @@ relação ao scroll, que é o que dá a profundidade. Três colunas abaixo de
 1024px e duas abaixo de 640px, para as peças não virarem tiras.
 
 As peças são as imagens de `assets/portfolio/` (array `PORTFOLIO_ART` no
-`<script>`), cada uma aparecendo no máximo uma vez em toda a faixa — nunca
-repetida. A faixa tem 4 colunas × `TILES_PER_COLUMN` vagas; com 12 peças hoje
-em `assets/portfolio/` e 36 vagas (4 × 9), sobram 24 vagas sem peça própria,
-que caem na mesma chapa gradiente de uma arte que falha ao carregar. Some
-mais arquivos a `PORTFOLIO_ART` para preencher as vagas restantes.
+`<script>`, hoje com 19 arquivos), embaralhadas uma vez por carregamento e
+cada uma aparecendo no máximo uma vez em toda a faixa — nunca repetida. O
+acervo é que dimensiona a faixa: são `peças ÷ colunas` por coluna, a sobra da
+divisão fica de fora (e troca a cada carregamento, junto com o
+embaralhamento), e o script dispensa colunas quando o acervo não sustenta a
+altura mínima. Some mais arquivos a `PORTFOLIO_ART` para colunas mais longas.
+
+Todas as 19 peças estão otimizadas para a medida em que aparecem: no máximo
+900×900 (elas são exibidas a ~480px), somando ~1,5MB no total. Ao adicionar
+peça nova, exporte nessa medida — subir a arte original de 3000px multiplica
+o peso da página por 20 sem ganho visível.
 
 A faixa é a primeira das duas superfícies claras da página — ela e Serviços.
 As trocas de fundo seguem sempre o mesmo recurso: a seção clara arredonda o
@@ -183,9 +204,17 @@ já servia o restante do movimento.
 Serviços, peças do portfólio e planos usam a mesma entrada escalonada do resto
 da página: `data-reveal` com `--rd` para o atraso. Um detalhe que economiza
 horas de depuração: `transition` é shorthand, então quem declara transição
-própria no card (`.service`, `.piece`, `.plan`) precisa repetir `opacity` e
+própria no card (`.service-row`, `.piece`, `.plan`) precisa repetir `opacity` e
 `transform` na lista — sem isso a regra do card substitui a de `[data-reveal]`
-e o escalonamento some. Por isso o avanço no hover das peças fica na imagem
+e o escalonamento some.
+
+A seção Serviços é uma régua editorial: uma faixa (`.service-row`) por
+serviço, separadas por um fio, com índice, ícone, nome, descrição e destino.
+A faixa inteira é um link — as três primeiras levam ao grupo correspondente
+do portfólio (`#portfolio-*`) e as duas últimas (Tráfego e T.I., que não têm
+tabela de planos) levam ao contato com `data-plan`, abrindo o WhatsApp com a
+mensagem certa. Ao criar um serviço novo, siga o padrão: índice sequencial e
+um destino real para a faixa. Por isso o avanço no hover das peças fica na imagem
 interna, não no card: no card ele disputaria o `transform` com a entrada.
 
 ## SEO
@@ -196,7 +225,7 @@ interna, não no card: no card ele disputaria o `transform` com a entrada.
   de propósito, veja
   "Logos já no repositório").
 - `sitemap.xml` traz a única URL da página mais um índice `image:image` com as
-  30 artes exibidas. Ao trocar arte do portfólio, regenere essa lista e atualize
+  39 artes exibidas. Ao trocar arte do portfólio, regenere essa lista e atualize
   o `lastmod`.
 - `site.webmanifest` declara ícones quadrados de 192 e 512 px mais um `maskable`
   — sem ícone quadrado o Chrome não oferece a instalação como app.
@@ -226,5 +255,15 @@ alimenta a faixa em parallax.
 
 As seções do `index.html` estão numeradas em comentário, na ordem em que
 aparecem: 1. Hero, 2. Faixa em parallax, 3. Sobre, 4. Serviços, 5. Soluções,
-6. Portfólio & Valores, 7. Processo, 8. Contato, 9. Rodapé. A mesma numeração
+6. Processo, 7. Portfólio & Valores, 8. Contato, 9. Rodapé. A mesma numeração
 divide o `<style>`, então dá para pular direto para o bloco certo.
+
+## Contato e conversão
+
+Os dois cards de WhatsApp abrem a conversa com uma mensagem padrão
+pré-preenchida (`?text=` no `wa.me`). Além disso, cada botão "Contratar" dos
+planos carrega um `data-plan`: o clique rola até o contato, abre o painel de
+WhatsApp e troca a mensagem pré-preenchida pela do plano escolhido — o
+visitante só decide com quem falar, e o atendimento já sabe qual plano
+interessou. Ao criar um plano novo, dê a ele um `data-plan` com a frase que
+completa "…quero falar sobre ___".
