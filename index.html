@@ -1878,14 +1878,17 @@
       }
 
       /* As artes vêm em 4:3, na mesma proporção do quadro: `cover` faz a
-         peça ocupar o card inteiro, de borda a borda, sem sobra da chapa
-         e sem corte que atrapalhe. */
+         peça ocupar o card inteiro, de borda a borda, sem sobra da chapa.
+         A âncora fica no topo porque os títulos desenhados nas peças
+         moram lá: quando o quadro é mais alto que 4:3 e o corte vira
+         vertical, quem sai é a base da composição, nunca o título. */
       .piece__art img {
         position: absolute;
         inset: 0;
         height: 100%;
         width: 100%;
         object-fit: cover;
+        object-position: 50% 0;
         transition: transform 0.5s var(--ease);
       }
 
@@ -2121,26 +2124,20 @@
         flex: 1 1 auto;
       }
 
-      /* Entre 768px e 1024px as três colunas ficam estreitas e o plano
-         precisa de mais altura do que a janela teria para dar ao par:
-         nessa faixa vale o card no tamanho que a seção já usava. O respiro
-         atrasa o empilhamento do mesmo jeito, só não há como deixar os
-         dois inteiros na tela. */
-      @media (min-width: 768px) {
+      /* Entre 768px e 1024px três colunas ficariam estreitas demais: o
+         conteúdo do plano estoura a altura do slot e o corte vertical da
+         arte engole os títulos desenhados nas peças. Nessa faixa vale a
+         pilha única do celular, que tem folga; as três colunas entram
+         quando há largura de verdade para elas. */
+      @media (min-width: 1024px) {
         .pstack {
           --pstack-hold: 6rem;
           grid-template-columns: repeat(3, 1fr);
           align-items: start;
         }
 
-        .pstack__slot {
-          height: clamp(25rem, 30vw, 28rem);
-        }
-      }
-
-      /* Coluna larga o bastante para o plano caber no seu conteúdo: aqui
-         a altura volta a ser a da janela, para o par inteiro aparecer. */
-      @media (min-width: 1024px) {
+        /* Coluna larga o bastante para o plano caber no seu conteúdo: a
+           altura é a da janela, para o par inteiro aparecer. */
         .pstack__slot {
           height: clamp(
             23.5rem,
