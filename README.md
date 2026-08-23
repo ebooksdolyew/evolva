@@ -209,12 +209,11 @@ própria no card (`.service-row`, `.piece`, `.plan`) precisa repetir `opacity` e
 e o escalonamento some.
 
 A seção Serviços é uma régua editorial: uma faixa (`.service-row`) por
-serviço, separadas por um fio, com índice, ícone, nome, descrição e destino.
+serviço, separadas por um fio, com ícone, nome, descrição e destino.
 A faixa inteira é um link — as três primeiras levam ao grupo correspondente
 do portfólio (`#portfolio-*`) e as duas últimas (Tráfego e T.I., que não têm
 tabela de planos) levam ao contato com `data-plan`, abrindo o WhatsApp com a
-mensagem certa. Ao criar um serviço novo, siga o padrão: índice sequencial e
-um destino real para a faixa. Por isso o avanço no hover das peças fica na imagem
+mensagem certa. Ao criar um serviço novo, dê a ele um destino real. Por isso o avanço no hover das peças fica na imagem
 interna, não no card: no card ele disputaria o `transform` com a entrada.
 
 ## SEO
