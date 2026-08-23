@@ -1100,10 +1100,10 @@
       }
 
       /* Régua editorial: uma faixa por serviço, separadas por um fio, com
-         índice, nome, descrição e destino — a faixa inteira é um link, que
-         leva aos planos do serviço ou abre a conversa. Ecoa o "01 —" do
-         Processo e os fios da sanfona de Soluções; e, com cinco itens, a
-         lista vertical não deixa o card órfão que a grade deixava. */
+         nome, descrição e destino — a faixa inteira é um link, que leva
+         aos planos do serviço ou abre a conversa. Ecoa os fios da sanfona
+         de Soluções; e, com cinco itens, a lista vertical não deixa o
+         card órfão que a grade deixava. */
       .services__list {
         margin: 0 auto;
         max-width: 76rem;
@@ -1112,10 +1112,10 @@
 
       .service-row {
         display: grid;
-        grid-template-columns: 2.4rem minmax(0, 1fr) auto;
+        grid-template-columns: minmax(0, 1fr) auto;
         grid-template-areas:
-          'index name arrow'
-          'index desc arrow';
+          'name arrow'
+          'desc arrow';
         align-items: center;
         column-gap: 0.9rem;
         row-gap: 0.4rem;
@@ -1140,22 +1140,7 @@
         outline-offset: -2px;
       }
 
-      .service-row__index {
-        grid-area: index;
-        align-self: start;
-        padding-top: 0.28rem;
-        font-size: 12px;
-        font-weight: 800;
-        letter-spacing: 0.1em;
-        color: #8893ad;
-        transition: color 0.35s var(--ease);
-      }
-
-      .service-row:hover .service-row__index {
-        color: var(--blue);
-      }
-
-      /* O ícone entra quando há largura; no celular índice + nome bastam.
+      /* O ícone entra quando há largura; no celular o nome basta.
          A chapa gradiente cheia mora num ::before que acende no hover —
          background-image não anima, opacidade sim. */
       .service-row__icon {
@@ -1276,10 +1261,10 @@
           margin-bottom: 4.5rem;
         }
         .service-row {
-          grid-template-columns: 2.6rem 3.25rem minmax(0, 1fr) auto;
+          grid-template-columns: 3.25rem minmax(0, 1fr) auto;
           grid-template-areas:
-            'index icon name arrow'
-            'index icon desc arrow';
+            'icon name arrow'
+            'icon desc arrow';
           column-gap: 1.1rem;
           padding: 1.5rem 0.6rem;
         }
@@ -1305,14 +1290,10 @@
         /* Com largura, cada faixa vira uma linha só: nome à esquerda,
            descrição em coluna própria no meio e o destino na ponta. */
         .service-row {
-          grid-template-columns: 3rem 3.25rem minmax(0, 1.05fr) minmax(0, 1fr) auto;
-          grid-template-areas: 'index icon name desc arrow';
+          grid-template-columns: 3.25rem minmax(0, 1.05fr) minmax(0, 1fr) auto;
+          grid-template-areas: 'icon name desc arrow';
           column-gap: 1.5rem;
           padding: 1.65rem 0.75rem;
-        }
-        .service-row__index {
-          align-self: center;
-          padding-top: 0;
         }
       }
 
@@ -2776,7 +2757,6 @@
             data-reveal
             style="--rd: 0s"
           >
-            <span class="service-row__index">01</span>
             <span class="service-row__icon">
               <svg
                 viewBox="0 0 24 24"
@@ -2811,7 +2791,6 @@
             data-reveal
             style="--rd: 0.06s"
           >
-            <span class="service-row__index">02</span>
             <span class="service-row__icon">
               <svg
                 viewBox="0 0 24 24"
@@ -2846,7 +2825,6 @@
             data-reveal
             style="--rd: 0.12s"
           >
-            <span class="service-row__index">03</span>
             <span class="service-row__icon">
               <svg
                 viewBox="0 0 24 24"
@@ -2878,7 +2856,6 @@
             data-reveal
             style="--rd: 0.18s"
           >
-            <span class="service-row__index">04</span>
             <span class="service-row__icon">
               <svg
                 viewBox="0 0 24 24"
@@ -2912,7 +2889,6 @@
             data-reveal
             style="--rd: 0.24s"
           >
-            <span class="service-row__index">05</span>
             <span class="service-row__icon">
               <svg
                 viewBox="0 0 24 24"
