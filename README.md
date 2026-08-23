@@ -204,9 +204,17 @@ já servia o restante do movimento.
 Serviços, peças do portfólio e planos usam a mesma entrada escalonada do resto
 da página: `data-reveal` com `--rd` para o atraso. Um detalhe que economiza
 horas de depuração: `transition` é shorthand, então quem declara transição
-própria no card (`.service`, `.piece`, `.plan`) precisa repetir `opacity` e
+própria no card (`.service-row`, `.piece`, `.plan`) precisa repetir `opacity` e
 `transform` na lista — sem isso a regra do card substitui a de `[data-reveal]`
-e o escalonamento some. Por isso o avanço no hover das peças fica na imagem
+e o escalonamento some.
+
+A seção Serviços é uma régua editorial: uma faixa (`.service-row`) por
+serviço, separadas por um fio, com índice, ícone, nome, descrição e destino.
+A faixa inteira é um link — as três primeiras levam ao grupo correspondente
+do portfólio (`#portfolio-*`) e as duas últimas (Tráfego e T.I., que não têm
+tabela de planos) levam ao contato com `data-plan`, abrindo o WhatsApp com a
+mensagem certa. Ao criar um serviço novo, siga o padrão: índice sequencial e
+um destino real para a faixa. Por isso o avanço no hover das peças fica na imagem
 interna, não no card: no card ele disputaria o `transform` com a entrada.
 
 ## SEO

@@ -1099,81 +1099,169 @@
         margin-bottom: 3.5rem;
       }
 
-      /* Uma coluna no celular, duas no tablet; no desktop a régua passa a
-         ser flex para a última fila ficar centrada — com cinco serviços a
-         grade fixa deixaria um card órfão encostado na esquerda. */
+      /* Régua editorial: uma faixa por serviço, separadas por um fio, com
+         índice, nome, descrição e destino — a faixa inteira é um link, que
+         leva aos planos do serviço ou abre a conversa. Ecoa o "01 —" do
+         Processo e os fios da sanfona de Soluções; e, com cinco itens, a
+         lista vertical não deixa o card órfão que a grade deixava. */
       .services__list {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 0.9rem;
         margin: 0 auto;
         max-width: 76rem;
+        border-top: 1px solid rgba(2, 5, 19, 0.12);
       }
 
-      .service {
-        display: flex;
-        flex-direction: column;
+      .service-row {
+        display: grid;
+        grid-template-columns: 2.4rem minmax(0, 1fr) auto;
+        grid-template-areas:
+          'index name arrow'
+          'index desc arrow';
         align-items: center;
-        gap: 0.9rem;
-        padding: 1.9rem 1.35rem;
-        text-align: center;
-        border: 1px solid rgba(2, 5, 19, 0.1);
-        border-radius: 20px;
-        background: #f6f8ff;
+        column-gap: 0.9rem;
+        row-gap: 0.4rem;
+        padding: 1.35rem 0.35rem;
+        border-bottom: 1px solid rgba(2, 5, 19, 0.12);
         /* A transição de entrada vem junto: `transition` é shorthand e,
-           declarada aqui, substituiria a de [data-reveal] — o card entraria
-           sem escalonamento. */
+           declarada aqui, substituiria a de [data-reveal] — a faixa
+           entraria sem escalonamento. */
         transition:
           opacity var(--rt, 0.7s) var(--ease) var(--rd, 0s),
           transform var(--rt, 0.7s) var(--ease) var(--rd, 0s),
-          border-color 0.35s var(--ease),
-          box-shadow 0.35s var(--ease);
+          background-color 0.35s var(--ease);
       }
 
-      .service:hover {
-        border-color: rgba(18, 100, 255, 0.34);
-        box-shadow: 0 18px 40px rgba(18, 100, 255, 0.14);
+      .service-row:hover {
+        background-color: rgba(18, 100, 255, 0.05);
       }
 
-      .service__icon {
-        display: grid;
+      .service-row:focus-visible {
+        background-color: rgba(18, 100, 255, 0.05);
+        outline: 2px solid rgba(18, 100, 255, 0.45);
+        outline-offset: -2px;
+      }
+
+      .service-row__index {
+        grid-area: index;
+        align-self: start;
+        padding-top: 0.28rem;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        color: #8893ad;
+        transition: color 0.35s var(--ease);
+      }
+
+      .service-row:hover .service-row__index {
+        color: var(--blue);
+      }
+
+      /* O ícone entra quando há largura; no celular índice + nome bastam.
+         A chapa gradiente cheia mora num ::before que acende no hover —
+         background-image não anima, opacidade sim. */
+      .service-row__icon {
+        grid-area: icon;
+        position: relative;
+        display: none;
         place-items: center;
-        flex-shrink: 0;
-        width: 58px;
-        height: 58px;
-        border-radius: 17px;
+        overflow: hidden;
+        width: 3.25rem;
+        height: 3.25rem;
+        border-radius: 16px;
         color: var(--blue);
         background: linear-gradient(
           150deg,
           rgba(18, 100, 255, 0.13),
           rgba(124, 60, 255, 0.13)
         );
+        transition: color 0.35s var(--ease);
       }
 
-      .service__icon svg {
-        width: 28px;
-        height: 28px;
+      .service-row__icon::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(150deg, #1264ff, #7c3cff);
+        opacity: 0;
+        transition: opacity 0.35s var(--ease);
       }
 
-      .service__body {
-        display: flex;
-        flex-direction: column;
-        gap: 0.45rem;
+      .service-row:hover .service-row__icon {
+        color: #fff;
       }
 
-      .service__name {
-        font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+      .service-row:hover .service-row__icon::before {
+        opacity: 1;
+      }
+
+      .service-row__icon svg {
+        position: relative;
+        z-index: 1;
+        width: 26px;
+        height: 26px;
+      }
+
+      .service-row__name {
+        grid-area: name;
+        font-size: clamp(1.02rem, 2.6vw, 1.45rem);
         font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: -0.01em;
-        line-height: 1.2;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        color: var(--bg);
+        transition: transform 0.35s var(--ease);
       }
 
-      .service__desc {
+      .service-row:hover .service-row__name {
+        transform: translateX(0.35rem);
+      }
+
+      .service-row__desc {
+        grid-area: desc;
         font-size: clamp(0.82rem, 1.3vw, 0.9rem);
         font-weight: 400;
         line-height: 1.6;
         color: #4a5372;
+      }
+
+      .service-row__cta {
+        grid-area: arrow;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        white-space: nowrap;
+        color: var(--blue);
+      }
+
+      /* No celular fica só o círculo com a seta; o rótulo entra em 640. */
+      .service-row__cta-label {
+        display: none;
+      }
+
+      .service-row__cta b {
+        display: grid;
+        place-items: center;
+        width: 2.4rem;
+        height: 2.4rem;
+        border: 1px solid rgba(18, 100, 255, 0.35);
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 700;
+        transition:
+          transform 0.35s var(--ease),
+          background-color 0.35s var(--ease),
+          border-color 0.35s var(--ease),
+          color 0.35s var(--ease);
+      }
+
+      .service-row:hover .service-row__cta b {
+        transform: translateX(4px);
+        border-color: transparent;
+        background: linear-gradient(90deg, #0758ff, #5428ff);
+        color: #fff;
       }
 
       @media (min-width: 640px) {
@@ -1187,8 +1275,19 @@
         .services__heading {
           margin-bottom: 4.5rem;
         }
-        .services__list {
-          grid-template-columns: repeat(2, 1fr);
+        .service-row {
+          grid-template-columns: 2.6rem 3.25rem minmax(0, 1fr) auto;
+          grid-template-areas:
+            'index icon name arrow'
+            'index icon desc arrow';
+          column-gap: 1.1rem;
+          padding: 1.5rem 0.6rem;
+        }
+        .service-row__icon {
+          display: grid;
+        }
+        .service-row__cta-label {
+          display: inline;
         }
       }
 
@@ -1200,22 +1299,20 @@
           height: 108px;
           margin-bottom: 2rem;
         }
-        .service {
-          padding: 2.2rem 1.5rem;
-        }
       }
 
       @media (min-width: 1024px) {
-        /* A base de 22rem cabe três vezes na régua de 76rem e nunca
-           quatro, então os cinco cards saem 3 + 2, com a segunda fila
-           centrada pelo `justify-content`. */
-        .services__list {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
+        /* Com largura, cada faixa vira uma linha só: nome à esquerda,
+           descrição em coluna própria no meio e o destino na ponta. */
+        .service-row {
+          grid-template-columns: 3rem 3.25rem minmax(0, 1.05fr) minmax(0, 1fr) auto;
+          grid-template-areas: 'index icon name desc arrow';
+          column-gap: 1.5rem;
+          padding: 1.65rem 0.75rem;
         }
-        .service {
-          flex: 0 1 22rem;
+        .service-row__index {
+          align-self: center;
+          padding-top: 0;
         }
       }
 
@@ -2671,9 +2768,19 @@
         <h2 class="section-heading services__heading" data-reveal style="--ry: 40px">
           Serviços
         </h2>
+        <!-- Cada faixa é um link: as três primeiras caem nos planos do
+             serviço na seção Portfólio & Valores; Tráfego e T.I. não têm
+             tabela própria, então caem no contato com o data-plan abrindo
+             o WhatsApp já com a mensagem certa. -->
         <div class="services__list">
-          <div class="service" data-reveal style="--rd: 0s">
-            <span class="service__icon">
+          <a
+            class="service-row"
+            href="#portfolio-desenvolvimento"
+            data-reveal
+            style="--rd: 0s"
+          >
+            <span class="service-row__index">01</span>
+            <span class="service-row__icon">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -2691,16 +2798,24 @@
                 />
               </svg>
             </span>
-            <div class="service__body">
-              <h3 class="service__name">Criação de sites</h3>
-              <p class="service__desc">
-                Sites modernos, rápidos e otimizados para todos os dispositivos.
-              </p>
-            </div>
-          </div>
+            <h3 class="service-row__name">Criação de sites</h3>
+            <p class="service-row__desc">
+              Sites modernos, rápidos e otimizados para todos os dispositivos.
+            </p>
+            <span class="service-row__cta">
+              <span class="service-row__cta-label">Ver planos</span>
+              <b aria-hidden="true">→</b>
+            </span>
+          </a>
 
-          <div class="service" data-reveal style="--rd: 0.06s">
-            <span class="service__icon">
+          <a
+            class="service-row"
+            href="#portfolio-social"
+            data-reveal
+            style="--rd: 0.06s"
+          >
+            <span class="service-row__index">02</span>
+            <span class="service-row__icon">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -2718,16 +2833,24 @@
                 <path d="M11 13.6h2.4" />
               </svg>
             </span>
-            <div class="service__body">
-              <h3 class="service__name">Criação de mídia social</h3>
-              <p class="service__desc">
-                Produção de conteúdos que conectam sua marca ao público certo.
-              </p>
-            </div>
-          </div>
+            <h3 class="service-row__name">Criação de mídia social</h3>
+            <p class="service-row__desc">
+              Produção de conteúdos que conectam sua marca ao público certo.
+            </p>
+            <span class="service-row__cta">
+              <span class="service-row__cta-label">Ver planos</span>
+              <b aria-hidden="true">→</b>
+            </span>
+          </a>
 
-          <div class="service" data-reveal style="--rd: 0.12s">
-            <span class="service__icon">
+          <a
+            class="service-row"
+            href="#portfolio-identidade"
+            data-reveal
+            style="--rd: 0.12s"
+          >
+            <span class="service-row__index">03</span>
+            <span class="service-row__icon">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -2741,16 +2864,25 @@
                 <path d="m12 7.4 1.6 3 3 1.6-3 1.6-1.6 3-1.6-3-3-1.6 3-1.6z" />
               </svg>
             </span>
-            <div class="service__body">
-              <h3 class="service__name">Identidade visual</h3>
-              <p class="service__desc">
-                Criamos marcas fortes, memoráveis e que se destacam no mercado.
-              </p>
-            </div>
-          </div>
+            <h3 class="service-row__name">Identidade visual</h3>
+            <p class="service-row__desc">
+              Criamos marcas fortes, memoráveis e que se destacam no mercado.
+            </p>
+            <span class="service-row__cta">
+              <span class="service-row__cta-label">Ver planos</span>
+              <b aria-hidden="true">→</b>
+            </span>
+          </a>
 
-          <div class="service" data-reveal style="--rd: 0.18s">
-            <span class="service__icon">
+          <a
+            class="service-row"
+            href="#contato"
+            data-plan="tráfego pago e anúncios"
+            data-reveal
+            style="--rd: 0.18s"
+          >
+            <span class="service-row__index">04</span>
+            <span class="service-row__icon">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -2765,17 +2897,26 @@
                 <path d="M13.6 10.4 20 4M16.2 4H20v3.8" />
               </svg>
             </span>
-            <div class="service__body">
-              <h3 class="service__name">Tráfego pago e anúncios</h3>
-              <p class="service__desc">
-                Campanhas inteligentes para atrair clientes e maximizar
-                resultados.
-              </p>
-            </div>
-          </div>
+            <h3 class="service-row__name">Tráfego pago e anúncios</h3>
+            <p class="service-row__desc">
+              Campanhas inteligentes para atrair clientes e maximizar
+              resultados.
+            </p>
+            <span class="service-row__cta">
+              <span class="service-row__cta-label">Pedir proposta</span>
+              <b aria-hidden="true">→</b>
+            </span>
+          </a>
 
-          <div class="service" data-reveal style="--rd: 0.24s">
-            <span class="service__icon">
+          <a
+            class="service-row"
+            href="#contato"
+            data-plan="serviços de T.I."
+            data-reveal
+            style="--rd: 0.24s"
+          >
+            <span class="service-row__index">05</span>
+            <span class="service-row__icon">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -2790,15 +2931,16 @@
                 <path d="M6.6 8.8h6.6M6.6 11.9h3.7" />
               </svg>
             </span>
-            <div class="service__body">
-              <h3 class="service__name">Serviços de T.I.</h3>
-              <p class="service__desc">
-                Soluções completas em tecnologia para que empresas funcionem
-                melhor.
-              </p>
-            </div>
-          </div>
-
+            <h3 class="service-row__name">Serviços de T.I.</h3>
+            <p class="service-row__desc">
+              Soluções completas em tecnologia para que empresas funcionem
+              melhor.
+            </p>
+            <span class="service-row__cta">
+              <span class="service-row__cta-label">Pedir proposta</span>
+              <b aria-hidden="true">→</b>
+            </span>
+          </a>
         </div>
       </section>
 
