@@ -33,11 +33,6 @@ assets/portfolio/  imagens dos trabalhos mostrados na seção de portfólio
       domínio e a caixa existem; se não, trocar ou remover.
 - [ ] **Valores dos planos**: são ponto de partida, não a tabela real — ver
       "Valores" abaixo.
-- [ ] **Logo do PSINDCE**: o carrossel de clientes já tem a vaga (aparece o
-      nome escrito enquanto isso). Salve o arquivo em
-      `assets/carrosel_empresas/psindce.webp` — de preferência com fundo
-      transparente, como as outras logos, para não virar um retângulo branco
-      no card escuro.
 
 ## Como visualizar
 
