@@ -5,7 +5,7 @@
 >
   <url>
     <loc>https://agenciaevolva.pages.dev/</loc>
-    <lastmod>2026-08-22</lastmod>
+    <lastmod>2026-08-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -67,6 +67,9 @@
     </image:image>
     <image:image>
       <image:loc>https://agenciaevolva.pages.dev/assets/carrosel_empresas/fortaleza-regional-11.webp</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://agenciaevolva.pages.dev/assets/carrosel_empresas/psindce.webp</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://agenciaevolva.pages.dev/assets/portfolio/1.webp</image:loc>
