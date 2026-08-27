@@ -72,6 +72,15 @@
     <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png" />
     <link rel="manifest" href="./site.webmanifest" />
 
+    <!-- A Neue Montreal é licenciada e não vive no repositório. Assim
+         que o corte fino chegar em assets/fonts/, descomente a linha
+         abaixo: ela é o único arquivo que vale pré-carregar, porque é
+         o que desenha a primeira linha da hero. Com o arquivo ausente
+         o preload viraria um 404 a cada visita, então fica comentado.
+         Ver assets/fonts/README.md. -->
+    <!-- <link rel="preload" as="font" type="font/woff2" crossorigin
+         href="./assets/fonts/NeueMontreal-Thin.woff2" /> -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Neue Montreal é a fonte da marca e vem auto-hospedada (ver o
@@ -122,6 +131,19 @@
          inteiro. Sem eles o navegador cai na Archivo variável, que
          mantém o mesmo desenho de pesos e larguras.
       =============================================================== */
+      @font-face {
+        font-family: 'Neue Montreal';
+        /* A linha branca da hero pede o peso mais fino da família. A
+           Pangram Pangram chama esse corte de "Thin"; o briefing pediu
+           "UltraLight" — os dois nomes estão listados, o navegador usa
+           o primeiro que existir. */
+        src:
+          url('./assets/fonts/NeueMontreal-Thin.woff2') format('woff2'),
+          url('./assets/fonts/NeueMontreal-UltraLight.woff2') format('woff2');
+        font-weight: 200;
+        font-style: normal;
+        font-display: swap;
+      }
       @font-face {
         font-family: 'Neue Montreal';
         src: url('./assets/fonts/NeueMontreal-Light.woff2') format('woff2');
@@ -219,64 +241,6 @@
         background-color: var(--bg);
       }
 
-      /* ---------------------------------------------------------------
-         Assinaturas visuais da marca, reconstruídas em CSS
-      --------------------------------------------------------------- */
-      .dot-grid::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        background-image: radial-gradient(
-          circle,
-          rgba(36, 102, 255, 0.55) 1px,
-          transparent 1px
-        );
-        background-size: 22px 22px;
-        -webkit-mask-image: linear-gradient(
-          100deg,
-          #000 0%,
-          rgba(0, 0, 0, 0.35) 18%,
-          transparent 34%
-        );
-        mask-image: linear-gradient(
-          100deg,
-          #000 0%,
-          rgba(0, 0, 0, 0.35) 18%,
-          transparent 34%
-        );
-      }
-
-      .streaks::after {
-        content: '';
-        position: absolute;
-        inset: -20% -10%;
-        pointer-events: none;
-        background:
-          linear-gradient(
-              104deg,
-              transparent 48.6%,
-              rgba(34, 167, 255, 0.55) 49%,
-              transparent 49.4%
-            )
-            no-repeat,
-          linear-gradient(
-              104deg,
-              transparent 61.6%,
-              rgba(124, 60, 255, 0.45) 62%,
-              transparent 62.4%
-            )
-            no-repeat,
-          linear-gradient(
-              104deg,
-              transparent 66.6%,
-              rgba(18, 100, 255, 0.35) 67%,
-              transparent 67.4%
-            )
-            no-repeat;
-        opacity: 0.7;
-      }
-
       .glow {
         position: absolute;
         border-radius: 50%;
@@ -289,6 +253,17 @@
         color: var(--accent-text);
       }
 
+      /* Texto que só o leitor de tela recebe. */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+
       /* Sem isto o navegador quebra onde cabe: títulos ficam com uma
          palavra sozinha na última linha e os parágrafos com um "órfão"
          no fim. `balance` iguala as linhas do título; `pretty` evita a
@@ -297,7 +272,6 @@
       h2,
       h3,
       .section-heading,
-      .hero__title,
       .faq summary {
         text-wrap: balance;
       }
@@ -338,7 +312,6 @@
          para que a diferença de largura se leia mesmo onde a fonte não
          tiver eixo de largura.
       --------------------------------------------------------------- */
-      .hero__title,
       .section-heading,
       .clients h2,
       .process__head h2,
@@ -366,7 +339,6 @@
         -webkit-text-fill-color: transparent;
       }
 
-      .hero__title .accent-text,
       .section-heading .accent-text,
       .clients h2 .accent-text,
       .process__head h2 .accent-text,
@@ -511,95 +483,86 @@
       }
 
       /* ===============================================================
-         1. Hero — sem menu de seções: numa landing page o visitante
-            não passeia, desce. Só o lockup e o CTA.
+         1. Hero — o lockup "DA ARTE DO POST / AO SITE."
+         ---------------------------------------------------------------
+         A frase inteira é a identidade da página: a linha branca é
+         texto HTML de verdade (Neue Montreal Ultra Light) e "AO SITE."
+         é um lettering vetorial desenhado para este site — ver o
+         <svg class="hero-wordmark"> no corpo da página. O fundo é
+         quase preto com um sopro de azul-marinho e um único feixe
+         diagonal à direita; nada de textura, partícula ou glow.
       =============================================================== */
       .hero {
+        --hero-bg: #020617;
+        --hero-blue: #0a56fa;
+        --hero-white: #f7f8ff;
+        --hero-cyan: #00a3ff;
+        --hero-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
         position: relative;
+        isolation: isolate;
         display: flex;
         flex-direction: column;
-        height: 100vh;
-        height: 100svh;
-        min-height: 640px;
-        overflow-x: clip;
-      }
-
-      .hero__bg {
-        position: absolute;
-        inset: 0;
+        /* `overflow: hidden` prende o feixe diagonal: sem isso ele
+           empurraria a página para o lado. */
         overflow: hidden;
+        min-height: 100vh;
+        min-height: 100svh;
         background:
           radial-gradient(
-            circle at 78% 42%,
-            rgba(124, 60, 255, 0.3),
-            transparent 46%
+            circle at 45% 45%,
+            rgba(20, 107, 255, 0.05),
+            transparent 48%
           ),
-          radial-gradient(
-            circle at 92% 78%,
-            rgba(18, 100, 255, 0.26),
-            transparent 42%
-          ),
-          linear-gradient(160deg, #020513 0%, #050a20 55%, #070428 100%);
+          var(--hero-bg);
       }
 
-      .hero__aurora {
+      /* Emenda com a seção seguinte, para o corte não aparecer. */
+      .hero__fade {
         position: absolute;
-        border-radius: 50%;
+        inset: auto 0 0;
+        z-index: -1;
+        height: 22%;
         pointer-events: none;
-        filter: blur(90px);
-        will-change: transform;
+        background: linear-gradient(transparent, var(--bg));
       }
 
-      .hero__aurora--a {
+      /* O feixe: um fio de luz ciano atravessando a direita, atrás de
+         tudo. Nasce fora da área visível em cima e sai fora embaixo.
+         A inclinação encolhe nas telas estreitas: o mesmo ângulo que
+         é discreto num monitor cortaria um celular ao meio. */
+      .hero__beam {
+        --beam-tilt: 12.6deg;
+        position: absolute;
         top: -12%;
-        right: -8%;
-        width: min(58vw, 720px);
-        height: min(58vw, 720px);
-        background: radial-gradient(
-          circle,
-          rgba(18, 100, 255, 0.38),
-          transparent 65%
-        );
-        animation: aurora-drift-a 18s ease-in-out infinite alternate;
-      }
-
-      .hero__aurora--b {
-        bottom: -18%;
-        right: 12%;
-        width: min(48vw, 600px);
-        height: min(48vw, 600px);
-        background: radial-gradient(
-          circle,
-          rgba(124, 60, 255, 0.36),
-          transparent 65%
-        );
-        animation: aurora-drift-b 22s ease-in-out infinite alternate;
-      }
-
-      @keyframes aurora-drift-a {
-        to {
-          transform: translate3d(-10%, 12%, 0) scale(1.12);
-        }
-      }
-
-      @keyframes aurora-drift-b {
-        to {
-          transform: translate3d(12%, -10%, 0) scale(0.92);
-        }
-      }
-
-      .hero__scrim {
-        position: absolute;
-        inset: 0;
+        left: 92%;
+        z-index: -1;
+        width: 2px;
+        height: 130%;
         pointer-events: none;
-        background:
-          linear-gradient(
-            90deg,
-            rgba(2, 5, 19, 0.95) 0%,
-            rgba(2, 5, 19, 0.72) 42%,
-            rgba(2, 5, 19, 0.1) 100%
-          ),
-          linear-gradient(transparent 62%, var(--bg) 100%);
+        transform-origin: top center;
+        transform: rotate(var(--beam-tilt));
+        background: linear-gradient(
+          transparent 0%,
+          rgba(0, 163, 255, 0.16) 14%,
+          rgba(0, 163, 255, 0.42) 50%,
+          rgba(0, 163, 255, 0.12) 88%,
+          transparent 100%
+        );
+        box-shadow: 0 0 10px rgba(0, 163, 255, 0.16);
+        animation: hero-beam 0.55s var(--hero-ease) 0.95s both;
+      }
+
+      @media (max-width: 900px) {
+        .hero__beam {
+          --beam-tilt: 6deg;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .hero__beam {
+          --beam-tilt: 3.5deg;
+        }
       }
 
       .hero__nav {
@@ -609,7 +572,9 @@
         align-items: center;
         justify-content: space-between;
         gap: 0.75rem;
-        padding: 1.4rem 1.25rem 0;
+        width: min(100%, 1920px);
+        margin-inline: auto;
+        padding: 1.4rem clamp(20px, 5vw, 96px) 0;
       }
 
       .hero__brand {
@@ -622,7 +587,6 @@
       .hero__brand-icon {
         height: 2rem;
         width: auto;
-        filter: drop-shadow(0 0 14px rgba(36, 102, 255, 0.65));
       }
 
       .hero__brand-word {
@@ -658,48 +622,129 @@
         flex: 1 0 auto;
         flex-direction: column;
         justify-content: center;
-        padding: 2.5rem 1.25rem 0;
+        width: min(100%, 1920px);
+        margin-inline: auto;
+        padding-inline: clamp(20px, 5vw, 96px);
+        padding-block: clamp(40px, 7vh, 110px) 0;
       }
 
-      .hero__title-clip {
-        overflow: hidden;
-        /* Entrelinha curta encosta o título no kicker: este respiro
-           devolve a separação entre os dois. */
-        margin-top: 0.55rem;
+      /* ---------------------------------------------------------------
+         O lockup
+         ---------------------------------------------------------------
+         O container de consulta é a chave da composição: a linha branca
+         mede o próprio corpo em `cqi` — porcentagem da largura do
+         lettering azul — então as duas linhas crescem e encolhem juntas,
+         sempre alinhadas pela esquerda e sem nunca estourar a tela.
+      --------------------------------------------------------------- */
+      .hero__lockup {
+        container-type: inline-size;
+        width: min(100%, 1720px);
+        margin-top: clamp(0.5rem, 1.2vw, 1.1rem);
       }
 
       .hero__title {
-        font-weight: 300;
-        text-transform: uppercase;
-        /* Entrelinha curta: as duas linhas precisam ler como uma frase
-           só, não como dois blocos separados. */
-        line-height: 0.86;
-        letter-spacing: 0.008em;
+        margin: 0;
+        font-weight: 200;
       }
 
-      .hero__title span {
+      .hero__title-top {
         display: block;
+        font-family: var(--font-sans);
+        font-weight: 200;
+        font-stretch: 108%;
+        font-style: normal;
+        text-transform: uppercase;
+        line-height: 0.95;
         white-space: nowrap;
+        letter-spacing: clamp(0.1em, 0.4vw, 0.18em);
+        font-size: clamp(0.95rem, 3.4vw, 4.4rem);
+        color: var(--hero-white);
+        animation: hero-rise 0.6s var(--hero-ease) 0.05s both;
       }
 
-      /* O tamanho acompanha a largura da tela, mas com teto: sem ele, em
-         monitor grande a frase vira dois textos distantes um do outro. */
-      /* No hero quem manda é o azul: vem maior e mais aberto que o
-         branco, que recua de corpo para abrir espaço. A largura sobe de
-         78% para 100% — segue mais estreito que o branco estendido em
-         125%, mas sem o aperto do resto do site. */
-      .hero__title .line-a {
-        font-size: min(6.6vw, 100px);
+      @supports (font-size: 1cqi) {
+        .hero__title-top {
+          font-size: 6.2cqi;
+          letter-spacing: 0.09em;
+        }
       }
 
-      .hero__title .line-b {
-        font-size: min(13.4vw, 182px);
-        font-stretch: 100%;
+      .hero__wordmark {
+        position: relative;
+        display: block;
+        margin-top: clamp(20px, 3vw, 52px);
+      }
+
+      .hero-wordmark {
+        display: block;
+        width: 100%;
+        height: auto;
+        /* Reserva a caixa antes de pintar: sem isto o bloco abaixo
+           saltaria quando o SVG entrasse. */
+        aspect-ratio: 1592 / 368;
+        color: var(--hero-blue);
+        animation: hero-wipe 0.85s var(--hero-ease) 0.2s both;
+      }
+
+      .wm-ribbon-sweep {
+        stroke-dashoffset: 0;
+        animation: hero-ribbon 0.95s var(--hero-ease) 0.25s both;
+      }
+
+      .wm-dot-in {
+        animation: hero-pop 0.45s var(--hero-ease) 0.8s both;
+      }
+
+      .wm-cursor-in {
+        animation: hero-cursor 0.5s var(--hero-ease) 0.95s both;
+      }
+
+      .wm-thumb {
+        animation: hero-thumb 0.5s var(--hero-ease) 0.85s both;
+      }
+
+      .wm-dot,
+      .wm-cursor {
+        transform-box: fill-box;
+        transform-origin: center;
+        transition: transform 0.35s var(--hero-ease);
+      }
+
+      /* O ponto final é o botão da hero: o círculo e a seta moram no
+         SVG (decorativo), e por cima dele fica um <a> de verdade, com
+         alvo de 44px, foco visível e navegação por teclado. */
+      .hero-wordmark__cta {
+        position: absolute;
+        left: 94.54%;
+        top: 76.36%;
+        width: max(44px, 4.8%);
+        aspect-ratio: 1;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+      }
+
+      .hero-wordmark__cta:focus-visible {
+        outline: 3px solid var(--hero-white);
+        outline-offset: 8px;
+      }
+
+      .hero__wordmark:has(.hero-wordmark__cta:hover) .wm-dot,
+      .hero__wordmark:has(.hero-wordmark__cta:focus-visible) .wm-dot {
+        transform: scale(1.07);
+      }
+
+      .hero__wordmark:has(.hero-wordmark__cta:hover) .wm-cursor,
+      .hero__wordmark:has(.hero-wordmark__cta:focus-visible) .wm-cursor {
+        transform: translate(-7px, -7px);
+      }
+
+      .hero__wordmark:has(.hero-wordmark__cta:active) .wm-dot {
+        transform: scale(0.97);
       }
 
       .hero__lead {
         max-width: 570px;
-        margin-top: 1.4rem;
+        margin-top: clamp(1.5rem, 3.2vw, 2.6rem);
         font-size: 15px;
         line-height: 1.65;
         color: #c5cbe0;
@@ -726,62 +771,78 @@
       }
 
       .hero__spacer {
-        flex: 1;
-        min-height: 2.75rem;
+        flex: 0 0 auto;
+        height: clamp(1.5rem, 5vh, 4.5rem);
       }
 
-      .hero__mark {
-        position: absolute;
-        right: -20%;
-        top: 60%;
-        z-index: 10;
-        width: 290px;
-        transform: translateY(-50%);
+      /* ---------------------------------------------------------------
+         Entrada da hero — ~1,5s no total, só transform, opacity,
+         clip-path e máscara: nada que force recálculo de layout.
+      --------------------------------------------------------------- */
+      @keyframes hero-rise {
+        from {
+          opacity: 0;
+          transform: translate3d(0, 16px, 0);
+        }
       }
 
-      .hero__mark img {
-        width: 100%;
-        filter: drop-shadow(0 0 60px rgba(60, 110, 255, 0.55))
-          drop-shadow(0 0 120px rgba(124, 60, 255, 0.35));
+      @keyframes hero-wipe {
+        from {
+          clip-path: inset(0 100% 0 0);
+        }
+        to {
+          clip-path: inset(0 0 0 0);
+        }
       }
 
-      .magnet {
-        will-change: transform;
-        transition: transform 0.6s ease-in-out;
+      @keyframes hero-ribbon {
+        from {
+          stroke-dashoffset: 1;
+        }
       }
 
-      .magnet.is-active {
-        transition: transform 0.3s ease-out;
+      @keyframes hero-pop {
+        from {
+          opacity: 0;
+          transform: scale(0.4);
+        }
+      }
+
+      @keyframes hero-cursor {
+        from {
+          opacity: 0;
+          transform: translate(26px, 26px);
+        }
+      }
+
+      @keyframes hero-thumb {
+        from {
+          transform: translateY(-16px);
+        }
+      }
+
+      @keyframes hero-beam {
+        from {
+          opacity: 0;
+          transform: rotate(var(--beam-tilt)) scaleY(0.4);
+        }
       }
 
       @media (min-width: 640px) {
-        .hero__nav {
-          padding-left: 2rem;
-          padding-right: 2rem;
-        }
         .hero__brand-word {
           display: block;
         }
         .nav-cta {
           font-size: 12px;
         }
-        .hero__body {
-          padding-left: 2rem;
-          padding-right: 2rem;
-        }
         .hero__lead {
           font-size: 17px;
-        }
-        .hero__mark {
-          right: -10%;
-          top: 62%;
-          width: 400px;
         }
       }
 
       @media (min-width: 768px) {
         .hero__nav {
-          padding: 1.8rem 2.75rem 0;
+          padding-top: 1.8rem;
         }
         .hero__brand {
           gap: 0.85rem;
@@ -792,32 +853,8 @@
         .hero__brand-word {
           height: 2.9rem;
         }
-        .hero__body {
-          padding-left: 2.75rem;
-          padding-right: 2.75rem;
-          padding-top: 3rem;
-        }
         .hero__lead {
           font-size: 18px;
-        }
-        .hero__mark {
-          right: -6%;
-          top: 62%;
-          width: 470px;
-        }
-      }
-
-      @media (min-width: 1024px) {
-        .hero__title .line-a {
-          font-size: min(5.9vw, 96px);
-        }
-        .hero__title .line-b {
-          font-size: min(12.6vw, 172px);
-        }
-        .hero__mark {
-          right: -2%;
-          top: 60%;
-          width: 520px;
         }
       }
 
@@ -1758,14 +1795,31 @@
           transform: none;
           transition: none;
         }
-        .magnet,
         .parallax__col {
           transition: none !important;
           transform: none !important;
         }
         .clients__track,
-        .hero__aurora {
+        .hero__title-top,
+        .hero-wordmark,
+        .hero__beam,
+        .wm-ribbon-sweep,
+        .wm-dot-in,
+        .wm-cursor-in,
+        .wm-thumb {
           animation: none !important;
+        }
+        /* A hero nasce montada: sem varredura, sem máscara, sem
+           deslocamento — só o desenho final. */
+        .hero-wordmark {
+          clip-path: none;
+        }
+        .wm-ribbon-sweep {
+          stroke-dashoffset: 0;
+        }
+        .wm-dot,
+        .wm-cursor {
+          transition: none !important;
         }
         .manifesto__text span {
           opacity: 1;
@@ -1790,12 +1844,9 @@
       <!-- ============================================================
            1. Hero
       ============================================================= -->
-      <section class="hero dot-grid streaks">
-        <div class="hero__bg" aria-hidden="true">
-          <span class="hero__aurora hero__aurora--a"></span>
-          <span class="hero__aurora hero__aurora--b"></span>
-        </div>
-        <div class="hero__scrim"></div>
+      <section class="hero">
+        <span class="hero__beam" aria-hidden="true"></span>
+        <span class="hero__fade" aria-hidden="true"></span>
 
         <nav class="hero__nav" data-reveal style="--ry: -20px">
           <span class="hero__brand">
@@ -1818,10 +1869,134 @@
             Criação de mídias digitais
           </p>
 
-          <div class="hero__title-clip">
-            <h1 class="hero__title" data-reveal style="--ry: 40px; --rd: 0.15s">
-              <span class="line-a">Da arte do post</span>
-              <span class="line-b accent-text">ao site.</span>
+          <div class="hero__lockup">
+            <h1 class="hero__title">
+              <span class="hero__title-top">DA ARTE DO POST</span>
+
+              <!-- A frase existe inteira no HTML; o SVG abaixo é a
+                   forma dela e fica escondido do leitor de tela para
+                   ninguém ouvir "ao site" duas vezes. -->
+              <span class="sr-only">AO SITE.</span>
+
+              <span class="hero__wordmark">
+                <!-- ==================================================
+                     Lettering "AO SITE." — desenho autoral em vetor
+                     ----------------------------------------------------
+                     Altura de caixa alta 300 (y 30 → 330). A faixa
+                     nasce na perna esquerda do A, fecha a contraforma,
+                     passa por baixo do O e vira o braço inferior do S:
+                     é uma peça só, não um sublinhado. O I guarda uma
+                     barra de rolagem, o E dois recortes de módulo e o
+                     ponto final virou botão.
+                ================================================== -->
+                <svg
+                  class="hero-wordmark"
+                  viewBox="0 18 1592 368"
+                  preserveAspectRatio="xMinYMid meet"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <defs>
+                    <mask
+                      id="wm-ribbon-mask"
+                      maskUnits="userSpaceOnUse"
+                      x="0"
+                      y="0"
+                      width="1592"
+                      height="400"
+                    >
+                      <path
+                        class="wm-ribbon-sweep"
+                        d="M20 366C60 250 150 200 224 240C296 278 352 332 438 350C532 338 604 300 790 296"
+                        fill="none"
+                        stroke="#fff"
+                        stroke-width="200"
+                        stroke-linecap="round"
+                        pathLength="1"
+                        stroke-dasharray="1"
+                      />
+                    </mask>
+                  </defs>
+
+                  <g fill="currentColor">
+                    <!-- A -->
+                    <path d="M128 30 186 30 302 319 210 255 157 108 64 330 0 330Z" />
+
+                    <!-- faixa A → O → S -->
+                    <path
+                      mask="url(#wm-ribbon-mask)"
+                      d="M100 224C130 198 178 190 214 214C258 244 300 288 372 314C404 325 476 325 520 312C566 297 620 278 700 268L700 330 648 330C610 340 560 358 492 369C470 373 454 375 438 375C420 375 398 373 375 369C330 360 296 342 262 322C236 306 200 286 160 257C130 279 98 307 62 330Z"
+                    />
+
+                    <!-- O, com o corte de abertura no ombro direito -->
+                    <path
+                      fill-rule="evenodd"
+                      d="M438 25A153 153 0 0 1 535 59L521 82 557 82A153 153 0 1 1 438 25ZM438 82A96 96 0 1 0 438 274 96 96 0 1 0 438 82Z"
+                    />
+
+                    <!-- S: bojo redondo à esquerda, terminal reto à direita -->
+                    <path
+                      d="M723 30H887V90H723A30 30 0 0 0 723 150H887V268A62 62 0 0 1 825 330H680V268H825V210H723A90 90 0 0 1 723 30Z"
+                    />
+
+                    <!-- I -->
+                    <path d="M906 30H969V330H906Z" />
+
+                    <!-- T -->
+                    <path d="M985 30H1214V90H1131V330H1069V90H985Z" />
+
+                    <!-- E, com os recortes de módulo no braço central -->
+                    <path
+                      d="M1230 30H1446V90H1292V150H1427V210H1334V200H1326V210H1318V194H1308V210H1292V270H1446V330H1230Z"
+                    />
+                  </g>
+
+                  <!-- barra de rolagem dentro do I -->
+                  <rect x="933" y="61" width="10" height="245" rx="5" fill="#05091d" />
+                  <rect
+                    class="wm-thumb"
+                    x="934"
+                    y="91"
+                    width="8"
+                    height="54"
+                    rx="4"
+                    fill="#8e99b1"
+                  />
+
+                  <!-- ponto final: botão com seta -->
+                  <g class="wm-dot-in">
+                    <g class="wm-dot">
+                      <circle cx="1505" cy="299" r="36" fill="currentColor" />
+                      <path
+                        d="M1489 315 1519 285M1502 285H1519V302"
+                        fill="none"
+                        stroke="#020617"
+                        stroke-width="10"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </g>
+                  </g>
+
+                  <!-- o cursor apontando para o botão -->
+                  <g class="wm-cursor-in">
+                    <path
+                      class="wm-cursor"
+                      d="M1541 320v54l13.5-13 8.3 17.5 9-4.2-8.3-16.8H1580Z"
+                      fill="#f7f8ff"
+                      stroke="#020617"
+                      stroke-width="3"
+                      stroke-linejoin="round"
+                    />
+                  </g>
+                </svg>
+
+                <a
+                  class="hero-wordmark__cta"
+                  href="#contato"
+                  aria-label="Pedir meu orçamento no WhatsApp"
+                ></a>
+              </span>
             </h1>
           </div>
 
@@ -1845,14 +2020,6 @@
         </div>
 
         <div class="hero__spacer"></div>
-
-        <div class="hero__mark">
-          <div data-reveal style="--ry: 30px; --rd: 0.6s">
-            <div class="magnet" data-magnet data-padding="150" data-strength="3">
-              <img src="./assets/iconelogo.webp" alt="" aria-hidden="true" />
-            </div>
-          </div>
-        </div>
       </section>
 
       <!-- ============================================================
@@ -2554,43 +2721,6 @@
               reversibleFrom && reversibleFrom.compareDocumentPosition(el) & AFTER;
             (late ? onEnter : early).observe(el);
           });
-        }
-
-        /* ----------------------------------------------------------
-           Ímã: o símbolo do hero segue o cursor
-        ---------------------------------------------------------- */
-        var magnets = document.querySelectorAll('[data-magnet]');
-        if (!reduceMotion && magnets.length) {
-          window.addEventListener(
-            'mousemove',
-            function (event) {
-              magnets.forEach(function (node) {
-                var pad = parseFloat(node.getAttribute('data-padding')) || 100;
-                var strength =
-                  parseFloat(node.getAttribute('data-strength')) || 2;
-                var rect = node.getBoundingClientRect();
-                var cx = rect.left + rect.width / 2;
-                var cy = rect.top + rect.height / 2;
-                var inRange =
-                  Math.abs(cx - event.clientX) < rect.width / 2 + pad &&
-                  Math.abs(cy - event.clientY) < rect.height / 2 + pad;
-
-                if (inRange) {
-                  node.classList.add('is-active');
-                  node.style.transform =
-                    'translate3d(' +
-                    (event.clientX - cx) / strength +
-                    'px, ' +
-                    (event.clientY - cy) / strength +
-                    'px, 0)';
-                } else {
-                  node.classList.remove('is-active');
-                  node.style.transform = 'translate3d(0, 0, 0)';
-                }
-              });
-            },
-            { passive: true },
-          );
         }
 
         /* ----------------------------------------------------------
