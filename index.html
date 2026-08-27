@@ -74,8 +74,10 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Inter para o texto corrido; Archivo Expanded (eixo de largura
+         em 125) para os títulos de display. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,700..900&family=Inter:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
 
@@ -120,8 +122,10 @@
         --text: #f5f7ff;
         --muted: #aab2ca;
         --line: rgba(73, 105, 205, 0.22);
+        --accent-text: #4e8fff;
         --glass: rgba(7, 13, 38, 0.62);
         --shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+        --font-display: Archivo, Inter, ui-sans-serif, system-ui, sans-serif;
         --card-radius: clamp(26px, 3vw, 42px);
         --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
       }
@@ -235,17 +239,9 @@
         filter: blur(90px);
       }
 
-      .gradient-text {
-        background: linear-gradient(90deg, #fff, #4e8fff 45%, #a75cff);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: transparent;
-        /* Folga vertical e horizontal para o til, a cedilha e o último
-           glifo não saírem da área pintada do gradiente. */
-        padding-block: 0.2em;
-        padding-inline-end: 0.08em;
-        margin-inline-end: -0.08em;
+      /* Destaque dos títulos: cor chapada, sem gradiente. */
+      .accent-text {
+        color: var(--accent-text);
       }
 
       /* Sem isto o navegador quebra onde cabe: títulos ficam com uma
@@ -282,12 +278,25 @@
         font-weight: 800;
       }
 
+      .hero__title .line-b,
+      .section-heading,
+      .clients h2,
+      .process__head h2,
+      .faq__inner h2,
+      .contact__box h2 {
+        font-family: var(--font-display);
+        font-stretch: 125%;
+        font-weight: 900;
+      }
+
       .section-heading {
-        font-size: clamp(2.75rem, 10vw, 140px);
+        /* Mínimo baixo de propósito: a Archivo Expanded é mais larga
+           que a Inter e no celular o piso antigo forçava quebra. */
+        font-size: clamp(1.9rem, 10vw, 140px);
         font-weight: 900;
         text-transform: uppercase;
         line-height: 0.92;
-        letter-spacing: -0.055em;
+        letter-spacing: -0.02em;
         text-align: center;
       }
 
@@ -573,6 +582,7 @@
 
       .hero__title .line-b {
         font-size: min(12.8vw, 172px);
+        letter-spacing: -0.015em;
       }
 
       .hero__lead {
@@ -712,7 +722,7 @@
       .clients h2 {
         font-size: clamp(1.5rem, 3.5vw, 2.25rem);
         font-weight: 900;
-        letter-spacing: -0.04em;
+        letter-spacing: -0.015em;
         line-height: 1.1;
         margin: 0.75rem 1.25rem 2rem;
       }
@@ -1025,7 +1035,7 @@
       .services__heading {
         color: var(--bg);
         margin-bottom: 3.5rem;
-        font-size: clamp(2.4rem, 8vw, 100px);
+        font-size: clamp(1.7rem, 8vw, 100px);
       }
 
       .services__list {
@@ -1252,7 +1262,7 @@
       .process__head h2 {
         font-size: clamp(2rem, 5vw, 3.4rem);
         font-weight: 900;
-        letter-spacing: -0.05em;
+        letter-spacing: -0.02em;
         line-height: 1;
         margin: 0.6rem 0 0.9rem;
       }
@@ -1332,7 +1342,7 @@
       .faq__inner h2 {
         font-size: clamp(2rem, 5vw, 3.4rem);
         font-weight: 900;
-        letter-spacing: -0.05em;
+        letter-spacing: -0.02em;
         line-height: 1;
         margin: 0.6rem 0 2.25rem;
       }
@@ -1422,7 +1432,7 @@
       .contact__box h2 {
         font-size: clamp(2rem, 5vw, 3.6rem);
         font-weight: 900;
-        letter-spacing: -0.05em;
+        letter-spacing: -0.02em;
         line-height: 1;
         margin: 0.75rem 0 1rem;
       }
@@ -1687,7 +1697,7 @@
           <div class="hero__title-clip">
             <h1 class="hero__title" data-reveal style="--ry: 40px; --rd: 0.15s">
               <span class="line-a">Da arte do post</span>
-              <span class="line-b gradient-text">ao site.</span>
+              <span class="line-b accent-text">ao site.</span>
             </h1>
           </div>
 
@@ -1726,7 +1736,7 @@
       ============================================================= -->
       <section class="clients" data-reveal style="--ry: 26px">
         <p class="kicker">Clientes</p>
-        <h2>Marcas que já <span class="gradient-text">confiaram</span> na EVOLVA</h2>
+        <h2>Marcas que já <span class="accent-text">confiaram</span> na EVOLVA</h2>
 
         <div class="clients__marquee">
           <ul class="clients__track">
@@ -1828,7 +1838,7 @@
           <p class="kicker" data-reveal style="--ry: 20px">Como trabalhamos</p>
 
           <h2 class="section-heading" data-reveal style="--ry: 40px">
-            Feito à mão,<br /><span class="gradient-text">peça a peça.</span>
+            Feito à mão,<br /><span class="accent-text">peça a peça.</span>
           </h2>
 
           <p class="manifesto__text" data-scroll-text>
@@ -2061,7 +2071,7 @@
             </p>
             <h2 data-reveal style="--ry: 44px; --rt: 0.85s; --rd: 0.1s">
               Do briefing à
-              <span class="gradient-text">arte&nbsp;pronta.</span>
+              <span class="accent-text">arte&nbsp;pronta.</span>
             </h2>
             <p data-reveal style="--ry: 26px; --rd: 0.2s">
               Quatro etapas simples entre o seu pedido e o arquivo final na sua
@@ -2103,7 +2113,7 @@
         <div class="faq__inner">
           <p class="kicker" data-reveal style="--ry: 20px">Dúvidas comuns</p>
           <h2 data-reveal style="--ry: 30px; --rd: 0.08s">
-            Perguntas <span class="gradient-text">frequentes</span>
+            Perguntas <span class="accent-text">frequentes</span>
           </h2>
 
           <div class="faq__list" data-reveal style="--ry: 26px; --rd: 0.15s">
@@ -2155,7 +2165,7 @@
           <p class="kicker">Sem compromisso</p>
           <h2>
             Que peça a gente cria
-            <span class="gradient-text">primeiro?</span>
+            <span class="accent-text">primeiro?</span>
           </h2>
           <p>
             Chame no WhatsApp e diga o que você precisa —&nbsp;arte, site, landing
