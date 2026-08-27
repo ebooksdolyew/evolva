@@ -77,7 +77,7 @@
     <!-- Inter para o texto corrido; Archivo Expanded (eixo de largura
          em 125) para os títulos de display. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,700..900&family=Inter:wght@400;500;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,125,700..900;1,125,700..900&family=Inter:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
 
@@ -278,6 +278,7 @@
         font-weight: 800;
       }
 
+      .hero__title .line-a,
       .hero__title .line-b,
       .section-heading,
       .clients h2,
@@ -552,11 +553,27 @@
         padding: 2.5rem 1.25rem 0;
       }
 
+      /* O título é um cartaz: as duas linhas ocupam a mesma largura,
+         empilhadas e coladas, com a segunda em degradê. O tamanho de
+         cada linha é medido em cqw — a fração da largura do bloco —
+         para que cada uma feche exatamente na borda, seja qual for a
+         tela. `max-width` é o teto: sem ele, em monitor grande o
+         título viraria uma faixa alta demais para o resto da dobra. */
+      .hero__title-block {
+        position: relative;
+        width: 100%;
+        max-width: 1180px;
+        margin-top: 0.35rem;
+      }
+
+      @supports (width: 1cqw) {
+        .hero__title-block {
+          container-type: inline-size;
+        }
+      }
+
       .hero__title-clip {
         overflow: hidden;
-        /* Entrelinha curta encosta o título no kicker: este respiro
-           devolve a separação entre os dois. */
-        margin-top: 0.55rem;
       }
 
       .hero__title {
@@ -565,7 +582,6 @@
         /* Entrelinha curta: as duas linhas precisam ler como uma frase
            só, não como dois blocos separados. */
         line-height: 0.84;
-        letter-spacing: -0.055em;
       }
 
       .hero__title span {
@@ -573,16 +589,123 @@
         white-space: nowrap;
       }
 
-      /* O tamanho acompanha a largura da tela, mas com teto: sem ele, em
-         monitor grande a frase vira dois textos distantes um do outro. */
       .hero__title .line-a {
-        font-size: min(8.5vw, 132px);
-        color: #e8edff;
+        font-size: min(10.5vw, 124px);
+        /* O espacejamento vive em cada linha, não no h1: em `em` no
+           pai ele congelaria no corpo do h1 e a linha maior ficaria
+           frouxa. */
+        letter-spacing: -0.045em;
+        color: #eef1ff;
       }
 
+      /* Degradê de cima para baixo, do azul claro ao azul profundo:
+         a palavra parece entrar na página em vez de flutuar sobre o
+         fundo. `background-clip: text` pinta só o desenho da letra. */
       .hero__title .line-b {
-        font-size: min(12.8vw, 172px);
-        letter-spacing: -0.015em;
+        font-size: min(23.7vw, 279px);
+        letter-spacing: -0.03em;
+        background: linear-gradient(
+          180deg,
+          #a9c9ff 0%,
+          #3f86ff 34%,
+          #1451da 64%,
+          #0a1f79 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      @supports (font-size: 1cqw) {
+        .hero__title .line-a {
+          font-size: 10.5cqw;
+        }
+        .hero__title .line-b {
+          font-size: 23.7cqw;
+        }
+      }
+
+      /* Moldura de seleção, o gesto de quem trabalha dentro de uma
+         prancheta: fio fino com quatro alças nos cantos. É enfeite —
+         fica fora da árvore de acessibilidade. */
+      .hero__select {
+        position: absolute;
+        inset: -0.6rem -0.75rem -0.5rem -0.9rem;
+        pointer-events: none;
+        outline: 1px solid rgba(78, 143, 255, 0.3);
+        background-image:
+          linear-gradient(#2f7bff, #2f7bff), linear-gradient(#2f7bff, #2f7bff),
+          linear-gradient(#2f7bff, #2f7bff), linear-gradient(#2f7bff, #2f7bff);
+        background-repeat: no-repeat;
+        background-size: 9px 9px;
+        background-position:
+          -5px -5px,
+          calc(100% + 5px) -5px,
+          -5px calc(100% + 5px),
+          calc(100% + 5px) calc(100% + 5px);
+      }
+
+      /* O cursor com etiqueta: a assinatura de quem está editando.
+         No celular a etiqueta cobriria metade da palavra — some. */
+      .hero__cursor {
+        display: none;
+        position: absolute;
+        right: 0.1rem;
+        bottom: 0.9rem;
+        z-index: 21;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+        background: #2f7bff;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .hero__cursor::before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 7px solid #fff;
+        border-bottom: 7px solid transparent;
+        transform: rotate(-20deg);
+      }
+
+      /* Assinatura sob o título, no lugar do antigo kicker: caixa alta
+         espaçada com o serviço em itálico, como a legenda de um
+         cartaz. */
+      .hero__stamp {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        margin-top: 1.5rem;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #aab6d6;
+      }
+
+      .hero__stamp::before {
+        content: '';
+        flex: none;
+        width: 26px;
+        height: 2px;
+        background: #2f7bff;
+      }
+
+      .hero__stamp i {
+        font-family: var(--font-display);
+        font-stretch: 125%;
+        font-style: italic;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        color: #eef1ff;
       }
 
       .hero__lead {
@@ -621,7 +744,7 @@
       .hero__mark {
         position: absolute;
         right: -20%;
-        top: 60%;
+        top: 82%;
         z-index: 10;
         width: 290px;
         transform: translateY(-50%);
@@ -629,6 +752,7 @@
 
       .hero__mark img {
         width: 100%;
+        opacity: 0.55;
         filter: drop-shadow(0 0 60px rgba(60, 110, 255, 0.55))
           drop-shadow(0 0 120px rgba(124, 60, 255, 0.35));
       }
@@ -643,6 +767,9 @@
       }
 
       @media (min-width: 640px) {
+        .hero__cursor {
+          display: flex;
+        }
         .hero__nav {
           padding-left: 2rem;
           padding-right: 2rem;
@@ -662,8 +789,8 @@
         }
         .hero__mark {
           right: -10%;
-          top: 62%;
-          width: 400px;
+          top: 80%;
+          width: 360px;
         }
       }
 
@@ -690,22 +817,16 @@
         }
         .hero__mark {
           right: -6%;
-          top: 62%;
-          width: 470px;
+          top: 78%;
+          width: 400px;
         }
       }
 
       @media (min-width: 1024px) {
-        .hero__title .line-a {
-          font-size: min(7.5vw, 124px);
-        }
-        .hero__title .line-b {
-          font-size: min(12vw, 162px);
-        }
         .hero__mark {
-          right: -2%;
-          top: 60%;
-          width: 520px;
+          right: -3%;
+          top: 76%;
+          width: 440px;
         }
       }
 
@@ -1690,18 +1811,33 @@
         </nav>
 
         <div class="hero__body">
-          <p class="kicker" data-reveal style="--ry: 20px; --rd: 0.1s">
-            Criação de mídias digitais
-          </p>
-
-          <div class="hero__title-clip">
-            <h1 class="hero__title" data-reveal style="--ry: 40px; --rd: 0.15s">
-              <span class="line-a">Da arte do post</span>
-              <span class="line-b accent-text">ao site.</span>
-            </h1>
+          <div class="hero__title-block">
+            <div class="hero__title-clip">
+              <h1 class="hero__title" data-reveal style="--ry: 40px; --rd: 0.1s">
+                <span class="line-a">Da arte do post</span>
+                <span class="line-b">ao site.</span>
+              </h1>
+            </div>
+            <span
+              class="hero__select"
+              aria-hidden="true"
+              data-reveal
+              style="--ry: 0px; --rd: 0.55s"
+            ></span>
+            <span
+              class="hero__cursor"
+              aria-hidden="true"
+              data-reveal
+              style="--ry: 10px; --rd: 0.7s"
+              >EVOLVA</span
+            >
           </div>
 
-          <p class="hero__lead" data-reveal style="--ry: 20px; --rd: 0.35s">
+          <p class="hero__stamp" data-reveal style="--ry: 16px; --rd: 0.3s">
+            Criação de <i>mídias digitais</i>
+          </p>
+
+          <p class="hero__lead" data-reveal style="--ry: 20px; --rd: 0.4s">
             Sites, blogs, landing pages, link na bio, artes para Instagram,
             flyers e identidade visual. Você diz a peça, a EVOLVA cria e
             entrega pronta para publicar.
@@ -2384,6 +2520,46 @@
           if (img.complete && img.naturalWidth === 0) {
             markFailed(img);
           }
+        });
+
+        /* ----------------------------------------------------------
+           Título-cartaz: cada linha fecha na borda do bloco
+
+           O CSS já chega perto pelo cqw, mas a medida exata depende da
+           fonte que carregou e do texto escrito no HTML. Aqui a linha é
+           medida e o corpo corrigido pela razão — assim a frase encosta
+           nas duas margens sem depender de números mágicos.
+        ---------------------------------------------------------- */
+        var titleBlock = document.querySelector('.hero__title-block');
+        var titleLines = document.querySelectorAll('.hero__title span');
+
+        var fitTitle = function () {
+          if (!titleBlock) return;
+          var width = titleBlock.clientWidth;
+          if (!width) return;
+
+          titleLines.forEach(function (line) {
+            line.style.fontSize = '';
+            var base = parseFloat(getComputedStyle(line).fontSize);
+            /* O span é bloco e mede a largura toda; o Range mede só
+               o desenho do texto. */
+            var range = document.createRange();
+            range.selectNodeContents(line);
+            var ink = range.getBoundingClientRect().width;
+            range.detach && range.detach();
+            if (!ink) return;
+            line.style.fontSize = (base * width) / ink + 'px';
+          });
+        };
+
+        fitTitle();
+        if (document.fonts && document.fonts.ready) {
+          document.fonts.ready.then(fitTitle);
+        }
+        var fitPending;
+        window.addEventListener('resize', function () {
+          clearTimeout(fitPending);
+          fitPending = setTimeout(fitTitle, 120);
         });
 
         /* ----------------------------------------------------------
