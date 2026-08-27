@@ -534,17 +534,28 @@
       .hero__body {
         position: relative;
         z-index: 20;
+        display: flex;
+        /* Cresce para centralizar o bloco na tela, mas nunca encolhe
+           abaixo do próprio conteúdo em telas baixas. */
+        flex: 1 0 auto;
+        flex-direction: column;
+        justify-content: center;
         padding: 2.5rem 1.25rem 0;
       }
 
       .hero__title-clip {
         overflow: hidden;
+        /* Entrelinha curta encosta o título no kicker: este respiro
+           devolve a separação entre os dois. */
+        margin-top: 0.55rem;
       }
 
       .hero__title {
         font-weight: 900;
         text-transform: uppercase;
-        line-height: 0.9;
+        /* Entrelinha curta: as duas linhas precisam ler como uma frase
+           só, não como dois blocos separados. */
+        line-height: 0.84;
         letter-spacing: -0.055em;
       }
 
@@ -553,13 +564,15 @@
         white-space: nowrap;
       }
 
+      /* O tamanho acompanha a largura da tela, mas com teto: sem ele, em
+         monitor grande a frase vira dois textos distantes um do outro. */
       .hero__title .line-a {
-        font-size: 8.5vw;
+        font-size: min(8.5vw, 132px);
         color: #e8edff;
       }
 
       .hero__title .line-b {
-        font-size: 12.8vw;
+        font-size: min(12.8vw, 172px);
       }
 
       .hero__lead {
@@ -674,10 +687,10 @@
 
       @media (min-width: 1024px) {
         .hero__title .line-a {
-          font-size: 7.5vw;
+          font-size: min(7.5vw, 124px);
         }
         .hero__title .line-b {
-          font-size: 12vw;
+          font-size: min(12vw, 162px);
         }
         .hero__mark {
           right: -2%;
