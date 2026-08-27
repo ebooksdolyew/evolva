@@ -142,9 +142,48 @@ quebrada.
 ## Identidade aplicada
 
 Paleta e tipografia vêm do protótipo da marca: fundo `#020513`, azul `#1264ff`,
-ciano `#22a7ff`, violeta `#7c3cff`, roxo `#b65cff`, texto `#f5f7ff`, fonte Inter
-(300–900). Dois elementos da identidade foram reconstruídos em CSS — a malha de
-pontos e os feixes diagonais que aparecem nas peças.
+ciano `#22a7ff`, violeta `#7c3cff`, roxo `#b65cff`, texto `#f5f7ff` e a
+**Neue Montreal** em todo o site. Dois elementos da identidade foram
+reconstruídos em CSS — a malha de pontos e os feixes diagonais que aparecem
+nas peças.
+
+### Neue Montreal — onde colocar os arquivos
+
+A Neue Montreal é licenciada (Pangram Pangram), então os arquivos não moram no
+repositório. Coloque os `.woff2` em `assets/fonts/` com estes nomes exatos e
+ela assume o site inteiro, sem mexer em nenhum CSS:
+
+```
+assets/fonts/NeueMontreal-Light.woff2    (300)
+assets/fonts/NeueMontreal-Book.woff2     (400)
+assets/fonts/NeueMontreal-Medium.woff2   (500–600)
+assets/fonts/NeueMontreal-Bold.woff2     (700–900)
+```
+
+Sem eles o navegador cai na **Archivo variável** do Google Fonts, que é a
+substituta escolhida por ser a única grotesca de lá com eixo de largura
+(62%–125%) — é ele que sustenta o contraste estendido/condensado dos títulos.
+
+### Títulos das seções
+
+Os títulos principais de cada seção seguem um sistema só, em duas vozes na
+mesma frase:
+
+| trecho | peso | largura | tracking | gradiente (135°) |
+| --- | --- | --- | --- | --- |
+| branco (padrão) | 300 | 125% (estendido) | `+0.01em` | `#ffffff → #edf1ff → #aab7dc` |
+| azul (`.accent-text`) | 900 | 78% (condensado) | `-0.03em` | `#7fb6ff → #2f7dff → #0e40c4` |
+
+O gradiente desce na diagonal — de cima para baixo, da esquerda para a
+direita — e é recortado no desenho da letra com `background-clip: text`. Para
+azular um trecho novo basta envolvê-lo num `<span class="accent-text">` dentro
+do título; nada mais precisa ser declarado.
+
+Um detalhe que não é opcional: `background-clip: text` só pinta dentro da caixa
+do elemento, e com a entrelinha curta dos títulos os acentos das maiúsculas
+(Ã, À, Ç) ficam de fora e somem. Por isso os títulos têm
+`padding-block: 0.2em 0.16em` com a margem descontada em `calc()` — mexer num
+sem mexer no outro reintroduz o corte.
 
 ## Movimento
 
