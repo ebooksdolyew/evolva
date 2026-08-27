@@ -8,16 +8,20 @@
          VERSÃO LANDING PAGE — branch claude/landing-page.
 
          Mesma identidade visual do site institucional, remontada com
-         anatomia de landing page: um único objetivo de conversão (a
-         conversa de diagnóstico no WhatsApp), sem menu de seções, prova
+         anatomia de landing page: um único objetivo de conversão (o
+         pedido de orçamento no WhatsApp), sem menu de seções, prova
          social logo após o hero, sem tabela de planos e com o CTA
          repetido ao longo da página inteira.
+
+         A copy fala de criação de mídias digitais — sites, blogs,
+         landing pages, link na bio, artes de Instagram, flyers e
+         identidade visual. Nada de performance de negócio.
     =============================================================== -->
 
-    <title>EVOLVA — Ideias que viram resultado</title>
+    <title>EVOLVA — Criação de mídias digitais</title>
     <meta
       name="description"
-      content="Branding, mídia social, sites, tráfego pago e IA para transformar sua marca. Comece com um diagnóstico gratuito pelo WhatsApp."
+      content="Criação de sites, blogs, landing pages, link na bio, artes para Instagram, flyers e identidade visual. Peça seu orçamento pelo WhatsApp."
     />
     <link rel="canonical" href="https://agenciaevolva.pages.dev/" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -32,11 +36,11 @@
     <meta property="og:url" content="https://agenciaevolva.pages.dev/" />
     <meta
       property="og:title"
-      content="EVOLVA — Ideias que viram resultado"
+      content="EVOLVA — Criação de mídias digitais"
     />
     <meta
       property="og:description"
-      content="Branding, mídia social, sites, tráfego pago e IA para transformar sua marca. Comece com um diagnóstico gratuito."
+      content="Criação de sites, blogs, landing pages, link na bio, artes para Instagram, flyers e identidade visual. Peça seu orçamento."
     />
     <meta property="og:image" content="https://agenciaevolva.pages.dev/assets/evolva_solucoes_digitais-og.png" />
     <meta property="og:image:type" content="image/png" />
@@ -46,10 +50,10 @@
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="EVOLVA — Ideias que viram resultado" />
+    <meta name="twitter:title" content="EVOLVA — Criação de mídias digitais" />
     <meta
       name="twitter:description"
-      content="Branding, mídia social, sites, tráfego pago e IA para transformar sua marca. Comece com um diagnóstico gratuito."
+      content="Criação de sites, blogs, landing pages, link na bio, artes para Instagram, flyers e identidade visual. Peça seu orçamento."
     />
     <meta
       name="twitter:image"
@@ -70,8 +74,10 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Inter para o texto corrido; Archivo Expanded (eixo de largura
+         em 125) para os títulos de display. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,700..900&family=Inter:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
 
@@ -88,8 +94,8 @@
             "url": "https://agenciaevolva.pages.dev/",
             "email": "contato@evolva.com.br",
             "telephone": "+55-85-99132-3925",
-            "description": "Agência de mídia digital e criação. Estratégia, branding, mídia social, tecnologia e inteligência artificial para marcas que querem crescer.",
-            "slogan": "Ideias que viram resultado.",
+            "description": "Estúdio de criação de mídias digitais. Sites, blogs, landing pages, link na bio, artes para Instagram, flyers e identidade visual.",
+            "slogan": "Da arte do post ao site.",
             "logo": {
               "@type": "ImageObject",
               "url": "https://agenciaevolva.pages.dev/assets/evolva_solucoes_digitais-og.png",
@@ -116,8 +122,10 @@
         --text: #f5f7ff;
         --muted: #aab2ca;
         --line: rgba(73, 105, 205, 0.22);
+        --accent-text: #4e8fff;
         --glass: rgba(7, 13, 38, 0.62);
         --shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+        --font-display: Archivo, Inter, ui-sans-serif, system-ui, sans-serif;
         --card-radius: clamp(26px, 3vw, 42px);
         --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
       }
@@ -231,17 +239,35 @@
         filter: blur(90px);
       }
 
-      .gradient-text {
-        background: linear-gradient(90deg, #fff, #4e8fff 45%, #a75cff);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: transparent;
-        /* Folga vertical e horizontal para o til, a cedilha e o último
-           glifo não saírem da área pintada do gradiente. */
-        padding-block: 0.2em;
-        padding-inline-end: 0.08em;
-        margin-inline-end: -0.08em;
+      /* Destaque dos títulos: cor chapada, sem gradiente. */
+      .accent-text {
+        color: var(--accent-text);
+      }
+
+      /* Sem isto o navegador quebra onde cabe: títulos ficam com uma
+         palavra sozinha na última linha e os parágrafos com um "órfão"
+         no fim. `balance` iguala as linhas do título; `pretty` evita a
+         linha final com uma palavra só. */
+      h1,
+      h2,
+      h3,
+      .section-heading,
+      .hero__title,
+      .faq summary {
+        text-wrap: balance;
+      }
+
+      p,
+      .check,
+      .hero__note {
+        text-wrap: pretty;
+      }
+
+      /* Blocos curtos de duas linhas: `balance` distribui as palavras
+         igualmente em vez de deixar a segunda linha com um resto. */
+      .service-row__desc,
+      .step span {
+        text-wrap: balance;
       }
 
       .kicker {
@@ -252,12 +278,25 @@
         font-weight: 800;
       }
 
+      .hero__title .line-b,
+      .section-heading,
+      .clients h2,
+      .process__head h2,
+      .faq__inner h2,
+      .contact__box h2 {
+        font-family: var(--font-display);
+        font-stretch: 125%;
+        font-weight: 900;
+      }
+
       .section-heading {
-        font-size: clamp(2.75rem, 10vw, 140px);
+        /* Mínimo baixo de propósito: a Archivo Expanded é mais larga
+           que a Inter e no celular o piso antigo forçava quebra. */
+        font-size: clamp(1.9rem, 10vw, 140px);
         font-weight: 900;
         text-transform: uppercase;
         line-height: 0.92;
-        letter-spacing: -0.055em;
+        letter-spacing: -0.02em;
         text-align: center;
       }
 
@@ -504,17 +543,28 @@
       .hero__body {
         position: relative;
         z-index: 20;
+        display: flex;
+        /* Cresce para centralizar o bloco na tela, mas nunca encolhe
+           abaixo do próprio conteúdo em telas baixas. */
+        flex: 1 0 auto;
+        flex-direction: column;
+        justify-content: center;
         padding: 2.5rem 1.25rem 0;
       }
 
       .hero__title-clip {
         overflow: hidden;
+        /* Entrelinha curta encosta o título no kicker: este respiro
+           devolve a separação entre os dois. */
+        margin-top: 0.55rem;
       }
 
       .hero__title {
         font-weight: 900;
         text-transform: uppercase;
-        line-height: 0.9;
+        /* Entrelinha curta: as duas linhas precisam ler como uma frase
+           só, não como dois blocos separados. */
+        line-height: 0.84;
         letter-spacing: -0.055em;
       }
 
@@ -523,13 +573,16 @@
         white-space: nowrap;
       }
 
+      /* O tamanho acompanha a largura da tela, mas com teto: sem ele, em
+         monitor grande a frase vira dois textos distantes um do outro. */
       .hero__title .line-a {
-        font-size: 8.5vw;
+        font-size: min(8.5vw, 132px);
         color: #e8edff;
       }
 
       .hero__title .line-b {
-        font-size: 12.8vw;
+        font-size: min(12.8vw, 172px);
+        letter-spacing: -0.015em;
       }
 
       .hero__lead {
@@ -644,10 +697,10 @@
 
       @media (min-width: 1024px) {
         .hero__title .line-a {
-          font-size: 7.5vw;
+          font-size: min(7.5vw, 124px);
         }
         .hero__title .line-b {
-          font-size: 12vw;
+          font-size: min(12vw, 162px);
         }
         .hero__mark {
           right: -2%;
@@ -669,7 +722,7 @@
       .clients h2 {
         font-size: clamp(1.5rem, 3.5vw, 2.25rem);
         font-weight: 900;
-        letter-spacing: -0.04em;
+        letter-spacing: -0.015em;
         line-height: 1.1;
         margin: 0.75rem 1.25rem 2rem;
       }
@@ -916,19 +969,28 @@
       .manifesto__checks {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 0.6rem 2.5rem;
+        gap: 0.6rem 2rem;
         margin-top: 0.75rem;
+        width: 100%;
+        max-width: 30rem;
       }
 
+      /* Cada item é uma linha de duas partes: o ✓ numa coluna fixa e o
+         texto na outra — assim as marcas ficam no mesmo eixo mesmo com
+         rótulos de tamanhos diferentes. */
       .check {
+        display: grid;
+        grid-template-columns: 1rem 1fr;
+        align-items: baseline;
+        gap: 0.45rem;
         color: #d8def0;
         font-size: 13px;
+        line-height: 1.5;
         text-align: left;
       }
 
       .check b {
         color: #3285ff;
-        margin-right: 0.5rem;
       }
 
       @media (min-width: 640px) {
@@ -945,8 +1007,8 @@
           width: 140px;
         }
         .manifesto__checks {
-          grid-template-columns: repeat(2, minmax(0, auto));
-          justify-content: center;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          max-width: 34rem;
         }
       }
 
@@ -973,7 +1035,7 @@
       .services__heading {
         color: var(--bg);
         margin-bottom: 3.5rem;
-        font-size: clamp(2.4rem, 8vw, 100px);
+        font-size: clamp(1.7rem, 8vw, 100px);
       }
 
       .services__list {
@@ -1053,6 +1115,9 @@
 
       .service-row__name {
         grid-area: name;
+        /* Nome de serviço quebra melhor pelo sentido do que "equilibrado":
+           mantém o par de palavras junto na primeira linha. */
+        text-wrap: pretty;
         font-size: clamp(1.02rem, 2.6vw, 1.45rem);
         font-weight: 900;
         text-transform: uppercase;
@@ -1197,7 +1262,7 @@
       .process__head h2 {
         font-size: clamp(2rem, 5vw, 3.4rem);
         font-weight: 900;
-        letter-spacing: -0.05em;
+        letter-spacing: -0.02em;
         line-height: 1;
         margin: 0.6rem 0 0.9rem;
       }
@@ -1277,7 +1342,7 @@
       .faq__inner h2 {
         font-size: clamp(2rem, 5vw, 3.4rem);
         font-weight: 900;
-        letter-spacing: -0.05em;
+        letter-spacing: -0.02em;
         line-height: 1;
         margin: 0.6rem 0 2.25rem;
       }
@@ -1367,13 +1432,14 @@
       .contact__box h2 {
         font-size: clamp(2rem, 5vw, 3.6rem);
         font-weight: 900;
-        letter-spacing: -0.05em;
+        letter-spacing: -0.02em;
         line-height: 1;
         margin: 0.75rem 0 1rem;
       }
 
       .contact__box > p {
         max-width: 600px;
+        text-wrap: balance;
         margin: 0 auto;
         color: #aeb7cc;
         line-height: 1.7;
@@ -1465,7 +1531,9 @@
       =============================================================== */
       .footer {
         border-top: 1px solid var(--line);
-        padding: 1.75rem 1.25rem;
+        /* A folga extra embaixo mantém o texto fora do botão flutuante
+           de WhatsApp quando a página chega ao fim. */
+        padding: 1.75rem 1.25rem 5.5rem;
       }
 
       .footer__inner {
@@ -1501,12 +1569,16 @@
 
       @media (min-width: 640px) {
         .footer {
-          padding: 1.75rem 2.75rem;
+          padding: 1.75rem 6.5rem 1.75rem 2.75rem;
         }
         .footer__inner {
           flex-direction: row;
+          align-items: center;
           justify-content: space-between;
           text-align: left;
+        }
+        .footer__copy {
+          text-align: right;
         }
       }
 
@@ -1619,32 +1691,32 @@
 
         <div class="hero__body">
           <p class="kicker" data-reveal style="--ry: 20px; --rd: 0.1s">
-            Nova era digital
+            Criação de mídias digitais
           </p>
 
           <div class="hero__title-clip">
             <h1 class="hero__title" data-reveal style="--ry: 40px; --rd: 0.15s">
-              <span class="line-a">Ideias que viram</span>
-              <span class="line-b gradient-text">resultado.</span>
+              <span class="line-a">Da arte do post</span>
+              <span class="line-b accent-text">ao site.</span>
             </h1>
           </div>
 
           <p class="hero__lead" data-reveal style="--ry: 20px; --rd: 0.35s">
-            Branding, mídia social, sites, tráfego pago e IA — a EVOLVA monta o
-            plano e executa. Tudo começa com um diagnóstico gratuito da sua
-            presença digital.
+            Sites, blogs, landing pages, link na bio, artes para Instagram,
+            flyers e identidade visual. Você diz a peça, a EVOLVA cria e
+            entrega pronta para publicar.
           </p>
 
           <div class="hero__actions" data-reveal style="--ry: 20px; --rd: 0.5s">
             <a class="btn btn--primary" href="#contato"
-              >Quero meu diagnóstico gratuito →</a
+              >Pedir meu orçamento →</a
             >
-            <a class="btn btn--ghost" href="#como-funciona">Como funciona</a>
+            <a class="btn btn--ghost" href="#servicos">Ver o que criamos</a>
           </div>
 
           <p class="hero__note" data-reveal style="--ry: 16px; --rd: 0.6s">
-            <b>✓</b>Sem compromisso — uma conversa no WhatsApp para entender
-            cenário, marca e objetivos.
+            <b>✓</b>Sem compromisso —&nbsp;manda a peça que você precisa no WhatsApp e
+            recebe prazo e valor.
           </p>
         </div>
 
@@ -1664,7 +1736,7 @@
       ============================================================= -->
       <section class="clients" data-reveal style="--ry: 26px">
         <p class="kicker">Clientes</p>
-        <h2>Marcas que já <span class="gradient-text">confiaram</span> na EVOLVA</h2>
+        <h2>Marcas que já <span class="accent-text">confiaram</span> na EVOLVA</h2>
 
         <div class="clients__marquee">
           <ul class="clients__track">
@@ -1763,37 +1835,36 @@
         </div>
 
         <div class="manifesto__inner">
-          <p class="kicker" data-reveal style="--ry: 20px">Por que a EVOLVA</p>
+          <p class="kicker" data-reveal style="--ry: 20px">Como trabalhamos</p>
 
           <h2 class="section-heading" data-reveal style="--ry: 40px">
-            Mais do que criar.<br /><span class="gradient-text">Conectar.</span>
+            Feito à mão,<br /><span class="accent-text">peça a peça.</span>
           </h2>
 
           <p class="manifesto__text" data-scroll-text>
-            Uma experiência digital premium para empresas que querem crescer, se
-            posicionar e competir na nova era. Unimos criatividade, tecnologia e
-            inteligência para entregar soluções reais, escaláveis e orientadas ao
-            negócio.
+            Criação de mídias digitais para marcas que querem aparecer bem em
+            todo lugar: no feed, no story, no impresso e na web. Cada arte sai
+            com a sua identidade, no formato certo e pronta para publicar.
           </p>
 
           <div class="manifesto__checks">
             <div class="check" data-reveal="zoom" style="--ry: 14px; --rd: 0.1s">
-              <b>✓</b> Diagnóstico estratégico
+              <b>✓</b> Briefing rápido
             </div>
             <div class="check" data-reveal="zoom" style="--ry: 14px; --rd: 0.18s">
-              <b>✓</b> Direção criativa
+              <b>✓</b> Direção de arte
             </div>
             <div class="check" data-reveal="zoom" style="--ry: 14px; --rd: 0.26s">
-              <b>✓</b> Tecnologia aplicada
+              <b>✓</b> Formatos prontos para publicar
             </div>
             <div class="check" data-reveal="zoom" style="--ry: 14px; --rd: 0.34s">
-              <b>✓</b> Mensuração e otimização
+              <b>✓</b> Rodada de ajustes inclusa
             </div>
           </div>
 
           <div data-reveal style="--ry: 20px; --rd: 0.2s">
             <a class="btn btn--primary" href="#contato"
-              >Quero meu diagnóstico gratuito →</a
+              >Pedir meu orçamento →</a
             >
           </div>
         </div>
@@ -1811,16 +1882,16 @@
           style="--ry: 20px"
         />
         <h2 class="section-heading services__heading" data-reveal style="--ry: 40px">
-          O que fazemos
+          O que criamos
         </h2>
 
-        <!-- Cada faixa abre a conversa já dizendo o que interessou:
+        <!-- Cada faixa abre a conversa já dizendo a peça que interessou:
              o data-plan preenche a mensagem dos dois contatos. -->
         <div class="services__list">
           <a
             class="service-row"
             href="#contato"
-            data-plan="criação de sites"
+            data-plan="site ou blog"
             data-reveal
             style="--rd: 0s"
           >
@@ -1842,9 +1913,10 @@
                 />
               </svg>
             </span>
-            <h3 class="service-row__name">Criação de sites</h3>
+            <h3 class="service-row__name">Sites e blogs</h3>
             <p class="service-row__desc">
-              Sites modernos, rápidos e otimizados para todos os dispositivos.
+              Sites institucionais e blogs rápidos, bonitos e adaptados a
+              qualquer tela.
             </p>
             <span class="service-row__cta">
               <span class="service-row__cta-label">Começar</span>
@@ -1855,7 +1927,7 @@
           <a
             class="service-row"
             href="#contato"
-            data-plan="mídia social"
+            data-plan="artes para Instagram"
             data-reveal
             style="--rd: 0.06s"
           >
@@ -1877,9 +1949,10 @@
                 <path d="M11 13.6h2.4" />
               </svg>
             </span>
-            <h3 class="service-row__name">Criação de mídia social</h3>
+            <h3 class="service-row__name">Artes para Instagram</h3>
             <p class="service-row__desc">
-              Produção de conteúdos que conectam sua marca ao público certo.
+              Feed, carrossel, story e capa de destaques —&nbsp;a linha visual
+              do perfil inteiro.
             </p>
             <span class="service-row__cta">
               <span class="service-row__cta-label">Começar</span>
@@ -1910,7 +1983,7 @@
             </span>
             <h3 class="service-row__name">Identidade visual</h3>
             <p class="service-row__desc">
-              Criamos marcas fortes, memoráveis e que se destacam no mercado.
+              Logo, cores, tipografia e um manual simples para aplicar em tudo.
             </p>
             <span class="service-row__cta">
               <span class="service-row__cta-label">Começar</span>
@@ -1921,7 +1994,7 @@
           <a
             class="service-row"
             href="#contato"
-            data-plan="tráfego pago"
+            data-plan="landing page ou link na bio"
             data-reveal
             style="--rd: 0.18s"
           >
@@ -1940,10 +2013,10 @@
                 <path d="M13.6 10.4 20 4M16.2 4H20v3.8" />
               </svg>
             </span>
-            <h3 class="service-row__name">Tráfego pago e anúncios</h3>
+            <h3 class="service-row__name">Landing page e link na bio</h3>
             <p class="service-row__desc">
-              Campanhas inteligentes para atrair clientes e maximizar
-              resultados.
+              Uma página só, direta ao ponto, com seus contatos e ofertas
+              reunidos.
             </p>
             <span class="service-row__cta">
               <span class="service-row__cta-label">Começar</span>
@@ -1954,7 +2027,7 @@
           <a
             class="service-row"
             href="#contato"
-            data-plan="serviços de T.I."
+            data-plan="flyers e artes promocionais"
             data-reveal
             style="--rd: 0.24s"
           >
@@ -1968,15 +2041,15 @@
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <rect x="2.8" y="4.4" width="18.4" height="12.2" rx="2" />
-                <path d="M9 20.4h6M12 16.6v3.8" />
-                <path d="M6.6 8.8h6.6M6.6 11.9h3.7" />
+                <path d="M6.4 3.2h11.2a1 1 0 0 1 1 1v15.6a1 1 0 0 1-1 1H6.4a1 1 0 0 1-1-1V4.2a1 1 0 0 1 1-1z" />
+                <path d="M8.6 7.4h6.8M8.6 10.5h6.8M8.6 13.6h4.2" />
+                <path d="M8.6 16.9h3" />
               </svg>
             </span>
-            <h3 class="service-row__name">Serviços de T.I.</h3>
+            <h3 class="service-row__name">Flyers e artes promocionais</h3>
             <p class="service-row__desc">
-              Soluções completas em tecnologia para que empresas funcionem
-              melhor.
+              Flyer, cardápio, panfleto e arte de promoção —&nbsp;para imprimir
+              ou postar.
             </p>
             <span class="service-row__cta">
               <span class="service-row__cta-label">Começar</span>
@@ -1997,36 +2070,37 @@
               Como funciona
             </p>
             <h2 data-reveal style="--ry: 44px; --rt: 0.85s; --rd: 0.1s">
-              Do conceito ao <span class="gradient-text">resultado.</span>
+              Do briefing à
+              <span class="accent-text">arte&nbsp;pronta.</span>
             </h2>
             <p data-reveal style="--ry: 26px; --rd: 0.2s">
-              Você pede o diagnóstico, a gente devolve o caminho: quatro etapas
-              do primeiro contato ao crescimento — sem improviso.
+              Quatro etapas simples entre o seu pedido e o arquivo final na sua
+              mão —&nbsp;sem improviso.
             </p>
           </div>
 
           <div class="process__steps">
             <div class="step" data-reveal="zoom" style="--rs: 0.9; --rd: 0s">
-              <strong>01 — Descobrir</strong>
-              <span>Entender cenário, marca e objetivos no diagnóstico.</span>
+              <strong>01 — Briefing</strong>
+              <span>Você conta a peça que precisa e manda referências.</span>
             </div>
             <div class="step" data-reveal="zoom" style="--rs: 0.9; --rd: 0.12s">
-              <strong>02 — Estratégia</strong>
-              <span>Definir posicionamento e plano.</span>
+              <strong>02 — Conceito</strong>
+              <span>Definimos estilo, cores e formatos.</span>
             </div>
             <div class="step" data-reveal="zoom" style="--rs: 0.9; --rd: 0.24s">
-              <strong>03 — Criar</strong>
-              <span>Transformar estratégia em experiência.</span>
+              <strong>03 — Criação</strong>
+              <span>A peça é desenhada e enviada para você ver.</span>
             </div>
             <div class="step" data-reveal="zoom" style="--rs: 0.9; --rd: 0.36s">
-              <strong>04 — Escalar</strong>
-              <span>Otimizar, automatizar e crescer.</span>
+              <strong>04 — Entrega</strong>
+              <span>Ajustes inclusos e arquivos nos formatos certos.</span>
             </div>
           </div>
 
           <div class="process__cta" data-reveal style="--ry: 20px; --rd: 0.2s">
             <a class="btn btn--primary" href="#contato"
-              >Começar pelo diagnóstico →</a
+              >Começar pelo orçamento →</a
             >
           </div>
         </div>
@@ -2039,39 +2113,40 @@
         <div class="faq__inner">
           <p class="kicker" data-reveal style="--ry: 20px">Dúvidas comuns</p>
           <h2 data-reveal style="--ry: 30px; --rd: 0.08s">
-            Perguntas <span class="gradient-text">frequentes</span>
+            Perguntas <span class="accent-text">frequentes</span>
           </h2>
 
           <div class="faq__list" data-reveal style="--ry: 26px; --rd: 0.15s">
             <details>
-              <summary>O que exatamente a EVOLVA faz?</summary>
+              <summary>O que exatamente a EVOLVA cria?</summary>
               <p>
-                Criação de sites, mídia social, identidade visual, tráfego pago
-                e serviços de T.I. — da página de conversão ao rebranding
-                completo, com estratégia, criação e mensuração na mesma casa.
+                Sites, blogs, landing pages, link na bio, artes para Instagram
+                (feed, carrossel e story), flyers e materiais promocionais, além
+                de identidade visual completa —&nbsp;logo, cores e tipografia.
               </p>
             </details>
             <details>
               <summary>Quanto custa?</summary>
               <p>
-                Depende do escopo: social media a partir de R$ 890/mês, sites a
-                partir de R$ 1.490 e identidade visual a partir de R$ 1.890. O
-                valor fechado sai do diagnóstico, junto com o plano.
+                Depende da peça: pacote de social media a partir de R$ 890/mês,
+                sites a partir de R$ 1.490 e identidade visual a partir de
+                R$ 1.890. Artes avulsas, landing pages e link na bio têm
+                orçamento próprio —&nbsp;é só dizer o que você precisa.
               </p>
             </details>
             <details>
               <summary>Como começa o trabalho?</summary>
               <p>
-                Com o diagnóstico gratuito: uma conversa no WhatsApp para
-                entender cenário, marca e objetivos. A partir dela definimos
-                posicionamento, plano e proposta — e só então a criação começa.
+                Pelo WhatsApp: você diz a peça, para onde ela vai (Instagram,
+                web, impresso) e manda referências. A gente responde com prazo,
+                valor e o que precisa de você para começar.
               </p>
             </details>
             <details>
-              <summary>O diagnóstico me compromete a fechar?</summary>
+              <summary>Posso pedir ajustes na arte?</summary>
               <p>
-                Não. É uma conversa sem compromisso — você sai com uma leitura
-                clara da sua presença digital, feche com a gente ou não.
+                Pode. Cada entrega inclui uma rodada de ajustes, e os arquivos
+                finais vão nos formatos certos para postar ou imprimir.
               </p>
             </details>
           </div>
@@ -2087,20 +2162,20 @@
           data-reveal="zoom"
           style="--ry: 40px; --rs: 0.95; --rt: 0.85s"
         >
-          <p class="kicker">Diagnóstico gratuito</p>
+          <p class="kicker">Sem compromisso</p>
           <h2>
-            Vamos transformar suas ideias em
-            <span class="gradient-text">resultados?</span>
+            Que peça a gente cria
+            <span class="accent-text">primeiro?</span>
           </h2>
           <p>
-            Chame no WhatsApp e receba o diagnóstico da sua presença digital.
-            Sem compromisso — só o próximo passo da sua marca.
+            Chame no WhatsApp e diga o que você precisa —&nbsp;arte, site, landing
+            page ou identidade visual. A gente volta com prazo e valor.
           </p>
 
           <div class="whatsapp__grid">
             <a
               class="whatsapp-card"
-              href="https://wa.me/5585991323925?text=Ol%C3%A1!%20Vim%20pela%20p%C3%A1gina%20da%20EVOLVA%20e%20quero%20um%20diagn%C3%B3stico%20gratuito."
+              href="https://wa.me/5585991323925?text=Ol%C3%A1!%20Vim%20pela%20p%C3%A1gina%20da%20EVOLVA%20e%20quero%20um%20or%C3%A7amento%20de%20cria%C3%A7%C3%A3o."
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -2118,7 +2193,7 @@
             </a>
             <a
               class="whatsapp-card"
-              href="https://wa.me/558597498750?text=Ol%C3%A1!%20Vim%20pela%20p%C3%A1gina%20da%20EVOLVA%20e%20quero%20um%20diagn%C3%B3stico%20gratuito."
+              href="https://wa.me/558597498750?text=Ol%C3%A1!%20Vim%20pela%20p%C3%A1gina%20da%20EVOLVA%20e%20quero%20um%20or%C3%A7amento%20de%20cria%C3%A7%C3%A3o."
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -2158,7 +2233,7 @@
             style="--rx: 26px; --rd: 0.1s"
           >
             EVOLVA — Soluções Digitais<br />
-            Estratégia • Criatividade • Tecnologia • Inteligência
+            Sites • Social media • Identidade visual • Impressos
           </p>
         </div>
       </footer>
@@ -2503,7 +2578,7 @@
         document.querySelectorAll('[data-plan]').forEach(function (link) {
           link.addEventListener('click', function () {
             var msg =
-              'Olá! Vim pela página da EVOLVA e quero um diagnóstico gratuito para ' +
+              'Olá! Vim pela página da EVOLVA e quero um orçamento de ' +
               link.getAttribute('data-plan') +
               '.';
             cards.forEach(function (card) {
