@@ -1094,16 +1094,20 @@
         opacity: 0.5;
       }
 
-      /* Mesmo raciocínio do hero, só aqui: o título da seção fica no
-         corpo do trecho branco e o azul sobe a partir dele. Escopado no
-         `.manifesto__inner` de propósito — a `.section-heading` também
-         veste o "O que criamos", que continua como estava. */
+      /* Mesmo raciocínio do hero, só aqui: o trecho branco é a entrada
+         e o azul é a frase — então o branco recua de corpo e ganha
+         espacejamento, e o azul sobe a partir dele. O multiplicador do
+         azul acompanha a queda do branco para o tamanho final do azul
+         não se mexer. Escopado no `.manifesto__inner` de propósito — a
+         `.section-heading` também veste o "O que criamos", que continua
+         como estava. */
       .manifesto__inner .section-heading {
-        font-size: clamp(1.5rem, 7.4vw, 104px);
+        font-size: clamp(1.1rem, 5.2vw, 73px);
+        letter-spacing: 0.06em;
       }
 
       .manifesto__inner .section-heading .accent-text {
-        font-size: 1.36em;
+        font-size: 1.93em;
         font-stretch: 100%;
       }
 
