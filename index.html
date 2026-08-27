@@ -684,12 +684,17 @@
 
       /* O tamanho acompanha a largura da tela, mas com teto: sem ele, em
          monitor grande a frase vira dois textos distantes um do outro. */
+      /* No hero quem manda é o azul: vem maior e mais aberto que o
+         branco, que recua de corpo para abrir espaço. A largura sobe de
+         78% para 100% — segue mais estreito que o branco estendido em
+         125%, mas sem o aperto do resto do site. */
       .hero__title .line-a {
-        font-size: min(8.5vw, 132px);
+        font-size: min(6.6vw, 100px);
       }
 
       .hero__title .line-b {
-        font-size: min(12.8vw, 172px);
+        font-size: min(13.4vw, 182px);
+        font-stretch: 100%;
       }
 
       .hero__lead {
@@ -804,10 +809,10 @@
 
       @media (min-width: 1024px) {
         .hero__title .line-a {
-          font-size: min(7.5vw, 124px);
+          font-size: min(5.9vw, 96px);
         }
         .hero__title .line-b {
-          font-size: min(12vw, 162px);
+          font-size: min(12.6vw, 172px);
         }
         .hero__mark {
           right: -2%;
@@ -1050,6 +1055,19 @@
         right: 3%;
         width: 100px;
         opacity: 0.5;
+      }
+
+      /* Mesmo raciocínio do hero, só aqui: o título da seção fica no
+         corpo do trecho branco e o azul sobe a partir dele. Escopado no
+         `.manifesto__inner` de propósito — a `.section-heading` também
+         veste o "O que criamos", que continua como estava. */
+      .manifesto__inner .section-heading {
+        font-size: clamp(1.5rem, 7.4vw, 104px);
+      }
+
+      .manifesto__inner .section-heading .accent-text {
+        font-size: 1.36em;
+        font-stretch: 100%;
       }
 
       .manifesto__inner {

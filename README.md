@@ -179,6 +179,14 @@ direita — e é recortado no desenho da letra com `background-clip: text`. Para
 azular um trecho novo basta envolvê-lo num `<span class="accent-text">` dentro
 do título; nada mais precisa ser declarado.
 
+Duas seções fogem de propósito dessa tabela — o **hero** e o **"Como
+trabalhamos"**. Nelas quem manda é o azul: ele vem maior que o branco (que
+recua de corpo) e mais aberto, com largura em 100% em vez de 78%. Segue mais
+estreito que o branco estendido em 125%, só sem o aperto do resto do site. No
+hero isso está nos tamanhos de `.line-a`/`.line-b`; no "Como trabalhamos" está
+escopado em `.manifesto__inner .section-heading`, porque a mesma
+`.section-heading` também veste o "O que criamos", que continua padrão.
+
 Um detalhe que não é opcional: `background-clip: text` só pinta dentro da caixa
 do elemento, e com a entrelinha curta dos títulos os acentos das maiúsculas
 (Ã, À, Ç) ficam de fora e somem. Por isso os títulos têm
