@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 1315 112" role="img" aria-label="DA ARTE DO POST" preserveAspectRatio="xMidYMid meet">
+  <title>DA ARTE DO POST</title>
+  <!-- Lettering hairline da linha branca da hero: caixa alta, condensada,
+       peso ultra light desenhado em traço (altura de caixa 100, traço 3.5),
+       uma única linha, fundo transparente. Só este título mora aqui. -->
+  <g fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="butt" stroke-linejoin="miter">
+    <!-- D -->
+    <path d="M0 0H34A30 50 0 0 1 34 100H0Z"/>
+    <!-- A -->
+    <g transform="translate(102 0)">
+      <path d="M0 100 31 0 62 100"/>
+      <path d="M11 65H51"/>
+    </g>
+    <!-- A -->
+    <g transform="translate(250 0)">
+      <path d="M0 100 31 0 62 100"/>
+      <path d="M11 65H51"/>
+    </g>
+    <!-- R -->
+    <g transform="translate(350 0)">
+      <path d="M0 100V0H36A25 24 0 0 1 36 48H0"/>
+      <path d="M33 48 60 100"/>
+    </g>
+    <!-- T -->
+    <g transform="translate(448 0)">
+      <path d="M0 0H60M30 0V100"/>
+    </g>
+    <!-- E -->
+    <g transform="translate(546 0)">
+      <path d="M62 0H0V100H62"/>
+      <path d="M0 50H50"/>
+    </g>
+    <!-- D -->
+    <path transform="translate(694 0)" d="M0 0H34A30 50 0 0 1 34 100H0Z"/>
+    <!-- O -->
+    <path transform="translate(796 0)" d="M32 0A32 50 0 0 1 32 100A32 50 0 0 1 32 0Z"/>
+    <!-- P -->
+    <path transform="translate(946 0)" d="M0 100V0H34A26 26 0 0 1 34 52H0"/>
+    <!-- O -->
+    <path transform="translate(1043 0)" d="M32 0A32 50 0 0 1 32 100A32 50 0 0 1 32 0Z"/>
+    <!-- S -->
+    <path transform="translate(1145 0)" d="M58 24C58 10 46 0 31 0 15 0 4 10 4 26c0 16 12 24 27 24 16 0 28 8 28 25 0 16-12 25-28 25C15 100 3 90 3 75"/>
+    <!-- T -->
+    <path transform="translate(1243 0)" d="M0 0H60M30 0V100"/>
+  </g>
+</svg>

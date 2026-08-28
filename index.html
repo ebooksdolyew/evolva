@@ -486,8 +486,9 @@
       /* ===============================================================
          1. Hero — o lockup "DA ARTE DO POST / AO SITE."
          ---------------------------------------------------------------
-         A frase inteira é a identidade da página: a linha branca é
-         texto HTML de verdade (Neue Montreal Ultra Light) e "AO SITE."
+         A frase inteira é a identidade da página: a linha branca é um
+         SVG próprio, hairline e condensado (ver
+         assets/hero-da-arte-do-post.svg) e "AO SITE."
          é um lettering vetorial desenhado para este site — ver o
          <svg class="hero-wordmark"> no corpo da página. O fundo é
          quase preto com um sopro de azul-marinho e um único feixe
@@ -701,25 +702,23 @@
         font-weight: 200;
       }
 
+      /* A linha branca é o SVG de assets/hero-da-arte-do-post.svg: a
+         proporção vem do próprio viewBox — largura fluida, altura
+         automática — então as letras nunca esticam nem achatam. A
+         largura acompanha o lettering azul pelo container de consulta,
+         como o texto fazia antes. */
       .hero__title-top {
         display: block;
-        font-family: var(--font-sans);
-        font-weight: 200;
-        font-stretch: 108%;
-        font-style: normal;
-        text-transform: uppercase;
-        line-height: 0.95;
-        white-space: nowrap;
-        letter-spacing: clamp(0.1em, 0.4vw, 0.18em);
-        font-size: clamp(0.95rem, 3.4vw, 4.4rem);
-        color: var(--hero-white);
+        width: min(100%, 660px);
+        max-width: 100%;
+        height: auto;
+        margin-inline: auto;
         animation: hero-rise 0.6s var(--hero-ease) 0.05s both;
       }
 
-      @supports (font-size: 1cqi) {
+      @supports (width: 1cqi) {
         .hero__title-top {
-          font-size: 6.2cqi;
-          letter-spacing: 0.09em;
+          width: min(100%, 64cqi);
         }
       }
 
@@ -738,6 +737,16 @@
         aspect-ratio: 1592 / 368;
         color: var(--hero-blue);
         animation: hero-wipe 0.85s var(--hero-ease) 0.2s both;
+      }
+
+      /* Só as formas azuis das letras: a barra do I, o ponto-botão e o
+         cursor moram fora deste grupo e não recebem filtro nenhum. É um
+         reforço mínimo de leitura sobre os feixes de luz do fundo —
+         mantém o azul-base, o desenho e a máscara da faixa. */
+      .wm-letters {
+        filter: brightness(1.06) saturate(1.04)
+          drop-shadow(0 3px 10px rgba(0, 6, 30, 0.34))
+          drop-shadow(0 0 8px rgba(0, 125, 255, 0.16));
       }
 
       .wm-ribbon-sweep {
@@ -1944,12 +1953,24 @@
 
           <div class="hero__lockup">
             <h1 class="hero__title">
-              <span class="hero__title-top">DA ARTE DO POST</span>
+              <!-- A frase existe inteira aqui; os dois desenhos abaixo são
+                   a forma dela e ficam escondidos do leitor de tela para
+                   ninguém ouvir a frase duas vezes. -->
+              <span class="sr-only">Da arte do post ao site.</span>
 
-              <!-- A frase existe inteira no HTML; o SVG abaixo é a
-                   forma dela e fica escondido do leitor de tela para
-                   ninguém ouvir "ao site" duas vezes. -->
-              <span class="sr-only">AO SITE.</span>
+              <!-- A linha branca é um SVG próprio, só com este título:
+                   lettering hairline em caixa alta, condensado, traçado
+                   em vetor — não depende de fonte carregada. Ver
+                   assets/hero-da-arte-do-post.svg. -->
+              <img
+                class="hero__title-top"
+                src="./assets/hero-da-arte-do-post.svg"
+                alt=""
+                aria-hidden="true"
+                width="1315"
+                height="112"
+                decoding="async"
+              />
 
               <span class="hero__wordmark">
                 <!-- ==================================================
@@ -1991,7 +2012,7 @@
                     </mask>
                   </defs>
 
-                  <g fill="currentColor">
+                  <g class="wm-letters" fill="currentColor">
                     <!-- A -->
                     <path d="M128 30 186 30 302 319 210 255 157 108 64 330 0 330Z" />
 
