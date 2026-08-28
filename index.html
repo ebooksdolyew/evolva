@@ -517,6 +517,26 @@
           var(--hero-bg);
       }
 
+      /* O fundo animado: três ondas de linhas desenhadas em WebGL nas
+         cores da marca (azul → ciano → violeta). Entra com `screen`
+         para somar luz ao quase-preto em vez de tapá-lo, fica atrás de
+         todo o conteúdo e não recebe ponteiro — quem escuta o cursor é
+         a <section> inteira. Ver assets/js/floating-lines.js. */
+      .hero__lines {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+        mix-blend-mode: screen;
+      }
+
+      .floating-lines__canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
       /* Emenda com a seção seguinte, para o corte não aparecer. */
       .hero__fade {
         position: absolute;
@@ -622,6 +642,10 @@
         flex: 1 0 auto;
         flex-direction: column;
         justify-content: center;
+        /* A coluna inteira — olho, lockup, texto, botões — corre pelo
+           eixo central da tela. */
+        align-items: center;
+        text-align: center;
         width: min(100%, 1920px);
         margin-inline: auto;
         padding-inline: clamp(20px, 5vw, 96px);
@@ -745,6 +769,7 @@
       .hero__lead {
         max-width: 570px;
         margin-top: clamp(1.5rem, 3.2vw, 2.6rem);
+        margin-inline: auto;
         font-size: 15px;
         line-height: 1.65;
         color: #c5cbe0;
@@ -754,6 +779,7 @@
         display: flex;
         gap: 0.75rem;
         flex-wrap: wrap;
+        justify-content: center;
         margin-top: 1.6rem;
       }
 
@@ -1850,6 +1876,9 @@
       ============================================================= -->
       <section class="hero">
         <span class="hero__beam" aria-hidden="true"></span>
+        <!-- O canvas das ondas nasce aqui pelo JS. Vem antes da
+             emenda para que o degradê de baixo passe por cima dele. -->
+        <div class="hero__lines" data-floating-lines aria-hidden="true"></div>
         <span class="hero__fade" aria-hidden="true"></span>
 
         <nav class="hero__nav" data-reveal style="--ry: -20px">
@@ -2543,6 +2572,8 @@
       </svg>
     </a>
 
+    <script src="./assets/js/floating-lines.js"></script>
+
     <script>
       (function () {
         'use strict';
@@ -2550,6 +2581,33 @@
         var reduceMotion = window.matchMedia(
           '(prefers-reduced-motion: reduce)',
         ).matches;
+
+        /* ----------------------------------------------------------
+           Fundo da hero — as ondas de linhas
+           ----------------------------------------------------------
+           A paleta é a do site: do azul da marca ao ciano, terminando
+           no violeta dos degradês das seções. Poucas linhas e bem
+           espaçadas — cruzamento demais estoura os canais e o feixe
+           vira um borrão branco, longe do quase-preto da identidade;
+           `intensity` segura o resto. Sem WebGL, `mount` devolve null
+           e a hero segue com o fundo do CSS.
+        ---------------------------------------------------------- */
+        var heroLines = document.querySelector('[data-floating-lines]');
+        if (heroLines && window.FloatingLines) {
+          window.FloatingLines.mount(heroLines, {
+            pointerTarget: heroLines.closest('.hero'),
+            linesGradient: ['#0a56fa', '#1264ff', '#22a7ff', '#7c3cff'],
+            enabledWaves: ['top', 'middle', 'bottom'],
+            intensity: 0.6,
+            lineCount: [6, 8, 10],
+            lineDistance: [12, 10, 9],
+            bendRadius: 5.0,
+            bendStrength: -0.5,
+            animationSpeed: 0.9,
+            interactive: true,
+            parallax: true,
+          });
+        }
 
         var clamp = function (value, min, max) {
           return Math.min(Math.max(value, min), max);
