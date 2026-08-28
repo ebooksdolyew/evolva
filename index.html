@@ -18,14 +18,14 @@
          identidade visual. Nada de performance de negócio.
     =============================================================== -->
 
-    <title>EVOLVA — Criação de mídias digitais</title>
+    <title>EVOLVA: criação de mídias digitais</title>
     <meta
       name="description"
       content="Criação de sites, blogs, landing pages, link na bio, artes para Instagram, flyers e identidade visual. Peça seu orçamento pelo WhatsApp."
     />
     <link rel="canonical" href="https://agenciaevolva.pages.dev/" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="author" content="EVOLVA — Soluções Digitais" />
+    <meta name="author" content="EVOLVA Soluções Digitais" />
     <meta name="theme-color" content="#020513" />
     <meta name="color-scheme" content="dark" />
 
@@ -36,7 +36,7 @@
     <meta property="og:url" content="https://agenciaevolva.pages.dev/" />
     <meta
       property="og:title"
-      content="EVOLVA — Criação de mídias digitais"
+      content="EVOLVA: criação de mídias digitais"
     />
     <meta
       property="og:description"
@@ -46,11 +46,11 @@
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="EVOLVA — Soluções Digitais" />
+    <meta property="og:image:alt" content="EVOLVA Soluções Digitais" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="EVOLVA — Criação de mídias digitais" />
+    <meta name="twitter:title" content="EVOLVA: criação de mídias digitais" />
     <meta
       name="twitter:description"
       content="Criação de sites, blogs, landing pages, link na bio, artes para Instagram, flyers e identidade visual. Peça seu orçamento."
@@ -59,7 +59,7 @@
       name="twitter:image"
       content="https://agenciaevolva.pages.dev/assets/evolva_solucoes_digitais-og.png"
     />
-    <meta name="twitter:image:alt" content="EVOLVA — Soluções Digitais" />
+    <meta name="twitter:image:alt" content="EVOLVA Soluções Digitais" />
 
     <!-- Ícones -->
     <link rel="icon" type="image/webp" href="./assets/iconelogo.webp" />
@@ -102,7 +102,7 @@
             "@type": "Organization",
             "@id": "https://agenciaevolva.pages.dev/#organizacao",
             "name": "EVOLVA",
-            "legalName": "EVOLVA — Soluções Digitais",
+            "legalName": "EVOLVA Soluções Digitais",
             "alternateName": "EVOLVA Soluções Digitais",
             "url": "https://agenciaevolva.pages.dev/",
             "email": "contato@evolva.com.br",
@@ -206,12 +206,12 @@
         padding: 0;
       }
 
-      html,
-      body {
-        background-color: var(--bg);
-      }
-
+      /* O fundo mora só no <html>, que vira o fundo da tela inteira.
+         No <body> ele seria pintado como fundo de elemento — depois
+         dos filhos de `z-index` negativo — e taparia a camada de
+         linhas do site. */
       html {
+        background-color: var(--bg);
         scroll-behavior: smooth;
       }
 
@@ -236,9 +236,10 @@
         list-style: none;
       }
 
+      /* Sem fundo próprio: quem pinta o `--bg` é o <html>, e a camada
+         de linhas mora entre os dois. Um fundo opaco aqui tapava ela. */
       .page {
         overflow-x: clip;
-        background-color: var(--bg);
       }
 
       .glow {
@@ -517,6 +518,55 @@
           var(--hero-bg);
       }
 
+      /* O fundo animado: três ondas de linhas desenhadas em WebGL nas
+         cores da marca (azul → ciano → violeta). Entra com `screen`
+         para somar luz ao quase-preto em vez de tapá-lo, fica atrás de
+         todo o conteúdo e não recebe ponteiro — quem escuta o cursor é
+         a <section> inteira. Ver assets/js/floating-lines.js. */
+      .hero__lines {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+        mix-blend-mode: screen;
+      }
+
+      .floating-lines__canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* As mesmas ondas seguem por trás do site inteiro, mais fracas e
+         mais lentas que na hero, presas à viewport: o conteúdo rola e o
+         campo desliza a uma fração da velocidade — o parallax.
+
+         Só aparecem onde o fundo é escuro. As seções brancas (a faixa
+         do portfólio e "O que criamos") são opacas e passam por cima da
+         camada sozinhas, o que preserva o contraste entre os dois
+         mundos da página. */
+      .site-lines {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        mix-blend-mode: screen;
+      }
+
+      /* O manifesto e o "como funciona" são cartões opacos: sobem 2rem
+         por cima da seção branca anterior e arredondam o topo, então
+         não podem ficar transparentes para a camada fixa aparecer. Aí
+         as linhas moram dentro deles — acima do fundo do cartão, abaixo
+         do conteúdo, e recortadas pelo `overflow: hidden` da seção. */
+      .section-lines {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        mix-blend-mode: screen;
+      }
+
       /* Emenda com a seção seguinte, para o corte não aparecer. */
       .hero__fade {
         position: absolute;
@@ -622,6 +672,10 @@
         flex: 1 0 auto;
         flex-direction: column;
         justify-content: center;
+        /* A coluna inteira — olho, lockup, texto, botões — corre pelo
+           eixo central da tela. */
+        align-items: center;
+        text-align: center;
         width: min(100%, 1920px);
         margin-inline: auto;
         padding-inline: clamp(20px, 5vw, 96px);
@@ -745,6 +799,7 @@
       .hero__lead {
         max-width: 570px;
         margin-top: clamp(1.5rem, 3.2vw, 2.6rem);
+        margin-inline: auto;
         font-size: 15px;
         line-height: 1.65;
         color: #c5cbe0;
@@ -754,6 +809,7 @@
         display: flex;
         gap: 0.75rem;
         flex-wrap: wrap;
+        justify-content: center;
         margin-top: 1.6rem;
       }
 
@@ -1185,7 +1241,7 @@
       =============================================================== */
       .services {
         position: relative;
-        border-radius: var(--card-radius) var(--card-radius) 0 0;
+        border-radius: var(--card-radius);
         background: #ffffff;
         color: var(--bg);
         padding: 4.5rem 1.25rem;
@@ -1394,13 +1450,15 @@
          6. Como funciona — o método em quatro passos e o CTA no meio
             do caminho, para quem já se convenceu aqui.
       =============================================================== */
+      /* Sem fundo, sem cantos e sem a subida de 2rem sobre a seção
+         branca: daqui até o fechamento é uma corrida escura só, e a
+         camada de linhas do site atravessa as três seções sem emenda.
+         Quem arremata o branco agora é a própria seção de cima, que
+         arredonda o pé. */
       .process {
         position: relative;
         z-index: 10;
         overflow: hidden;
-        margin-top: -2rem;
-        border-radius: var(--card-radius) var(--card-radius) 0 0;
-        background-color: var(--bg);
         padding: 5rem 1.25rem;
       }
 
@@ -1444,11 +1502,10 @@
         gap: 0.75rem;
       }
 
+      /* Sem chapa nem moldura: as etapas são texto sobre o fundo, e o
+         que separa uma da outra é o espaço da grade. */
       .step {
-        padding: 1.25rem 1.25rem;
-        border-left: 2px solid var(--blue);
-        background: rgba(6, 13, 37, 0.55);
-        border-radius: 0 12px 12px 0;
+        padding: 0.25rem 1.25rem 0.25rem 0;
       }
 
       .step strong {
@@ -1579,19 +1636,14 @@
           );
       }
 
+      /* O fechamento não é mais um cartão: sem moldura, sem chapa e sem
+         sombra, a oferta fica direto sobre as linhas que vêm rolando
+         desde o "como funciona". */
       .contact__box {
         margin: 0 auto;
         max-width: 72rem;
-        border: 1px solid rgba(75, 117, 255, 0.35);
-        border-radius: var(--card-radius);
         padding: 3rem 1.5rem;
         text-align: center;
-        background: linear-gradient(
-          145deg,
-          rgba(8, 17, 49, 0.86),
-          rgba(3, 7, 23, 0.94)
-        );
-        box-shadow: var(--shadow);
       }
 
       .contact__box h2 {
@@ -1694,11 +1746,21 @@
          9. Rodapé mínimo — sem árvore de links: a página acabou, o
             próximo passo é um só.
       =============================================================== */
+      /* Branco como as outras seções claras, e arredondado no topo pelo
+         mesmo motivo delas: é assim que o claro encosta no escuro nesta
+         página. Fecha a corrida de linhas que vem desde o "como
+         funciona". */
       .footer {
-        border-top: 1px solid var(--line);
-        /* A folga extra embaixo mantém o texto fora do botão flutuante
-           de WhatsApp quando a página chega ao fim. */
-        padding: 1.75rem 1.25rem 5.5rem;
+        position: relative;
+        z-index: 10;
+        border-radius: var(--card-radius) var(--card-radius) 0 0;
+        background: #ffffff;
+        color: var(--bg);
+        /* No topo dá para apertar; embaixo não: a folga é o que mantém
+           o texto fora do botão flutuante de WhatsApp quando a página
+           chega ao fim. No desktop o mesmo papel é do padding da
+           direita, abaixo. */
+        padding: 1.25rem 1.25rem 5.25rem;
       }
 
       .footer__inner {
@@ -1718,23 +1780,23 @@
       }
 
       .footer__brand img {
-        height: 1.9rem;
+        height: 1.5rem;
         width: auto;
       }
 
       .footer__brand-word {
-        height: 2.3rem;
+        height: 1.9rem;
       }
 
       .footer__copy {
         font-size: 12px;
-        color: #7f8aa6;
-        line-height: 1.6;
+        color: #5b657f;
+        line-height: 1.55;
       }
 
       @media (min-width: 640px) {
         .footer {
-          padding: 1.75rem 6.5rem 1.75rem 2.75rem;
+          padding: 1.25rem 6.5rem 1.25rem 2.75rem;
         }
         .footer__inner {
           flex-direction: row;
@@ -1844,12 +1906,19 @@
   </head>
 
   <body>
+    <!-- Fundo de linhas do site inteiro: fica atrás da página e só
+         aparece nas seções escuras. Ver assets/js/floating-lines.js. -->
+    <div class="site-lines" data-site-lines aria-hidden="true"></div>
+
     <main class="page" id="topo">
       <!-- ============================================================
            1. Hero
       ============================================================= -->
       <section class="hero">
         <span class="hero__beam" aria-hidden="true"></span>
+        <!-- O canvas das ondas nasce aqui pelo JS. Vem antes da
+             emenda para que o degradê de baixo passe por cima dele. -->
+        <div class="hero__lines" data-floating-lines aria-hidden="true"></div>
         <span class="hero__fade" aria-hidden="true"></span>
 
         <nav class="hero__nav" data-reveal style="--ry: -20px">
@@ -1862,7 +1931,7 @@
             <img
               class="hero__brand-word"
               src="./assets/evolva_solucoes_digitais.webp"
-              alt="EVOLVA — Soluções Digitais"
+              alt="EVOLVA Soluções Digitais"
             />
           </span>
           <a class="nav-cta" href="#contato">Falar no WhatsApp</a>
@@ -2018,7 +2087,7 @@
           </div>
 
           <p class="hero__note" data-reveal style="--ry: 16px; --rd: 0.6s">
-            <b>✓</b>Sem compromisso —&nbsp;manda a peça que você precisa no WhatsApp e
+            <b>✓</b>Sem compromisso, manda a peça que você precisa no WhatsApp e
             recebe prazo e valor.
           </p>
         </div>
@@ -2056,11 +2125,11 @@
               <span class="client__name">Creativity</span>
             </li>
             <li class="client">
-              <img src="./assets/carrosel_empresas/fortaleza-regional-11.webp" alt="Prefeitura de Fortaleza — Regional 11" loading="lazy" />
+              <img src="./assets/carrosel_empresas/fortaleza-regional-11.webp" alt="Prefeitura de Fortaleza, Regional 11" loading="lazy" />
               <span class="client__name">Regional 11</span>
             </li>
             <li class="client">
-              <img src="./assets/carrosel_empresas/psindce.webp" alt="PSINDCE — Sindicato dos Psicólogos do Ceará" loading="lazy" />
+              <img src="./assets/carrosel_empresas/psindce.webp" alt="PSINDCE, Sindicato dos Psicólogos do Ceará" loading="lazy" />
               <span class="client__name">PSINDCE</span>
             </li>
 
@@ -2111,6 +2180,7 @@
            4. Manifesto
       ============================================================= -->
       <section class="manifesto">
+        <div class="section-lines" data-section-lines aria-hidden="true"></div>
         <span class="glow glow--a"></span>
         <span class="glow glow--b"></span>
 
@@ -2172,7 +2242,7 @@
         <img
           class="services__brand"
           src="./assets/evolva_solucoes_digitais-light.webp"
-          alt="EVOLVA — Soluções Digitais"
+          alt="EVOLVA Soluções Digitais"
           data-reveal
           style="--ry: 20px"
         />
@@ -2246,7 +2316,7 @@
             </span>
             <h3 class="service-row__name">Artes para Instagram</h3>
             <p class="service-row__desc">
-              Feed, carrossel, story e capa de destaques —&nbsp;a linha visual
+              Feed, carrossel, story e capa de destaques: a linha visual
               do perfil inteiro.
             </p>
             <span class="service-row__cta">
@@ -2343,7 +2413,7 @@
             </span>
             <h3 class="service-row__name">Flyers e artes promocionais</h3>
             <p class="service-row__desc">
-              Flyer, cardápio, panfleto e arte de promoção —&nbsp;para imprimir
+              Flyer, cardápio, panfleto e arte de promoção para imprimir
               ou postar.
             </p>
             <span class="service-row__cta">
@@ -2370,25 +2440,25 @@
             </h2>
             <p data-reveal style="--ry: 26px; --rd: 0.2s">
               Quatro etapas simples entre o seu pedido e o arquivo final na sua
-              mão —&nbsp;sem improviso.
+              mão, sem improviso.
             </p>
           </div>
 
           <div class="process__steps">
             <div class="step" data-reveal="zoom" style="--rs: 0.9; --rd: 0s">
-              <strong>01 — Briefing</strong>
+              <strong>01 Briefing</strong>
               <span>Você conta a peça que precisa e manda referências.</span>
             </div>
             <div class="step" data-reveal="zoom" style="--rs: 0.9; --rd: 0.12s">
-              <strong>02 — Conceito</strong>
+              <strong>02 Conceito</strong>
               <span>Definimos estilo, cores e formatos.</span>
             </div>
             <div class="step" data-reveal="zoom" style="--rs: 0.9; --rd: 0.24s">
-              <strong>03 — Criação</strong>
+              <strong>03 Criação</strong>
               <span>A peça é desenhada e enviada para você ver.</span>
             </div>
             <div class="step" data-reveal="zoom" style="--rs: 0.9; --rd: 0.36s">
-              <strong>04 — Entrega</strong>
+              <strong>04 Entrega</strong>
               <span>Ajustes inclusos e arquivos nos formatos certos.</span>
             </div>
           </div>
@@ -2417,7 +2487,7 @@
               <p>
                 Sites, blogs, landing pages, link na bio, artes para Instagram
                 (feed, carrossel e story), flyers e materiais promocionais, além
-                de identidade visual completa —&nbsp;logo, cores e tipografia.
+                de identidade visual completa: logo, cores e tipografia.
               </p>
             </details>
             <details>
@@ -2426,7 +2496,7 @@
                 Depende da peça: pacote de social media a partir de R$ 890/mês,
                 sites a partir de R$ 1.490 e identidade visual a partir de
                 R$ 1.890. Artes avulsas, landing pages e link na bio têm
-                orçamento próprio —&nbsp;é só dizer o que você precisa.
+                orçamento próprio, é só dizer o que você precisa.
               </p>
             </details>
             <details>
@@ -2463,7 +2533,7 @@
             <span class="accent-text">primeiro?</span>
           </h2>
           <p>
-            Chame no WhatsApp e diga o que você precisa —&nbsp;arte, site, landing
+            Chame no WhatsApp e diga o que você precisa: arte, site, landing
             page ou identidade visual. A gente volta com prazo e valor.
           </p>
 
@@ -2517,8 +2587,8 @@
             <img src="./assets/iconelogo.webp" alt="" />
             <img
               class="footer__brand-word"
-              src="./assets/evolva_solucoes_digitais.webp"
-              alt="EVOLVA — Soluções Digitais"
+              src="./assets/evolva_solucoes_digitais-light.webp"
+              alt="EVOLVA Soluções Digitais"
             />
           </span>
           <p
@@ -2527,7 +2597,7 @@
             data-reveal="right"
             style="--rx: 26px; --rd: 0.1s"
           >
-            EVOLVA — Soluções Digitais<br />
+            EVOLVA Soluções Digitais<br />
             Sites • Social media • Identidade visual • Impressos
           </p>
         </div>
@@ -2543,6 +2613,8 @@
       </svg>
     </a>
 
+    <script src="./assets/js/floating-lines.js"></script>
+
     <script>
       (function () {
         'use strict';
@@ -2550,6 +2622,100 @@
         var reduceMotion = window.matchMedia(
           '(prefers-reduced-motion: reduce)',
         ).matches;
+
+        /* ----------------------------------------------------------
+           Fundo da hero — as ondas de linhas
+           ----------------------------------------------------------
+           A paleta é a do site: do azul da marca ao ciano, terminando
+           no violeta dos degradês das seções. Poucas linhas e bem
+           espaçadas — cruzamento demais estoura os canais e o feixe
+           vira um borrão branco, longe do quase-preto da identidade;
+           `intensity` segura o resto. Sem WebGL, `mount` devolve null
+           e a hero segue com o fundo do CSS.
+        ---------------------------------------------------------- */
+        var heroLines = document.querySelector('[data-floating-lines]');
+        if (heroLines && window.FloatingLines) {
+          window.FloatingLines.mount(heroLines, {
+            pointerTarget: heroLines.closest('.hero'),
+            linesGradient: ['#0a56fa', '#1264ff', '#22a7ff', '#7c3cff'],
+            enabledWaves: ['top', 'middle', 'bottom'],
+            intensity: 0.6,
+            lineCount: [6, 8, 10],
+            lineDistance: [12, 10, 9],
+            bendRadius: 5.0,
+            bendStrength: -0.5,
+            animationSpeed: 0.9,
+            interactive: true,
+            parallax: true,
+          });
+        }
+
+        /* ----------------------------------------------------------
+           O mesmo campo por trás do resto do site
+           ----------------------------------------------------------
+           Mesma paleta da hero, porém mais apagado, mais espaçado e
+           mais devagar: aqui as linhas passam atrás de texto corrido,
+           e o assunto da seção é o texto, não o fundo. Sem cursor —
+           o movimento vem só da rolagem.
+
+           São duas montagens porque a página tem dois tipos de seção
+           escura: as transparentes, que deixam ver a camada fixa, e os
+           dois cartões opacos, que carregam a sua própria.
+        ---------------------------------------------------------- */
+        var AMBIENT_LINES = {
+          linesGradient: ['#0a56fa', '#1264ff', '#22a7ff', '#7c3cff'],
+          enabledWaves: ['top', 'middle', 'bottom'],
+          intensity: 0.38,
+          lineCount: [4, 5, 6],
+          lineDistance: [16, 14, 12],
+          animationSpeed: 0.45,
+          interactive: false,
+          parallax: false,
+          scrollParallax: true,
+          /* Dentro de uma seção: uv por altura de tela. */
+          scrollStrength: 0.18,
+        };
+
+        var copyAmbient = function (extra) {
+          var options = {};
+          for (var key in AMBIENT_LINES) {
+            if (Object.prototype.hasOwnProperty.call(AMBIENT_LINES, key)) {
+              options[key] = AMBIENT_LINES[key];
+            }
+          }
+          for (var own in extra) {
+            if (Object.prototype.hasOwnProperty.call(extra, own)) {
+              options[own] = extra[own];
+            }
+          }
+          return options;
+        };
+
+        var siteLines = document.querySelector('[data-site-lines]');
+        if (siteLines && window.FloatingLines) {
+          /* A camada fixa cobre a tela inteira o tempo todo, inclusive
+             atrás das seções brancas, que a escondem. Observar só as
+             seções escuras e transparentes faz o laço dormir quando
+             não há nada dela para ver. */
+          var seeThrough = [].slice.call(
+            document.querySelectorAll('.clients, .process, .faq, .contact'),
+          );
+
+          window.FloatingLines.mount(
+            siteLines,
+            /* Aqui `scrollStrength` é o passeio total do campo, em uv,
+               da primeira à última tela da página. */
+            copyAmbient({ observe: seeThrough, scrollStrength: 1.1 }),
+          );
+        }
+
+        if (window.FloatingLines) {
+          document
+            .querySelectorAll('[data-section-lines]')
+            .forEach(function (layer) {
+              window.FloatingLines.mount(layer, copyAmbient({}));
+            });
+        }
 
         var clamp = function (value, min, max) {
           return Math.min(Math.max(value, min), max);
