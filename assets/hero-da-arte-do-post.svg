@@ -1,47 +1,49 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 897 64" role="img" aria-label="DA ARTE DO POST" preserveAspectRatio="xMidYMid meet">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 524 64" role="img" aria-label="DA ARTE DO POST" preserveAspectRatio="xMidYMid meet">
   <title>DA ARTE DO POST</title>
   <!-- Lettering hairline da linha branca da hero: caixa alta, baixa e
-       condensada — altura de caixa 56 numa faixa de 889 (antes 78 em
-       943), então a linha renderiza ~25% mais baixa na mesma largura.
-       As letras são estreitas (largura ≈ 0,55 da altura) e o
-       espacejamento carrega a faixa; traço 2.5, uma linha só, fundo
+       condensada de verdade — altura de caixa 56 numa faixa de 516.
+       Não basta a letra ser estreita (largura ≈ 0,55 da altura): o
+       espacejamento é que faz a linha ler como condensada, então o
+       vão entre letras é 10 e entre palavras 26 (antes 40 e 70, o que
+       devolvia um traço estendido). A largura em `cqi` no CSS é quem
+       segura a altura final na tela. Traço 2.5, uma linha só, fundo
        transparente. Só este título mora aqui. -->
   <g fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="miter">
     <!-- D -->
     <path d="M0 0H17A14 28 0 0 1 17 56H0Z"/>
     <!-- A -->
-    <g transform="translate(71 0)">
+    <g transform="translate(41 0)">
       <path d="M0 56 15 0 30 56"/>
       <path d="M5.6 37H24.4"/>
     </g>
     <!-- A -->
-    <g transform="translate(171 0)">
+    <g transform="translate(97 0)">
       <path d="M0 56 15 0 30 56"/>
       <path d="M5.6 37H24.4"/>
     </g>
     <!-- R -->
-    <g transform="translate(241 0)">
+    <g transform="translate(137 0)">
       <path d="M0 56V0H17A12 13.5 0 0 1 17 27H0"/>
       <path d="M15 27 29 56"/>
     </g>
     <!-- T -->
-    <path transform="translate(310 0)" d="M0 0H30M15 0V56"/>
+    <path transform="translate(176 0)" d="M0 0H30M15 0V56"/>
     <!-- E -->
-    <g transform="translate(380 0)">
+    <g transform="translate(216 0)">
       <path d="M29 0H0V56H29"/>
       <path d="M0 28H23"/>
     </g>
     <!-- D -->
-    <path transform="translate(479 0)" d="M0 0H17A14 28 0 0 1 17 56H0Z"/>
+    <path transform="translate(271 0)" d="M0 0H17A14 28 0 0 1 17 56H0Z"/>
     <!-- O -->
-    <path transform="translate(550 0)" d="M15.5 0A15.5 28 0 0 1 15.5 56A15.5 28 0 0 1 15.5 0Z"/>
+    <path transform="translate(312 0)" d="M15.5 0A15.5 28 0 0 1 15.5 56A15.5 28 0 0 1 15.5 0Z"/>
     <!-- P -->
-    <path transform="translate(651 0)" d="M0 56V0H17A12 14.5 0 0 1 17 29H0"/>
+    <path transform="translate(369 0)" d="M0 56V0H17A12 14.5 0 0 1 17 29H0"/>
     <!-- O -->
-    <path transform="translate(720 0)" d="M15.5 0A15.5 28 0 0 1 15.5 56A15.5 28 0 0 1 15.5 0Z"/>
+    <path transform="translate(408 0)" d="M15.5 0A15.5 28 0 0 1 15.5 56A15.5 28 0 0 1 15.5 0Z"/>
     <!-- S -->
-    <path transform="translate(791 0)" d="M26 13.5C26 5.5 20.5 0 14 0 7.5 0 2 5 2 11.5c0 7 5 10.5 12 14 7 3.5 12.5 7.5 12.5 15C26.5 49 21 55.5 14 55.5 7 55.5 1.5 49.5 1.5 42"/>
+    <path transform="translate(449 0)" d="M26 13.5C26 5.5 20.5 0 14 0 7.5 0 2 5 2 11.5c0 7 5 10.5 12 14 7 3.5 12.5 7.5 12.5 15C26.5 49 21 55.5 14 55.5 7 55.5 1.5 49.5 1.5 42"/>
     <!-- T -->
-    <path transform="translate(859 0)" d="M0 0H30M15 0V56"/>
+    <path transform="translate(486 0)" d="M0 0H30M15 0V56"/>
   </g>
 </svg>
