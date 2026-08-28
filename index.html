@@ -975,7 +975,7 @@
         align-items: flex-start;
         gap: 2vw;
         overflow: hidden;
-        height: 130vh;
+        height: 168vh;
         padding: 2vw;
         border-radius: var(--card-radius) var(--card-radius) 0 0;
         background: #ffffff;
@@ -1026,7 +1026,7 @@
 
       @media (min-width: 640px) {
         .parallax {
-          height: 150vh;
+          height: 195vh;
         }
         .parallax__col:nth-child(3) {
           display: flex;
@@ -2876,7 +2876,11 @@
           });
         };
 
-        var COLUMN_TO_BAND = 2;
+        /* Quanto a coluna precisa ser mais alta que a faixa para haver
+           folga de parallax. A faixa ficou mais alta (168vh/195vh), então
+           a razão caiu junto: o curso em pixels — e com ele a decisão de
+           quantas colunas cabem — segue o mesmo de antes. */
+        var COLUMN_TO_BAND = 1.55;
 
         var bandWidth = -1;
         var fillBand = function () {
