@@ -712,7 +712,7 @@
          como o texto fazia antes. */
       .hero__title-top {
         display: block;
-        width: min(100%, 540px);
+        width: min(100%, 460px);
         max-width: 100%;
         height: auto;
         margin-inline: auto;
@@ -721,7 +721,36 @@
 
       @supports (width: 1cqi) {
         .hero__title-top {
-          width: min(100%, 52cqi);
+          width: min(100%, 44cqi);
+        }
+      }
+
+      /* Nas telas estreitas o mesmo desenho ficaria fino demais para
+         ler: só o SVG branco cresce em relação ao lettering azul — o
+         "AO SITE." não muda em nenhum breakpoint. */
+      @media (max-width: 900px) {
+        .hero__title-top {
+          width: min(100%, 380px);
+        }
+      }
+
+      @media (max-width: 640px) {
+        .hero__title-top {
+          width: min(100%, 260px);
+        }
+      }
+
+      @supports (width: 1cqi) {
+        @media (max-width: 900px) {
+          .hero__title-top {
+            width: min(100%, 54cqi);
+          }
+        }
+
+        @media (max-width: 640px) {
+          .hero__title-top {
+            width: min(100%, 68cqi);
+          }
         }
       }
 
@@ -930,6 +959,18 @@
          2. Faixa em parallax — o portfólio como prova visual, sem
             virar catálogo: as peças passam, o CTA continua um só.
       =============================================================== */
+      /* A emenda com a hero: a hero é opaca e tapa a camada fixa de
+         linhas, que reaparecia de uma vez logo abaixo dela — um degrau
+         de luz atravessando a tela. Esta faixa começa na cor da página
+         e abre até o transparente, então as linhas entram por uma rampa
+         e não há borda nenhuma. É ela que dá o respiro antes da faixa
+         branca, no lugar da antiga margem. */
+      .hero-seam {
+        height: clamp(2.5rem, 4vw, 3.5rem);
+        pointer-events: none;
+        background: linear-gradient(var(--bg) 12%, transparent);
+      }
+
       .parallax {
         position: relative;
         display: flex;
@@ -938,7 +979,6 @@
         overflow: hidden;
         height: 130vh;
         padding: 2vw;
-        margin-top: 3.5rem;
         border-radius: var(--card-radius) var(--card-radius) 0 0;
         background: #ffffff;
       }
@@ -2009,8 +2049,8 @@
                 src="./assets/hero-da-arte-do-post.svg"
                 alt=""
                 aria-hidden="true"
-                width="993"
-                height="98"
+                width="955"
+                height="90"
                 decoding="async"
               />
 
@@ -2157,6 +2197,9 @@
 
         <div class="hero__spacer"></div>
       </section>
+
+      <!-- A rampa que emenda o pé da hero com a faixa branca. -->
+      <div class="hero-seam" aria-hidden="true"></div>
 
       <!-- ============================================================
            2. Faixa em parallax — prova visual do trabalho

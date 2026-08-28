@@ -1,45 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 993 98" role="img" aria-label="DA ARTE DO POST" preserveAspectRatio="xMidYMid meet">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 955 90" role="img" aria-label="DA ARTE DO POST" preserveAspectRatio="xMidYMid meet">
   <title>DA ARTE DO POST</title>
-  <!-- Lettering hairline da linha branca da hero: caixa alta, condensada
-       (letras estreitas, altura de caixa 86, traço 3.1), peso ultra light
-       desenhado em traço, uma única linha, fundo transparente. Só este
-       título mora aqui. -->
-  <g fill="none" stroke="#ffffff" stroke-width="3.1" stroke-linecap="butt" stroke-linejoin="miter">
+  <!-- Lettering hairline da linha branca da hero: caixa alta, baixa e
+       compacta (altura de caixa 78, letras em ~0,62 da altura, traço
+       2.9), condensada pelo espacejamento curto, uma linha só e fundo
+       transparente. Só este título mora aqui. -->
+  <g fill="none" stroke="#ffffff" stroke-width="2.9" stroke-linecap="butt" stroke-linejoin="miter">
     <!-- D -->
-    <path d="M0 0H26A22 43 0 0 1 26 86H0Z"/>
+    <path d="M0 0H27A23 39 0 0 1 27 78H0Z"/>
     <!-- A -->
-    <g transform="translate(78 0)">
-      <path d="M0 86 23 0 46 86"/>
-      <path d="M8.5 56H37.5"/>
+    <g transform="translate(76 0)">
+      <path d="M0 78 24 0 48 78"/>
+      <path d="M9 51H39"/>
     </g>
     <!-- A -->
-    <g transform="translate(186 0)">
-      <path d="M0 86 23 0 46 86"/>
-      <path d="M8.5 56H37.5"/>
+    <g transform="translate(176 0)">
+      <path d="M0 78 24 0 48 78"/>
+      <path d="M9 51H39"/>
     </g>
     <!-- R -->
-    <g transform="translate(262 0)">
-      <path d="M0 86V0H27A19 21 0 0 1 27 42H0"/>
-      <path d="M25 42 44 86"/>
+    <g transform="translate(250 0)">
+      <path d="M0 78V0H28A19 19 0 0 1 28 38H0"/>
+      <path d="M26 38 46 78"/>
     </g>
     <!-- T -->
-    <path transform="translate(337 0)" d="M0 0H45M22.5 0V86"/>
+    <path transform="translate(323 0)" d="M0 0H47M23.5 0V78"/>
     <!-- E -->
-    <g transform="translate(412 0)">
-      <path d="M46 0H0V86H46"/>
-      <path d="M0 43H37"/>
+    <g transform="translate(396 0)">
+      <path d="M48 0H0V78H48"/>
+      <path d="M0 39H38"/>
     </g>
     <!-- D -->
-    <path transform="translate(520 0)" d="M0 0H26A22 43 0 0 1 26 86H0Z"/>
+    <path transform="translate(496 0)" d="M0 0H27A23 39 0 0 1 27 78H0Z"/>
     <!-- O -->
-    <path transform="translate(598 0)" d="M24 0A24 43 0 0 1 24 86A24 43 0 0 1 24 0Z"/>
+    <path transform="translate(572 0)" d="M25 0A25 39 0 0 1 25 78A25 39 0 0 1 25 0Z"/>
     <!-- P -->
-    <path transform="translate(708 0)" d="M0 86V0H26A22 22.5 0 0 1 26 45H0"/>
+    <path transform="translate(674 0)" d="M0 78V0H27A22 20.5 0 0 1 27 41H0"/>
     <!-- O -->
-    <path transform="translate(783 0)" d="M24 0A24 43 0 0 1 24 86A24 43 0 0 1 24 0Z"/>
+    <path transform="translate(747 0)" d="M25 0A25 39 0 0 1 25 78A25 39 0 0 1 25 0Z"/>
     <!-- S -->
-    <path transform="translate(861 0)" d="M43 20C43 8 34 0 23 0 12 0 3 8 3 20c0 12 9 18 20 18 12 0 21 7 21 19 0 12-9 19-21 19C11 76 2 68 2 57"/>
+    <path transform="translate(823 0)" d="M45 18C45 8 35 0 23 0 12 0 3 8 3 18c0 11 9 17 20 17 12 0 22 7 22 18 0 11-10 18-22 18C11 71 2 63 2 52"/>
     <!-- T -->
-    <path transform="translate(936 0)" d="M0 0H45M22.5 0V86"/>
+    <path transform="translate(896 0)" d="M0 0H47M23.5 0V78"/>
   </g>
 </svg>
