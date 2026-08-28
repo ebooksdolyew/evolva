@@ -714,7 +714,7 @@
          como o texto fazia antes. */
       .hero__title-top {
         display: block;
-        width: min(100%, 320px);
+        width: min(100%, 690px);
         max-width: 100%;
         height: auto;
         margin-inline: auto;
@@ -723,7 +723,7 @@
 
       @supports (width: 1cqi) {
         .hero__title-top {
-          width: min(100%, 27cqi);
+          width: min(100%, 58cqi);
         }
       }
 
@@ -732,26 +732,26 @@
          "AO SITE." não muda em nenhum breakpoint. */
       @media (max-width: 900px) {
         .hero__title-top {
-          width: min(100%, 250px);
+          width: min(100%, 480px);
         }
       }
 
       @media (max-width: 640px) {
         .hero__title-top {
-          width: min(100%, 185px);
+          width: min(100%, 320px);
         }
       }
 
       @supports (width: 1cqi) {
         @media (max-width: 900px) {
           .hero__title-top {
-            width: min(100%, 34cqi);
+            width: min(100%, 70cqi);
           }
         }
 
         @media (max-width: 640px) {
           .hero__title-top {
-            width: min(100%, 44cqi);
+            width: min(100%, 92cqi);
           }
         }
       }
@@ -2027,28 +2027,27 @@
         </nav>
 
         <div class="hero__body">
-          <p class="kicker" data-reveal style="--ry: 20px; --rd: 0.1s">
-            Criação de mídias digitais
-          </p>
-
           <div class="hero__lockup">
             <h1 class="hero__title">
               <!-- A frase existe inteira aqui; os dois desenhos abaixo são
                    a forma dela e ficam escondidos do leitor de tela para
                    ninguém ouvir a frase duas vezes. -->
-              <span class="sr-only">Da arte do post ao site.</span>
+              <span class="sr-only">Criatividade que vai do post ao site.</span>
 
               <!-- A linha branca é um SVG próprio, só com este título:
-                   lettering hairline em caixa alta, condensado, traçado
-                   em vetor — não depende de fonte carregada. Ver
+                   uma linha de texto em MuseoModerno Light (300), caixa
+                   alta, com a fonte embutida no próprio arquivo — não
+                   depende de fonte carregada pela página. As medidas
+                   abaixo repetem o viewBox (900 × 51) só para o
+                   navegador reservar a proporção certa. Ver
                    assets/hero-da-arte-do-post.svg. -->
               <img
                 class="hero__title-top"
                 src="./assets/hero-da-arte-do-post.svg"
                 alt=""
                 aria-hidden="true"
-                width="955"
-                height="90"
+                width="900"
+                height="51"
                 decoding="async"
               />
 
