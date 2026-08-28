@@ -206,12 +206,12 @@
         padding: 0;
       }
 
-      html,
-      body {
-        background-color: var(--bg);
-      }
-
+      /* O fundo mora só no <html>, que vira o fundo da tela inteira.
+         No <body> ele seria pintado como fundo de elemento — depois
+         dos filhos de `z-index` negativo — e taparia a camada de
+         linhas do site. */
       html {
+        background-color: var(--bg);
         scroll-behavior: smooth;
       }
 
@@ -236,9 +236,10 @@
         list-style: none;
       }
 
+      /* Sem fundo próprio: quem pinta o `--bg` é o <html>, e a camada
+         de linhas mora entre os dois. Um fundo opaco aqui tapava ela. */
       .page {
         overflow-x: clip;
-        background-color: var(--bg);
       }
 
       .glow {
@@ -535,6 +536,35 @@
         display: block;
         width: 100%;
         height: 100%;
+      }
+
+      /* As mesmas ondas seguem por trás do site inteiro, mais fracas e
+         mais lentas que na hero, presas à viewport: o conteúdo rola e o
+         campo desliza a uma fração da velocidade — o parallax.
+
+         Só aparecem onde o fundo é escuro. As seções brancas (a faixa
+         do portfólio e "O que criamos") são opacas e passam por cima da
+         camada sozinhas, o que preserva o contraste entre os dois
+         mundos da página. */
+      .site-lines {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        mix-blend-mode: screen;
+      }
+
+      /* O manifesto e o "como funciona" são cartões opacos: sobem 2rem
+         por cima da seção branca anterior e arredondam o topo, então
+         não podem ficar transparentes para a camada fixa aparecer. Aí
+         as linhas moram dentro deles — acima do fundo do cartão, abaixo
+         do conteúdo, e recortadas pelo `overflow: hidden` da seção. */
+      .section-lines {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        mix-blend-mode: screen;
       }
 
       /* Emenda com a seção seguinte, para o corte não aparecer. */
@@ -1870,6 +1900,10 @@
   </head>
 
   <body>
+    <!-- Fundo de linhas do site inteiro: fica atrás da página e só
+         aparece nas seções escuras. Ver assets/js/floating-lines.js. -->
+    <div class="site-lines" data-site-lines aria-hidden="true"></div>
+
     <main class="page" id="topo">
       <!-- ============================================================
            1. Hero
@@ -2140,6 +2174,7 @@
            4. Manifesto
       ============================================================= -->
       <section class="manifesto">
+        <div class="section-lines" data-section-lines aria-hidden="true"></div>
         <span class="glow glow--a"></span>
         <span class="glow glow--b"></span>
 
@@ -2387,6 +2422,7 @@
            6. Como funciona
       ============================================================= -->
       <section class="process" id="como-funciona">
+        <div class="section-lines" data-section-lines aria-hidden="true"></div>
         <span class="glow glow--c"></span>
         <div class="process__inner">
           <div class="process__head">
@@ -2607,6 +2643,73 @@
             interactive: true,
             parallax: true,
           });
+        }
+
+        /* ----------------------------------------------------------
+           O mesmo campo por trás do resto do site
+           ----------------------------------------------------------
+           Mesma paleta da hero, porém mais apagado, mais espaçado e
+           mais devagar: aqui as linhas passam atrás de texto corrido,
+           e o assunto da seção é o texto, não o fundo. Sem cursor —
+           o movimento vem só da rolagem.
+
+           São duas montagens porque a página tem dois tipos de seção
+           escura: as transparentes, que deixam ver a camada fixa, e os
+           dois cartões opacos, que carregam a sua própria.
+        ---------------------------------------------------------- */
+        var AMBIENT_LINES = {
+          linesGradient: ['#0a56fa', '#1264ff', '#22a7ff', '#7c3cff'],
+          enabledWaves: ['top', 'middle', 'bottom'],
+          intensity: 0.38,
+          lineCount: [4, 5, 6],
+          lineDistance: [16, 14, 12],
+          animationSpeed: 0.45,
+          interactive: false,
+          parallax: false,
+          scrollParallax: true,
+          /* Dentro de uma seção: uv por altura de tela. */
+          scrollStrength: 0.18,
+        };
+
+        var copyAmbient = function (extra) {
+          var options = {};
+          for (var key in AMBIENT_LINES) {
+            if (Object.prototype.hasOwnProperty.call(AMBIENT_LINES, key)) {
+              options[key] = AMBIENT_LINES[key];
+            }
+          }
+          for (var own in extra) {
+            if (Object.prototype.hasOwnProperty.call(extra, own)) {
+              options[own] = extra[own];
+            }
+          }
+          return options;
+        };
+
+        var siteLines = document.querySelector('[data-site-lines]');
+        if (siteLines && window.FloatingLines) {
+          /* A camada fixa cobre a tela inteira o tempo todo, inclusive
+             atrás das seções brancas, que a escondem. Observar só as
+             seções escuras e transparentes faz o laço dormir quando
+             não há nada dela para ver. */
+          var seeThrough = [].slice.call(
+            document.querySelectorAll('.clients, .faq, .contact, .footer'),
+          );
+
+          window.FloatingLines.mount(
+            siteLines,
+            /* Aqui `scrollStrength` é o passeio total do campo, em uv,
+               da primeira à última tela da página. */
+            copyAmbient({ observe: seeThrough, scrollStrength: 1.1 }),
+          );
+        }
+
+        if (window.FloatingLines) {
+          document
+            .querySelectorAll('[data-section-lines]')
+            .forEach(function (layer) {
+              window.FloatingLines.mount(layer, copyAmbient({}));
+            });
         }
 
         var clamp = function (value, min, max) {
