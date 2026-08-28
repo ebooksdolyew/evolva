@@ -495,7 +495,9 @@
          diagonal à direita; nada de textura, partícula ou glow.
       =============================================================== */
       .hero {
-        --hero-bg: #020617;
+        /* A mesma cor de `--bg`: a emenda com a faixa de fotos não
+           pode virar um degrau de tom. */
+        --hero-bg: #020513;
         --hero-blue: #0a56fa;
         --hero-white: #f7f8ff;
         --hero-cyan: #00a3ff;
@@ -757,7 +759,9 @@
       .hero__wordmark {
         position: relative;
         display: block;
-        margin-top: clamp(20px, 3vw, 52px);
+        /* A linha branca agora é baixa e condensada: sem encolher esta
+           folga, o vazio entre ela e o lettering azul cresceria. */
+        margin-top: clamp(6px, 1vw, 16px);
       }
 
       .hero-wordmark {
@@ -965,12 +969,6 @@
          e abre até o transparente, então as linhas entram por uma rampa
          e não há borda nenhuma. É ela que dá o respiro antes da faixa
          branca, no lugar da antiga margem. */
-      .hero-seam {
-        height: clamp(2.5rem, 4vw, 3.5rem);
-        pointer-events: none;
-        background: linear-gradient(var(--bg) 12%, transparent);
-      }
-
       .parallax {
         position: relative;
         display: flex;
@@ -2197,9 +2195,6 @@
 
         <div class="hero__spacer"></div>
       </section>
-
-      <!-- A rampa que emenda o pé da hero com a faixa branca. -->
-      <div class="hero-seam" aria-hidden="true"></div>
 
       <!-- ============================================================
            2. Faixa em parallax — prova visual do trabalho
