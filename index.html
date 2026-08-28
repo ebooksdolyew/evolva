@@ -486,8 +486,9 @@
       /* ===============================================================
          1. Hero — o lockup "DA ARTE DO POST / AO SITE."
          ---------------------------------------------------------------
-         A frase inteira é a identidade da página: a linha branca é
-         texto HTML de verdade (Neue Montreal Ultra Light) e "AO SITE."
+         A frase inteira é a identidade da página: a linha branca é um
+         SVG próprio, hairline e condensado (ver
+         assets/hero-da-arte-do-post.svg) e "AO SITE."
          é um lettering vetorial desenhado para este site — ver o
          <svg class="hero-wordmark"> no corpo da página. O fundo é
          quase preto com um sopro de azul-marinho e um único feixe
@@ -572,9 +573,12 @@
         position: absolute;
         inset: auto 0 0;
         z-index: -1;
-        height: 22%;
+        height: 26%;
         pointer-events: none;
-        background: linear-gradient(transparent, var(--bg));
+        /* Fecha em `--bg` cheio antes da borda: assim o pé da hero e o
+           fundo da página são a mesma cor e a emenda com a faixa em
+           parallax não vira um degrau. */
+        background: linear-gradient(transparent, var(--bg) 80%);
       }
 
       /* O feixe: um fio de luz ciano atravessando a direita, atrás de
@@ -701,25 +705,52 @@
         font-weight: 200;
       }
 
+      /* A linha branca é o SVG de assets/hero-da-arte-do-post.svg: a
+         proporção vem do próprio viewBox — largura fluida, altura
+         automática — então as letras nunca esticam nem achatam. A
+         largura acompanha o lettering azul pelo container de consulta,
+         como o texto fazia antes. */
       .hero__title-top {
         display: block;
-        font-family: var(--font-sans);
-        font-weight: 200;
-        font-stretch: 108%;
-        font-style: normal;
-        text-transform: uppercase;
-        line-height: 0.95;
-        white-space: nowrap;
-        letter-spacing: clamp(0.1em, 0.4vw, 0.18em);
-        font-size: clamp(0.95rem, 3.4vw, 4.4rem);
-        color: var(--hero-white);
+        width: min(100%, 460px);
+        max-width: 100%;
+        height: auto;
+        margin-inline: auto;
         animation: hero-rise 0.6s var(--hero-ease) 0.05s both;
       }
 
-      @supports (font-size: 1cqi) {
+      @supports (width: 1cqi) {
         .hero__title-top {
-          font-size: 6.2cqi;
-          letter-spacing: 0.09em;
+          width: min(100%, 44cqi);
+        }
+      }
+
+      /* Nas telas estreitas o mesmo desenho ficaria fino demais para
+         ler: só o SVG branco cresce em relação ao lettering azul — o
+         "AO SITE." não muda em nenhum breakpoint. */
+      @media (max-width: 900px) {
+        .hero__title-top {
+          width: min(100%, 380px);
+        }
+      }
+
+      @media (max-width: 640px) {
+        .hero__title-top {
+          width: min(100%, 260px);
+        }
+      }
+
+      @supports (width: 1cqi) {
+        @media (max-width: 900px) {
+          .hero__title-top {
+            width: min(100%, 54cqi);
+          }
+        }
+
+        @media (max-width: 640px) {
+          .hero__title-top {
+            width: min(100%, 68cqi);
+          }
         }
       }
 
@@ -738,6 +769,16 @@
         aspect-ratio: 1592 / 368;
         color: var(--hero-blue);
         animation: hero-wipe 0.85s var(--hero-ease) 0.2s both;
+      }
+
+      /* Só as formas azuis das letras: a barra do I, o ponto-botão e o
+         cursor moram fora deste grupo e não recebem filtro nenhum. É um
+         reforço mínimo de leitura sobre os feixes de luz do fundo —
+         mantém o azul-base, o desenho e a máscara da faixa. */
+      .wm-letters {
+        filter: brightness(1.06) saturate(1.04)
+          drop-shadow(0 3px 10px rgba(0, 6, 30, 0.34))
+          drop-shadow(0 0 8px rgba(0, 125, 255, 0.16));
       }
 
       .wm-ribbon-sweep {
@@ -915,115 +956,21 @@
       }
 
       /* ===============================================================
-         2. Clientes — prova social na primeira dobra depois do hero:
-            numa landing page a confiança vem antes do argumento.
-      =============================================================== */
-      .clients {
-        position: relative;
-        padding: 3.5rem 0 1rem;
-        text-align: center;
-      }
-
-      .clients h2 {
-        font-size: clamp(1.5rem, 3.5vw, 2.25rem);
-        font-weight: 300;
-        letter-spacing: 0.01em;
-        line-height: 1.1;
-        margin: calc(0.75rem - 0.2em) 1.25rem calc(2rem - 0.16em);
-      }
-
-      .clients__marquee {
-        overflow: hidden;
-        -webkit-mask-image: linear-gradient(
-          90deg,
-          transparent,
-          #000 8%,
-          #000 92%,
-          transparent
-        );
-        mask-image: linear-gradient(
-          90deg,
-          transparent,
-          #000 8%,
-          #000 92%,
-          transparent
-        );
-      }
-
-      .clients__track {
-        display: flex;
-        width: max-content;
-        animation: clients-roll 34s linear infinite;
-      }
-
-      .clients__marquee:hover .clients__track,
-      .clients__marquee:focus-within .clients__track {
-        animation-play-state: paused;
-      }
-
-      @keyframes clients-roll {
-        to {
-          transform: translate3d(-50%, 0, 0);
-        }
-      }
-
-      .client {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex: 0 0 auto;
-        width: clamp(9rem, 26vw, 12rem);
-        margin-right: 0.9rem;
-        height: 6rem;
-        padding: 1.1rem;
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        background: rgba(255, 255, 255, 0.03);
-        transition:
-          border-color 0.3s var(--ease),
-          background-color 0.3s var(--ease),
-          transform 0.3s var(--ease);
-      }
-
-      .client:hover {
-        transform: translateY(-2px);
-        border-color: rgba(100, 135, 255, 0.45);
-        background: rgba(75, 120, 255, 0.08);
-      }
-
-      .client img {
-        max-height: 100%;
-        max-width: 100%;
-        object-fit: contain;
-        opacity: 0.85;
-        transition: opacity 0.3s var(--ease);
-      }
-
-      .client:hover img {
-        opacity: 1;
-      }
-
-      .client__name {
-        display: none;
-        font-size: 12px;
-        font-weight: 800;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: #8893ad;
-      }
-
-      .client img.img-failed {
-        display: none;
-      }
-
-      .client img.img-failed ~ .client__name {
-        display: block;
-      }
-
-      /* ===============================================================
-         3. Faixa em parallax — o portfólio como prova visual, sem
+         2. Faixa em parallax — o portfólio como prova visual, sem
             virar catálogo: as peças passam, o CTA continua um só.
       =============================================================== */
+      /* A emenda com a hero: a hero é opaca e tapa a camada fixa de
+         linhas, que reaparecia de uma vez logo abaixo dela — um degrau
+         de luz atravessando a tela. Esta faixa começa na cor da página
+         e abre até o transparente, então as linhas entram por uma rampa
+         e não há borda nenhuma. É ela que dá o respiro antes da faixa
+         branca, no lugar da antiga margem. */
+      .hero-seam {
+        height: clamp(2.5rem, 4vw, 3.5rem);
+        pointer-events: none;
+        background: linear-gradient(var(--bg) 12%, transparent);
+      }
+
       .parallax {
         position: relative;
         display: flex;
@@ -1032,7 +979,6 @@
         overflow: hidden;
         height: 130vh;
         padding: 2vw;
-        margin-top: 3.5rem;
         border-radius: var(--card-radius) var(--card-radius) 0 0;
         background: #ffffff;
       }
@@ -1096,7 +1042,7 @@
       }
 
       /* ===============================================================
-         4. Manifesto — o "por quê" em uma dobra, com o texto que
+         3. Manifesto — o "por quê" em uma dobra, com o texto que
             acende na rolagem e os checks do método.
       =============================================================== */
       .manifesto {
@@ -1110,6 +1056,14 @@
         text-align: center;
       }
 
+      /* O campo de linhas do manifesto se apaga antes do pé da seção:
+         daí para baixo vem a chapa opaca dos clientes, então o corte do
+         canvas não vira uma linha visível na emenda. */
+      .manifesto .section-lines {
+        -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 96%);
+        mask-image: linear-gradient(to bottom, #000 55%, transparent 96%);
+      }
+
       .manifesto .glow--a {
         top: 8%;
         left: -10%;
@@ -1118,8 +1072,12 @@
         background: rgba(18, 100, 255, 0.22);
       }
 
+      /* O halo roxo sobe do pé da seção: encostado na borda, o
+         `overflow: hidden` cortava o desfoque bem na emenda com os
+         clientes e o corte lia como um risco. Mesma mancha, longe da
+         costura. */
       .manifesto .glow--b {
-        bottom: 4%;
+        bottom: 150px;
         right: -8%;
         width: 460px;
         height: 460px;
@@ -1232,6 +1190,116 @@
           grid-template-columns: repeat(2, minmax(0, 1fr));
           max-width: 34rem;
         }
+      }
+
+      /* ===============================================================
+         4. Clientes — a prova social logo depois do "como trabalhamos".
+            É a continuação do mesmo bloco escuro: mesma chapa opaca do
+            manifesto, sem cantos e sem respiro entre os dois, para o
+            olho ler uma seção só até a faixa branca do "O que criamos".
+      =============================================================== */
+      .clients {
+        position: relative;
+        z-index: 10;
+        padding: 1rem 0 4rem;
+        text-align: center;
+        background-color: var(--bg);
+      }
+
+      .clients h2 {
+        font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+        font-weight: 300;
+        letter-spacing: 0.01em;
+        line-height: 1.1;
+        margin: calc(0.75rem - 0.2em) 1.25rem calc(2rem - 0.16em);
+      }
+
+      .clients__marquee {
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(
+          90deg,
+          transparent,
+          #000 8%,
+          #000 92%,
+          transparent
+        );
+        mask-image: linear-gradient(
+          90deg,
+          transparent,
+          #000 8%,
+          #000 92%,
+          transparent
+        );
+      }
+
+      .clients__track {
+        display: flex;
+        width: max-content;
+        animation: clients-roll 34s linear infinite;
+      }
+
+      .clients__marquee:hover .clients__track,
+      .clients__marquee:focus-within .clients__track {
+        animation-play-state: paused;
+      }
+
+      @keyframes clients-roll {
+        to {
+          transform: translate3d(-50%, 0, 0);
+        }
+      }
+
+      .client {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        width: clamp(9rem, 26vw, 12rem);
+        margin-right: 0.9rem;
+        height: 6rem;
+        padding: 1.1rem;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.03);
+        transition:
+          border-color 0.3s var(--ease),
+          background-color 0.3s var(--ease),
+          transform 0.3s var(--ease);
+      }
+
+      .client:hover {
+        transform: translateY(-2px);
+        border-color: rgba(100, 135, 255, 0.45);
+        background: rgba(75, 120, 255, 0.08);
+      }
+
+      .client img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+        opacity: 0.85;
+        transition: opacity 0.3s var(--ease);
+      }
+
+      .client:hover img {
+        opacity: 1;
+      }
+
+      .client__name {
+        display: none;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #8893ad;
+      }
+
+      .client img.img-failed {
+        display: none;
+      }
+
+      .client img.img-failed ~ .client__name {
+        display: block;
       }
 
       /* ===============================================================
@@ -1455,18 +1523,22 @@
          camada de linhas do site atravessa as três seções sem emenda.
          Quem arremata o branco agora é a própria seção de cima, que
          arredonda o pé. */
+      /* Sem `overflow: hidden`: recortar a seção cortava o halo roxo no
+         pé dela e essa borda aparecia como um risco na emenda com as
+         "dúvidas comuns". Agora o halo vaza e se apaga sozinho no
+         desfoque — a mancha continua a mesma, a linha some. O corte
+         lateral quem segura é o `overflow-x: clip` da página. */
       .process {
         position: relative;
         z-index: 10;
-        overflow: hidden;
         padding: 5rem 1.25rem;
       }
 
       .process .glow--c {
-        top: 20%;
+        top: 30%;
         right: -12%;
-        width: 480px;
-        height: 480px;
+        width: 440px;
+        height: 360px;
         background: rgba(84, 40, 255, 0.18);
       }
 
@@ -1623,17 +1695,36 @@
         position: relative;
         z-index: 10;
         padding: 1rem 1.25rem 5rem;
+      }
+
+      /* O banho radial do fechamento morava no fundo da seção e nascia
+         de uma vez na borda de cima — era o segundo risco em volta das
+         "dúvidas comuns". Agora ele é uma camada que sobe 320px por
+         cima das perguntas e entra por uma rampa de opacidade: mesma
+         cor, mesma força no miolo, sem começo visível. */
+      .contact::before {
+        content: '';
+        position: absolute;
+        inset: -320px 0 0;
+        z-index: -1;
+        pointer-events: none;
         background:
           radial-gradient(
-            circle at 70% 30%,
+            circle at 70% 42%,
             rgba(70, 48, 255, 0.28),
             transparent 38%
           ),
           radial-gradient(
-            circle at 30% 50%,
+            circle at 30% 58%,
             rgba(0, 111, 255, 0.16),
             transparent 35%
           );
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          transparent 0%,
+          #000 42%
+        );
+        mask-image: linear-gradient(to bottom, transparent 0%, #000 42%);
       }
 
       /* O fechamento não é mais um cartão: sem moldura, sem chapa e sem
@@ -1944,12 +2035,24 @@
 
           <div class="hero__lockup">
             <h1 class="hero__title">
-              <span class="hero__title-top">DA ARTE DO POST</span>
+              <!-- A frase existe inteira aqui; os dois desenhos abaixo são
+                   a forma dela e ficam escondidos do leitor de tela para
+                   ninguém ouvir a frase duas vezes. -->
+              <span class="sr-only">Da arte do post ao site.</span>
 
-              <!-- A frase existe inteira no HTML; o SVG abaixo é a
-                   forma dela e fica escondido do leitor de tela para
-                   ninguém ouvir "ao site" duas vezes. -->
-              <span class="sr-only">AO SITE.</span>
+              <!-- A linha branca é um SVG próprio, só com este título:
+                   lettering hairline em caixa alta, condensado, traçado
+                   em vetor — não depende de fonte carregada. Ver
+                   assets/hero-da-arte-do-post.svg. -->
+              <img
+                class="hero__title-top"
+                src="./assets/hero-da-arte-do-post.svg"
+                alt=""
+                aria-hidden="true"
+                width="955"
+                height="90"
+                decoding="async"
+              />
 
               <span class="hero__wordmark">
                 <!-- ==================================================
@@ -1991,7 +2094,7 @@
                     </mask>
                   </defs>
 
-                  <g fill="currentColor">
+                  <g class="wm-letters" fill="currentColor">
                     <!-- A -->
                     <path d="M128 30 186 30 302 319 210 255 157 108 64 330 0 330Z" />
 
@@ -2095,8 +2198,81 @@
         <div class="hero__spacer"></div>
       </section>
 
+      <!-- A rampa que emenda o pé da hero com a faixa branca. -->
+      <div class="hero-seam" aria-hidden="true"></div>
+
       <!-- ============================================================
-           2. Clientes — prova social antes do argumento
+           2. Faixa em parallax — prova visual do trabalho
+      ============================================================= -->
+      <section class="parallax" data-parallax aria-hidden="true">
+        <div class="parallax__col" data-from="0.10" data-to="0.62"></div>
+        <div class="parallax__col" data-from="0.70" data-to="0.16"></div>
+        <div class="parallax__col" data-from="0.06" data-to="0.40"></div>
+        <div class="parallax__col" data-from="0.58" data-to="0.10"></div>
+      </section>
+
+      <!-- ============================================================
+           3. Manifesto
+      ============================================================= -->
+      <section class="manifesto">
+        <div class="section-lines" data-section-lines aria-hidden="true"></div>
+        <span class="glow glow--a"></span>
+        <span class="glow glow--b"></span>
+
+        <div
+          class="manifesto__decor manifesto__decor--tl"
+          data-reveal
+          style="--rx: -80px; --ry: 0px; --rd: 0.1s; --rt: 0.9s"
+        >
+          <img src="./assets/iconelogo.webp" alt="" />
+        </div>
+        <div
+          class="manifesto__decor manifesto__decor--br"
+          data-reveal
+          style="--rx: 80px; --ry: 0px; --rd: 0.2s; --rt: 0.9s"
+        >
+          <img src="./assets/iconelogo.webp" alt="" />
+        </div>
+
+        <div class="manifesto__inner">
+          <p class="kicker" data-reveal style="--ry: 20px">Como trabalhamos</p>
+
+          <h2 class="section-heading" data-reveal style="--ry: 40px">
+            Feito à mão,<br /><span class="accent-text">peça a peça.</span>
+          </h2>
+
+          <p class="manifesto__text" data-scroll-text>
+            Criação de mídias digitais para marcas que querem aparecer bem em
+            todo lugar: no feed, no story, no impresso e na web. Cada arte sai
+            com a sua identidade, no formato certo e pronta para publicar.
+          </p>
+
+          <div class="manifesto__checks">
+            <div class="check" data-reveal="zoom" style="--ry: 14px; --rd: 0.1s">
+              <b>✓</b> Briefing rápido
+            </div>
+            <div class="check" data-reveal="zoom" style="--ry: 14px; --rd: 0.18s">
+              <b>✓</b> Direção de arte
+            </div>
+            <div class="check" data-reveal="zoom" style="--ry: 14px; --rd: 0.26s">
+              <b>✓</b> Formatos prontos para publicar
+            </div>
+            <div class="check" data-reveal="zoom" style="--ry: 14px; --rd: 0.34s">
+              <b>✓</b> Rodada de ajustes inclusa
+            </div>
+          </div>
+
+          <div data-reveal style="--ry: 20px; --rd: 0.2s">
+            <a class="btn btn--primary" href="#contato"
+              >Pedir meu orçamento →</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           4. Clientes — a prova social fecha o manifesto, no mesmo
+              fundo escuro: quem conta como trabalha mostra para quem
       ============================================================= -->
       <section class="clients" data-reveal style="--ry: 26px">
         <p class="kicker">Clientes</p>
@@ -2163,75 +2339,6 @@
               <span class="client__name">PSINDCE</span>
             </li>
           </ul>
-        </div>
-      </section>
-
-      <!-- ============================================================
-           3. Faixa em parallax — prova visual do trabalho
-      ============================================================= -->
-      <section class="parallax" data-parallax aria-hidden="true">
-        <div class="parallax__col" data-from="0.10" data-to="0.62"></div>
-        <div class="parallax__col" data-from="0.70" data-to="0.16"></div>
-        <div class="parallax__col" data-from="0.06" data-to="0.40"></div>
-        <div class="parallax__col" data-from="0.58" data-to="0.10"></div>
-      </section>
-
-      <!-- ============================================================
-           4. Manifesto
-      ============================================================= -->
-      <section class="manifesto">
-        <div class="section-lines" data-section-lines aria-hidden="true"></div>
-        <span class="glow glow--a"></span>
-        <span class="glow glow--b"></span>
-
-        <div
-          class="manifesto__decor manifesto__decor--tl"
-          data-reveal
-          style="--rx: -80px; --ry: 0px; --rd: 0.1s; --rt: 0.9s"
-        >
-          <img src="./assets/iconelogo.webp" alt="" />
-        </div>
-        <div
-          class="manifesto__decor manifesto__decor--br"
-          data-reveal
-          style="--rx: 80px; --ry: 0px; --rd: 0.2s; --rt: 0.9s"
-        >
-          <img src="./assets/iconelogo.webp" alt="" />
-        </div>
-
-        <div class="manifesto__inner">
-          <p class="kicker" data-reveal style="--ry: 20px">Como trabalhamos</p>
-
-          <h2 class="section-heading" data-reveal style="--ry: 40px">
-            Feito à mão,<br /><span class="accent-text">peça a peça.</span>
-          </h2>
-
-          <p class="manifesto__text" data-scroll-text>
-            Criação de mídias digitais para marcas que querem aparecer bem em
-            todo lugar: no feed, no story, no impresso e na web. Cada arte sai
-            com a sua identidade, no formato certo e pronta para publicar.
-          </p>
-
-          <div class="manifesto__checks">
-            <div class="check" data-reveal="zoom" style="--ry: 14px; --rd: 0.1s">
-              <b>✓</b> Briefing rápido
-            </div>
-            <div class="check" data-reveal="zoom" style="--ry: 14px; --rd: 0.18s">
-              <b>✓</b> Direção de arte
-            </div>
-            <div class="check" data-reveal="zoom" style="--ry: 14px; --rd: 0.26s">
-              <b>✓</b> Formatos prontos para publicar
-            </div>
-            <div class="check" data-reveal="zoom" style="--ry: 14px; --rd: 0.34s">
-              <b>✓</b> Rodada de ajustes inclusa
-            </div>
-          </div>
-
-          <div data-reveal style="--ry: 20px; --rd: 0.2s">
-            <a class="btn btn--primary" href="#contato"
-              >Pedir meu orçamento →</a
-            >
-          </div>
         </div>
       </section>
 
@@ -2698,7 +2805,7 @@
              seções escuras e transparentes faz o laço dormir quando
              não há nada dela para ver. */
           var seeThrough = [].slice.call(
-            document.querySelectorAll('.clients, .process, .faq, .contact'),
+            document.querySelectorAll('.process, .faq, .contact'),
           );
 
           window.FloatingLines.mount(
